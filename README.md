@@ -1,7 +1,10 @@
-# SHEROES
-
-<center>
-<h1>(Team #3)</h1>
+<div style="text-align: center">
+<h1>
+SHEROES 
+</h1>
+<h2>
+(Team #3)
+</h2>
 
 [Manavjeet Singh](https://github.com/underhood31), [Navneet Agarwal](https://github.com/navneet-ag), [Sandeep Kumar Singh](https://github.com/itissandeep98), [Sarthak Arora](https://github.com/sarthak144)
 
@@ -9,45 +12,38 @@ Software Requirements Specification Document
 
 **Version:** (1.0) **Date:** (14/02/2021)
 
-</center>
+</div>
 
-- [SHEROES](#sheroes)
-  - [1. Introduction](#1-introduction)
-    - [1.1 Purpose of this document](#11-purpose-of-this-document)
-    - [1.2 Scope](#12-scope)
-    - [1.3 References](#13-references)
-    - [1.4 Initial Architecture](#14-initial-architecture)
-    - [1.5 Overview](#15-overview)
-  - [2. Specific Requirements](#2-specific-requirements)
-    - [2.1 External Interfaces](#21-external-interfaces)
-    - [2.2 Functions](#22-functions)
-      - [2.2.1 Feature Prioritization](#221-feature-prioritization)
-    - [2.3 Performance Requirements](#23-performance-requirements)
-    - [2.4 Design Constraints](#24-design-constraints)
-  - [3. Acceptance Criteria](#3-acceptance-criteria)
-  - [4. Summary of Meetings with Users/Sponsors](#4-summary-of-meetings-with-userssponsors)
-    - [4.1 Meeting](#41-meeting)
-    - [4.2 Meeting](#42-meeting)
-    - [4.3 Meeting](#43-meeting)
-    - [4.4 SRS Review Meetings](#44-srs-review-meetings)
-    - [Briefly describe the method of review used:](#briefly-describe-the-method-of-review-used)
-    - [List of key issues identified in the review:](#list-of-key-issues-identified-in-the-review)
+- [1. Introduction](#1-introduction)
+  - [1.1 Purpose of this document](#11-purpose-of-this-document)
+  - [1.2 Scope](#12-scope)
+  - [1.3 References](#13-references)
+  - [1.4 Initial Architecture](#14-initial-architecture)
+  - [1.5 Overview](#15-overview)
+- [2. Specific Requirements](#2-specific-requirements)
+  - [2.1 External Interfaces](#21-external-interfaces)
+  - [2.2 Functions](#22-functions)
+    - [2.2.1 Feature Prioritization](#221-feature-prioritization)
+  - [2.3 Performance Requirements](#23-performance-requirements)
+  - [2.4 Design Constraints](#24-design-constraints)
+- [3. Acceptance Criteria](#3-acceptance-criteria)
+- [4. Summary of Meetings with Users/Sponsors](#4-summary-of-meetings-with-userssponsors)
+  - [4.1 Meeting](#41-meeting)
+  - [4.2 Meeting](#42-meeting)
+  - [4.3 Meeting](#43-meeting)
+  - [4.4 SRS Review Meetings](#44-srs-review-meetings)
+  - [Briefly describe the method of review used:](#briefly-describe-the-method-of-review-used)
+  - [List of key issues identified in the review:](#list-of-key-issues-identified-in-the-review)
 
 ## 1. Introduction
 
 ### 1.1 Purpose of this document
 
-ThepurposeofthisdocumentistopresentadetaileddescriptionofSheroesuserresearch
-platformfortheSheroesOrganization.Itwillexplainthepurpose,featuresandinterfaces
-ofthesystem,whatthesystemwilldo,theconstraintsforitsoperation.Thisdocumentis
-intended for the sponsors and developers of the system.
+The purpose of this document is to present a detailed description of Sheroes user research platform for the Sheroes Organization. It will explain the purpose,features and interfaces of the system, what the system will do,the constraints for its operation. This document is intended for the sponsors and developers of the system.
 
 ### 1.2 Scope
 
-The mainaimisto developa newform platformforconducting surveysandonline
-quizzeswhichtheSheroesorganisationwilluse.ThiswillbebuiltusingMySql,Django
-and React. It will be accessible with any standard compliant browser on your
-phone/computer.
+The main aim is to develop a new form platform for conducting surveys and online quizzes which the Sheroes organisation will use.This will be built using MySql,Django and React. It will be accessible with any standard compliant browser on your phone/computer.
 
 ### 1.3 References
 
@@ -70,12 +66,11 @@ https://www.cse.msu.edu/~chengb/RE-491/Papers/~$SExample-webapp.doc
 
 ### 1.4 Initial Architecture
 
+![image](https://user-images.githubusercontent.com/44255731/107886153-20849e00-6f24-11eb-8204-c32a65571aae.png)
+
 ### 1.5 Overview
 
-The next section is the Specific Requirements which are written primarilyfor the
-developers. It describes all the interfaces, functionality, performance and design
-constraints.Thethirdsectionis mainlyforthesponsorssothattheycanevaluatethe
-developed system based on the parameters mentionedthere.
+The next section is the Specific Requirements which are written primarilyfor the developers. It describes all the interfaces, functionality, performance and design constraints.Thethirdsectionis mainly for the sponsors so that they can evaluate the developed system based on the parameters mentionedthere.
 
 ## 2. Specific Requirements
 
@@ -85,12 +80,15 @@ developed system based on the parameters mentionedthere.
 
 - End users will receive a form link with a unique identifierfor every form.
 - After filling up the form if requested by the user and enabled by the form creator, their responses will be mailed back.
-  ● Software Interface
+
+● Software Interface
+
 - Frontend:This is the primary interface with which every surveyee and form creator will interact. It will, in turn, interact with backend using APIs
 - Backend:This will store and perform all the form functions by providing various API endpoints.
-  ● Hardware Interface
-- Theapplicationwillbeaccessiblefromanydevicewhichhasthebrowser
-  support.
+
+● Hardware Interface
+
+- The application will be accessible from any device which has the browser support.
 
 ### 2.2 Functions
 
@@ -109,8 +107,8 @@ Following is the feature prioritisation.
 - Paragraph based questions
 - Short answer questions.
 - Form creators would be able to set the data type of input collection as a string(with character limit), float or integer.
-- File Upload
-  - Form creator will decide the following parameters:
+- File Upload \
+  Form creator will decide the following parameters:
   - Type of file (Image, pdf, txt etc.)
   - Size limit of file
 
@@ -127,7 +125,7 @@ Following is the feature prioritisation.
 ● The accessibility to the form will be divided into three groups.
 
 - Admin: Create and modify forms. Unrestricted accessto the database.
-- Editor: Create and modifyforms.View the data of the form they created and export the inputs.
+- Editor: Create and modify forms.View the data of the form they created and export the inputs.
 - End-User: Fill up the forms. Report an issue to Editor/Admin.
 
 **Medium Priority**
@@ -223,6 +221,7 @@ _Main points of discussion :_
 ● Stakeholders of the end-product and their expecteduse-cases were discussed.
 
 ● Future mode and time of meetings were discussed. The team and sponsors decided upon meeting every Friday.The sponsors also assured that the team was free to reach them over email in case of any doubts.
+
 ● The goal for the next meeting:The team had to present a document with their brainstorming about the project by the next meeting.
 
 _Estimate of how much of the duration the sponsor/usersspoke in the meeting:_ 15-20 mins
@@ -242,7 +241,8 @@ _Date:_ 5-Feb-2021
 _Duration:_ ~30 mins
 
 _Main Points of discussion:_
-● A brief discussion over the brainstorming documentthat was shared with them
+
+● A brief discussion over the brainstorming document that was shared with them
 
 ● A basic idea about the schema was discussed.
 
@@ -250,7 +250,7 @@ _Main Points of discussion:_
 
 ● The layout of questions was discussed.
 
-● Option to report any discrepancy in the form shouldgo to the admin.
+● Option to report any discrepancy in the form should go to the admin.
 
 ● The app must be a standalone web platform for now.
 
@@ -261,9 +261,9 @@ The team had to present a document with
 - Prioritisation of features
 - Schema of the system
 - Proposed UI
-  _Estimate of how much of the duration the sponsor/usersspoke in the meeting:_ ~10 mins
-  _Estimateofhowmuchofthedurationyou/yourteammembersspokeinthemeeting:_ ~
-  mins
+- _Estimate of how much of the duration the sponsor/usersspoke in the meeting:_ ~10 mins
+
+  _Estimateofhowmuchofthedurationyou/yourteammembersspokeinthemeeting:_ ~20 mins
 
 ### 4.3 Meeting
 
@@ -280,21 +280,21 @@ _Main points of discussion :_
 
 ● The UI of the forms for quizzes and surveys and mobile/desktops was presented, and the discussion on the UI is mentioned below :
 
-- Consent should be updated to a statement rather thana form.
+- Consent should be updated to a statement rather than a form.
 - The banner option is to be added.
 - Admin/Editor page is yet to be designed.
 - Decisions on selection of a particular UI were takenin the meeting.
-- Sponsor mentioned that they’d get their UX designerin contact with us.
+- Sponsor mentioned that they’d get their UX designer in contact with us.
 
 ● The Schema of the database was presented, and the discussion for the same is mentioned below:
 
 - Try to add five mandatory columns in most of the tables.(Created on/ Updated on/Created by/Updated by/ IsActive/ IsDeleted)
 - The naming convention should be changed. Like the primary key should be "id" for every table.
-- No hard delete of data would bethere.TheIsDeleted attribute would handle soft deletion.
+- No hard delete of data would be there.The IsDeleted attribute would handle soft deletion.
 - Images paths will be stored as a string in the database.
-- For every question, we will have an upper cap of twoimages.
+- For every question, we will have an upper cap of two images.
 - Options for MCQ depend on the editor,so we will have a separate options table to accommodate this.
-- Dropdown as an inputfor thequestions shouldbe explored more and discussed in the next meeting.
+- Dropdown as an inputfor the questions should be explored more and discussed in the next meeting.
 - Details of the User table were discussed.
 
 ● The team discussed the GitHub repository for the project. The sponsors mentioned that the team should give them relevant access to add other people from Sheroes to this repo for any help needed in the future.
