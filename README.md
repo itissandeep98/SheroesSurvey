@@ -1,7 +1,10 @@
-# SHEROES
-
-<center>
-<h1>(Team #3)</h1>
+<div style="text-align: center">
+<h1>
+SHEROES 
+</h1>
+<h2>
+(Team #3)
+</h2>
 
 [Manavjeet Singh](https://github.com/underhood31), [Navneet Agarwal](https://github.com/navneet-ag), [Sandeep Kumar Singh](https://github.com/itissandeep98), [Sarthak Arora](https://github.com/sarthak144)
 
@@ -9,45 +12,38 @@ Software Requirements Specification Document
 
 **Version:** (1.0) **Date:** (14/02/2021)
 
-</center>
+</div>
 
-- [SHEROES](#sheroes)
-  - [1. Introduction](#1-introduction)
-    - [1.1 Purpose of this document](#11-purpose-of-this-document)
-    - [1.2 Scope](#12-scope)
-    - [1.3 References](#13-references)
-    - [1.4 Initial Architecture](#14-initial-architecture)
-    - [1.5 Overview](#15-overview)
-  - [2. Specific Requirements](#2-specific-requirements)
-    - [2.1 External Interfaces](#21-external-interfaces)
-    - [2.2 Functions](#22-functions)
-      - [2.2.1 Feature Prioritization](#221-feature-prioritization)
-    - [2.3 Performance Requirements](#23-performance-requirements)
-    - [2.4 Design Constraints](#24-design-constraints)
-  - [3. Acceptance Criteria](#3-acceptance-criteria)
-  - [4. Summary of Meetings with Users/Sponsors](#4-summary-of-meetings-with-userssponsors)
-    - [4.1 Meeting](#41-meeting)
-    - [4.2 Meeting](#42-meeting)
-    - [4.3 Meeting](#43-meeting)
-    - [4.4 SRS Review Meetings](#44-srs-review-meetings)
-    - [Briefly describe the method of review used:](#briefly-describe-the-method-of-review-used)
-    - [List of key issues identified in the review:](#list-of-key-issues-identified-in-the-review)
+- [1. Introduction](#1-introduction)
+  - [1.1 Purpose of this document](#11-purpose-of-this-document)
+  - [1.2 Scope](#12-scope)
+  - [1.3 References](#13-references)
+  - [1.4 Initial Architecture](#14-initial-architecture)
+  - [1.5 Overview](#15-overview)
+- [2. Specific Requirements](#2-specific-requirements)
+  - [2.1 External Interfaces](#21-external-interfaces)
+  - [2.2 Functions](#22-functions)
+    - [2.2.1 Feature Prioritization](#221-feature-prioritization)
+  - [2.3 Performance Requirements](#23-performance-requirements)
+  - [2.4 Design Constraints](#24-design-constraints)
+- [3. Acceptance Criteria](#3-acceptance-criteria)
+- [4. Summary of Meetings with Users/Sponsors](#4-summary-of-meetings-with-userssponsors)
+  - [4.1 Meeting](#41-meeting)
+  - [4.2 Meeting](#42-meeting)
+  - [4.3 Meeting](#43-meeting)
+  - [4.4 SRS Review Meetings](#44-srs-review-meetings)
+  - [Briefly describe the method of review used:](#briefly-describe-the-method-of-review-used)
+  - [List of key issues identified in the review:](#list-of-key-issues-identified-in-the-review)
 
 ## 1. Introduction
 
 ### 1.1 Purpose of this document
 
-ThepurposeofthisdocumentistopresentadetaileddescriptionofSheroesuserresearch
-platformfortheSheroesOrganization.Itwillexplainthepurpose,featuresandinterfaces
-ofthesystem,whatthesystemwilldo,theconstraintsforitsoperation.Thisdocumentis
-intended for the sponsors and developers of the system.
+The purpose of this document is to present a detailed description of Sheroes user research platform for the Sheroes Organization. It will explain the purpose,features and interfaces of the system, what the system will do,the constraints for its operation. This document is intended for the sponsors and developers of the system.
 
 ### 1.2 Scope
 
-The mainaimisto developa newform platformforconducting surveysandonline
-quizzeswhichtheSheroesorganisationwilluse.ThiswillbebuiltusingMySql,Django
-and React. It will be accessible with any standard compliant browser on your
-phone/computer.
+The main aim is to develop a new form platform for conducting surveys and online quizzes which the Sheroes organisation will use.This will be built using MySql,Django and React. It will be accessible with any standard compliant browser on your phone/computer.
 
 ### 1.3 References
 
