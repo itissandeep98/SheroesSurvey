@@ -16,6 +16,7 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - name: publish package
         run: |
+          git config --global init.defaultBranch "main"
           npm install
           git config user.name "itissandeep98"
           git config user.email "itissandeep98@gmail.com"
