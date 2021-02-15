@@ -39,28 +39,27 @@ Software Requirements Specification Document
 
 ### 1.1 Purpose of this document
 
-The purpose of this document is to present a detailed description of Sheroes user research platform for the Sheroes Organization. It will explain the purpose,features and interfaces of the system, what the system will do,the constraints for its operation. This document is intended for the sponsors and developers of the system.
+This document aims to present a detailed description of Sheroes user research platform for the Sheroes Organization. It will explain the system's purpose, features, and interfaces, what the system will do, and its operational constraints. This document is intended for the sponsors and developers of the system.
 
 ### 1.2 Scope
 
-The main aim is to develop a new form platform for conducting surveys and online quizzes which the Sheroes organisation will use.This will be built using MySql,Django and React. It will be accessible with any standard compliant browser on your phone/computer.
+The main aim is to develop a new form platform for conducting surveys and online quizzes which the Sheroes organisation will use. This will be built using MySql, Django and React. It will be accessible with any standard compliant browser on your phone/computer.
 
 ### 1.3 References
 
-● “9 Types of Design Constraint,” published Jun’17 on Simplicable.
+● "9 Types of Design Constraint," published Jun '17 on Simplicable.
 https://simplicable.com/new/design-constraints.
 
-● “AcceptanceCriteria:Purposes,Formats,andBestPractices,”publishedJuly’
+● "AcceptanceCriteria: Purposes, Formats, and best practices," published July'
 on AltexSoft.
 https://www.altexsoft.com/blog/business/acceptance-criteria-purposes-formats-an
 d-best-practices/
 
-● “How to elicit performance requirements,” published Jan’21 on
+● "How to elicit performance requirements," published Jan '21 on
 SearchSoftwareQuality
-https://searchsoftwarequality.techtarget.com/answer/How-to-elicit-performance-re
-quirements
+https://searchsoftwarequality.techtarget.com/answer/How-to-elicit-performance-requirements
 
-● “Index of /~chengb/RE-491/Papers.” published Nov’1 1
+● "Index of /~chengb/RE-491/Papers." published Nov' 1 1
 https://www.cse.msu.edu/~chengb/RE-491/Papers/~$SExample-webapp.doc
 (accessed Feb. 07, 2021).
 
@@ -70,7 +69,7 @@ https://www.cse.msu.edu/~chengb/RE-491/Papers/~$SExample-webapp.doc
 
 ### 1.5 Overview
 
-The next section is the Specific Requirements which are written primarilyfor the developers. It describes all the interfaces, functionality, performance and design constraints.Thethirdsectionis mainly for the sponsors so that they can evaluate the developed system based on the parameters mentionedthere.
+The next section is the Specific Requirements which are written primarily for the developers. It describes all the interfaces, functionality, performance and design constraints. The thirds section is mainly for the sponsors to evaluate the developed system based on the parameters mentioned there.
 
 ## 2. Specific Requirements
 
@@ -78,13 +77,13 @@ The next section is the Specific Requirements which are written primarilyfor the
 
 ● Communication Interface
 
-- End users will receive a form link with a unique identifierfor every form.
+- End users will receive a form link with a unique identifier for every form.
 - After filling up the form if requested by the user and enabled by the form creator, their responses will be mailed back.
 
 ● Software Interface
 
-- Frontend:This is the primary interface with which every surveyee and form creator will interact. It will, in turn, interact with backend using APIs
-- Backend:This will store and perform all the form functions by providing various API endpoints.
+- Frontend: This is the primary interface with which every surveyee and form creator will interact. It will, in turn, interact with backend using APIs
+- Backend: This will store and perform all the form functions by providing various API endpoints.
 
 ● Hardware Interface
 
@@ -112,7 +111,7 @@ Following is the feature prioritisation.
   - Type of file (Image, pdf, txt etc.)
   - Size limit of file
 
-● Individual link of the forms that can be shared tothe end-users to fill them up.
+● Individual link of the forms that can be shared to the end-users to fill them up.
 
 ● Questions can be marked compulsory by the creator.
 
@@ -124,8 +123,8 @@ Following is the feature prioritisation.
 
 ● The accessibility to the form will be divided into three groups.
 
-- Admin: Create and modify forms. Unrestricted accessto the database.
-- Editor: Create and modify forms.View the data of the form they created and export the inputs.
+- Admin: Create and modify forms. Unrestricted access to the database.
+- Editor: Create and modify forms. View the data of the form they created and export the inputs.
 - End-User: Fill up the forms. Report an issue to Editor/Admin.
 
 **Medium Priority**
@@ -146,13 +145,13 @@ Following is the feature prioritisation.
 
 ● The form could also be used to conduct graded quizzes. Quiz mode will have the following distinct features.
 
-- Question sequence can be randomised for a particularsection.
+- Question sequence can be randomised for a particular section.
 
 **Lower Priority**
 
 ● Addition quiz mode features:
 
-- The creator will be able to decide whether to display the score after finishing or release it later automatically.
+- The creator will decide whether to display the score after finishing or release it later automatically.
 - Answers could be revealed after the quiz.
 
 ● Additional input methods:
@@ -161,7 +160,7 @@ Following is the feature prioritisation.
 - The ranking is given options.
 - Linkert
 
-● Authentication and auto-filling details of pre-registered Sheroes’ users.
+● Authentication and auto-filling details of pre-registered Sheroes' users.
 
 ● Captcha verification will be enabled to stop spamming.
 
@@ -185,7 +184,7 @@ Following is the feature prioritisation.
 
 ● The number of simultaneous users support will be dependent upon the server on which the backend is installed.
 
-● We are constrained to use MySQL database because the Sheroes platform already uses MySQL DB to store users’ data.
+● We are constrained to use MySQL database because the Sheroes platform already uses MySQL DB to store users' data.
 
 ● Any updates in an existing form by the form editor is visible to the end-user only after the page is refreshed.
 To create a form, users must log in to the platform and have admin/editor rights.
@@ -210,7 +209,7 @@ _Date:_ 29-Jan-2021
 
 _Duration:_ 35-40 mins
 
-_Main points of discussion :_
+_Main points of discussion:_
 
 ● Everyone introduced themselves, and sponsors described the critical aspects of the project.
 
@@ -218,13 +217,13 @@ _Main points of discussion :_
 
 ● Decisions regarding technology stack were made for both groups based on previous knowledge.
 
-● Stakeholders of the end-product and their expecteduse-cases were discussed.
+● Stakeholders of the end-product and their expected use-cases were discussed.
 
-● Future mode and time of meetings were discussed. The team and sponsors decided upon meeting every Friday.The sponsors also assured that the team was free to reach them over email in case of any doubts.
+● Future mode and time of meetings were discussed. The team and sponsors decided upon meeting every Friday. The sponsors also assured that the team was free to reach them over email in case of any doubts.
 
-● The goal for the next meeting:The team had to present a document with their brainstorming about the project by the next meeting.
+● The next meeting's goal: The team had to present a document with their brainstorming about the project by the next meeting.
 
-_Estimate of how much of the duration the sponsor/usersspoke in the meeting:_ 15-20 mins
+_Estimate of how much of the duration the sponsor/users spoke in the meeting:_ 15-20 mins
 
 _Estimate of how much of the duration you/your team members spoke in the meeting:_
 15-20 mins
@@ -244,7 +243,7 @@ _Main Points of discussion:_
 
 ● A brief discussion over the brainstorming document that was shared with them
 
-● A basic idea about the schema was discussed.
+● A basic idea about the Schema was discussed.
 
 ● The option of a consent page was introduced.
 
@@ -261,9 +260,10 @@ The team had to present a document with
 - Prioritisation of features
 - Schema of the system
 - Proposed UI
-- _Estimate of how much of the duration the sponsor/usersspoke in the meeting:_ ~10 mins
 
-  _Estimateofhowmuchofthedurationyou/yourteammembersspokeinthemeeting:_ ~20 mins
+_Estimate of how much of the duration the sponsor/users spoke in the meeting:_ ~10 mins
+
+_Estimate of how much of the duration you /your team members spoke in the meeting:_ ~20 mins
 
 ### 4.3 Meeting
 
@@ -276,38 +276,38 @@ _Date:_ 12-Feb-2021
 
 _Duration:_ 80-90 mins
 
-_Main points of discussion :_
+_Main points of discussion:_
 
 ● The UI of the forms for quizzes and surveys and mobile/desktops was presented, and the discussion on the UI is mentioned below :
 
 - Consent should be updated to a statement rather than a form.
 - The banner option is to be added.
 - Admin/Editor page is yet to be designed.
-- Decisions on selection of a particular UI were takenin the meeting.
-- Sponsor mentioned that they’d get their UX designer in contact with us.
+- Decisions on selection of a particular UI were taken in the meeting.
+- Sponsor mentioned that they'd get their UX designer in contact with us.
 
 ● The Schema of the database was presented, and the discussion for the same is mentioned below:
 
 - Try to add five mandatory columns in most of the tables.(Created on/ Updated on/Created by/Updated by/ IsActive/ IsDeleted)
 - The naming convention should be changed. Like the primary key should be "id" for every table.
-- No hard delete of data would be there.The IsDeleted attribute would handle soft deletion.
+- No hard delete of data would be there. The IsDeleted attribute would handle soft deletion.
 - Images paths will be stored as a string in the database.
 - For every question, we will have an upper cap of two images.
-- Options for MCQ depend on the editor,so we will have a separate options table to accommodate this.
-- Dropdown as an inputfor the questions should be explored more and discussed in the next meeting.
+- Options for MCQ depend on the editor, so we will have a separate options table to accommodate this.
+- Dropdown as an input for the questions should be explored more and discussed in the next meeting.
 - Details of the User table were discussed.
 
 ● The team discussed the GitHub repository for the project. The sponsors mentioned that the team should give them relevant access to add other people from Sheroes to this repo for any help needed in the future.
 
-● The team to make the necessary changes to the UI and schema and send them to sponsors by Tuesday.
+● The team to make the necessary changes to the UI and Schema and send them to sponsors by Tuesday.
 
-_Estimate of how much of the duration the sponsor/usersspoke in the meeting:_ ~40 mins
+_Estimate of how much of the duration the sponsor/users spoke in the meeting:_ ~40 mins
 
 _Estimate of how much of the duration you/your team members spoke in the meeting:_ ~50 mins
 
 ### 4.4 SRS Review Meetings
 
-_Attendees, Date and Duration:_ Meetings 2 and 3 werethe review meetings
+_Attendees, Date and Duration:_ Meetings 2 and 3 were the review meetings
 
 Size of the SRS being reviewed (in pages): 7
 
@@ -315,9 +315,9 @@ Size of the SRS being reviewed (in pages): 7
 
 SRS was reviewed in a modular manner. The requirements document was shared with the sponsors before the second meeting to share their thoughts by commenting on the document. The doc was based upon the points mentioned in the previously shared problem statement by the sponsors.
 In the second meeting, the team presented their understanding of the requirements using the pre-shared doc. The sponsors cleared any misunderstanding.
-In the third meeting remaining doubts regarding the requirements were put forward from the team’s side. They were cleared by the sponsors.
+In the third meeting remaining doubts regarding the requirements were put forward from the team's side. The sponsors cleared them.
 
-### List of key issues identified in the review:
+### List of critical issues identified in the review:
 
 ● Feature prioritisation was missing in the initial iteration. The basic functionality (like the creation of form, accepting responses etc.) features were given a higher priority. Other features which will act as accessories to the basic functionality (like email notifications ) were given lower priority.
 

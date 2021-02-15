@@ -1,0 +1,5 @@
+.navbar_top {
+	border-radius: 0px 0px 10px 10px;
+	z-index: 100;
+	transition: top 0.3s;
+}
