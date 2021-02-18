@@ -33,7 +33,7 @@ Software Requirements Specification Document
   - [4.3 Meeting](#43-meeting)
   - [4.4 SRS Review Meetings](#44-srs-review-meetings)
   - [Briefly describe the method of review used:](#briefly-describe-the-method-of-review-used)
-  - [List of key issues identified in the review:](#list-of-key-issues-identified-in-the-review)
+  - [List of critical issues identified in the review:](#list-of-critical-issues-identified-in-the-review)
 
 ## 1. Introduction
 
