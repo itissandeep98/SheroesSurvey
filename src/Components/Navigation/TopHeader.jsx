@@ -8,7 +8,7 @@ function TopHeader() {
 			<Row>
 				<Col className=" justify-content-center d-flex">
 					<Image
-						src={process.env.PUBLIC_URL + '/Icons/logo.svg'}
+						src={process.env.PUBLIC_URL + '/Icons/full-logo_white.svg'}
 						alt="sheroes"
 					/>
 				</Col>

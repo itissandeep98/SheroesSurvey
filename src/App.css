@@ -1,0 +1,31 @@
+#root {
+	min-height: 100vh;
+}
+
+.vert_divider {
+	position: relative;
+	width: 1px;
+	background: rgb(206, 206, 206);
+	border: none;
+	margin: 0px;
+}
+
+.bg-gradient {
+	background: #e2ad49;
+	background: -moz-linear-gradient(
+		268deg,
+		rgb(233, 20, 20) 0,
+		rgb(248, 181, 136) 100%
+	);
+	background: -webkit-linear-gradient(
+		268deg,
+		rgb(233, 20, 20) 0,
+		rgb(248, 181, 136) 100%
+	);
+	background: linear-gradient(268deg, rgb(233, 20, 20), rgb(248, 181, 136));
+	background-size: 400% 400%;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#47a06e", endColorstr="#3b7cb4", GradientType=1);
+	-webkit-animation: gradient 15s ease infinite;
+	-moz-animation: gradient 15s ease infinite;
+	animation: gradient 15s ease infinite;
+}
