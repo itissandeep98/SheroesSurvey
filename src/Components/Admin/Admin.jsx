@@ -5,9 +5,11 @@ import Section from './Section';
 
 function Admin() {
 	const [structure, setStructure] = useState([]);
+
 	const addSection = () => {
 		setStructure([...structure, [{ type: 'text' }]]);
 	};
+
 	const removeSection = index => {
 		setStructure([...structure.slice(0, index), ...structure.slice(index + 1)]);
 	};
@@ -15,8 +17,32 @@ function Admin() {
 	const addQuestion = index => {
 		const temp = [...structure];
 		temp[index] = [...temp[index], { type: 'text' }];
-		console.log(temp, structure);
 		setStructure(temp);
+	};
+
+	const removeQuestion = (section, index) => {
+		const temp = [...structure];
+
+		if (temp[section].length === 1) {
+			removeSection(section);
+		} else {
+			temp[section] = [
+				...temp[section].slice(0, index),
+				...temp[section].slice(index + 1),
+			];
+			setStructure(temp);
+		}
+	};
+
+	const modifyQuestion = (section, index, target, value) => {
+		// console.log(target,value);
+		const temp = structure[section];
+		temp[index] = { ...temp[index], [target]: value };
+		setStructure([
+			...structure.slice(0, section),
+			temp,
+			...structure.slice(section + 1),
+		]);
 	};
 
 	return (
@@ -30,6 +56,8 @@ function Admin() {
 							index={i + 1}
 							remove={() => removeSection(i)}
 							addQuestion={() => addQuestion(i)}
+							removeQuestion={removeQuestion}
+							modifyQuestion={modifyQuestion}
 						/>
 					))}
 				</Col>

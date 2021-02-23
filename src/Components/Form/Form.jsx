@@ -1,27 +1,32 @@
-import { Button, Col, Container, Row } from 'reactstrap';
-import { Divider, Icon } from 'semantic-ui-react';
+import { Col, Container, Row } from 'reactstrap';
+import { Button, Divider, Icon } from 'semantic-ui-react';
 import { FormStructure } from '../../Utils/FormStructure';
+import Banner from './Banner';
 import Section from './Section';
+import './style.css';
 
 function Form(props) {
-	const structure = FormStructure;
+	const formID = props.match.params.id;
+	const { sections, details } = FormStructure;
 	return (
-		<Container>
-			<Row>
-				<Col className="text-center mt-3">
-					<h2>Form ID: {props.match.params.id}</h2>
-					<hr />
-				</Col>
-			</Row>
+		<Container className="mb-5">
+			<Banner {...details} />
 			<Row>
 				<Col>
-					{structure.map((section, i) => (
-						<Section key={Math.random()} queslist={section} index={i + 1} />
+					{sections.map((section, i) => (
+						<Section key={Math.random()} {...section} index={i + 1} />
 					))}
 				</Col>
 			</Row>
+			<Button className="float-right">
+				<Icon name="check" />
+				Submit
+			</Button>
+			<br />
+			<br />
 			<Divider horizontal>End of the Form</Divider>
-			<Button className="float-right"> Submit</Button>
+			<br />
+			<br />
 		</Container>
 	);
 }

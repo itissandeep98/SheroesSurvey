@@ -1,16 +1,14 @@
 import { Col, Container, Row } from 'reactstrap';
-import { Button, Dropdown, Icon } from 'semantic-ui-react';
-import { QuestionTypes } from '../../Utils/QuestionTypes';
-import TextInput from './Inputs/TextInput';
+import { Button, Icon } from 'semantic-ui-react';
+import Question from './Question';
 
 function Section(props) {
 	const { queslist, index } = props;
 	return (
 		<Container>
-			<Row className=" p-4 mb-4 rounded-lg shadow">
+			<Row className=" p-4 mb-4 rounded_lg shadow bg-white">
 				<Col>
 					<h1>
-						{' '}
 						Section {index}
 						<Icon
 							name="trash"
@@ -19,21 +17,16 @@ function Section(props) {
 						/>
 					</h1>
 					{queslist.map((ques, i) => (
-						<>
-							{ques.type == 'text' && (
-								<TextInput ques={ques.ques} index={i + 1} />
-							)}
-							<br />
-							<Dropdown
-								placeholder="Select Question Type"
-								search
-								selection
-								clearable
-								options={QuestionTypes}
+						<div key={Math.random()}>
+							<Question
+								{...ques}
+								index={i + 1}
+								remove={() => props.removeQuestion(index - 1, i)}
+								modify={(target, value) =>
+									props.modifyQuestion(index - 1, i, target, value)
+								}
 							/>
-							<br />
-							<br />
-						</>
+						</div>
 					))}
 				</Col>
 				<Col xs={12}>

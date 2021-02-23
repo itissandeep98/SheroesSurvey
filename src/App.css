@@ -2,6 +2,16 @@
 	min-height: 100vh;
 }
 
+.App {
+	background-color: #f5f5f5;
+	min-height: 100vh;
+	color: #3c3c3c;
+	font-family: noto-sans;
+}
+
+.rounded_lg {
+	border-radius: 20px !important;
+}
 .vert_divider {
 	position: relative;
 	width: 1px;
