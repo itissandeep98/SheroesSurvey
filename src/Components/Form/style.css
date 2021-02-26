@@ -2,8 +2,13 @@
 	border-bottom: 4px solid #ff0000;
 }
 
+.form_desc {
+	transition: max-height 1s ease;
+	max-height: 500px;
+}
+
 .hidden_banner {
-	height: 50px;
+	max-height: 50px;
 }
 
 .hidden_banner:before {
@@ -15,15 +20,3 @@
 	top: 0;
 	background: linear-gradient(transparent 40px, white);
 }
-/* .img-wrap{
-	height: 50px;
-}
-.img-wrap:before {
-	content: '';
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	left: 0;
-	top: 0;
-	background: linear-gradient(transparent 40px, rgb(184, 35, 35));
-} */
