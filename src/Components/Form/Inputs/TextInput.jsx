@@ -8,7 +8,7 @@ function TextInput(props) {
 				<label>
 					Q{index}: {ques}
 				</label>
-				<Input fluid rounded placeholder="Type Your Answer Here" />
+				<Input fluid placeholder="Type Your Answer Here" />
 			</Form.Field>
 		</Form>
 	);

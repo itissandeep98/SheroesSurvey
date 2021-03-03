@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import Loading from './Loading';
 
 const Login = lazy(() => import('./Auth/Login'));
@@ -12,9 +12,10 @@ export default function Routing() {
 		<Suspense fallback={<Loading />}>
 			<TopHeader />
 			<Switch>
-				<Route exact path="/:id/admin" component={Admin} />
+				<Route exact path="/admin/:id" component={Admin} />
 				<Route exact path="/:id" component={Form} />
 				<Route exact path="/" component={Login} />
+				<Redirect to="/" />
 			</Switch>
 		</Suspense>
 	);

@@ -8,12 +8,7 @@ function NumberInput(props) {
 				<label>
 					Q{index}: {ques}
 				</label>
-				<Input
-					fluid
-					rounded
-					type="number"
-					placeholder="Type Your Answer Here"
-				/>
+				<Input fluid type="number" placeholder="Type Your Answer Here" />
 			</Form.Field>
 		</Form>
 	);

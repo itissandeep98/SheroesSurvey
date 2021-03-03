@@ -8,7 +8,7 @@ function ParagraphInput(props) {
 				<label>
 					Q{index}: {ques}
 				</label>
-				<TextArea fluid rows="10" placeholder="Type Your Answer Here" />
+				<TextArea rows="10" placeholder="Type Your Answer Here" />
 			</Form.Field>
 		</Form>
 	);

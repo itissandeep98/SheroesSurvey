@@ -1,18 +1,27 @@
-<div style="text-align: center">
-<h1>
-SHEROES 
-</h1>
-<h2>
-(Team #3)
-</h2>
+<p align= "center">
+
+<h1> SHEROES</h1>
+
+<h2>Team #3</h2>
 
 [Manavjeet Singh](https://github.com/underhood31), [Navneet Agarwal](https://github.com/navneet-ag), [Sandeep Kumar Singh](https://github.com/itissandeep98), [Sarthak Arora](https://github.com/sarthak144)
 
+<h2>
 Software Requirements Specification Document
+</h2>
 
 **Version:** (1.0) **Date:** (14/02/2021)
 
-</div>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/github/issues-raw/SDOS-Winter2021/Team_3_Sheroes??style=plastic"> 
+  <img src="https://img.shields.io/website?url=https://sdos-winter2021.github.io/Team_3_Sheroes/&style=plastic">
+  <img src="https://img.shields.io/github/languages/count/SDOS-Winter2021/Team_3_Sheroes?style=plastic">
+  <img src="https://img.shields.io/github/languages/code-size/SDOS-Winter2021/Team_3_Sheroes?style=plastic"> 
+  <img src="https://img.shields.io/github/workflow/status/SDOS-Winter2021/Team_3_Sheroes/gh%20pages%20publish/master?style=plastic"> 
+  <img src="https://img.shields.io/tokei/lines/github/SDOS-Winter2021/Team_3_Sheroes?style=plastic"> 
+</p>
 
 - [1. Introduction](#1-introduction)
   - [1.1 Purpose of this document](#11-purpose-of-this-document)

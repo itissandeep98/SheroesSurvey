@@ -12,6 +12,11 @@
 .rounded_lg {
 	border-radius: 20px !important;
 }
+
+.section_name {
+	border-bottom: 4px solid #ff0000;
+}
+
 .vert_divider {
 	position: relative;
 	width: 1px;
