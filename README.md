@@ -1,18 +1,17 @@
+<h1 align="center"> SHEROES</h1>
+
+<h2 align="center">Team #3</h2>
+
 <p align= "center">
-
-<h1> SHEROES</h1>
-
-<h2>Team #3</h2>
-
-[Manavjeet Singh](https://github.com/underhood31), [Navneet Agarwal](https://github.com/navneet-ag), [Sandeep Kumar Singh](https://github.com/itissandeep98), [Sarthak Arora](https://github.com/sarthak144)
-
-<h2>
-Software Requirements Specification Document
-</h2>
-
-**Version:** (1.0) **Date:** (14/02/2021)
-
+  <a href="https://github.com/underhood31">Manavjeet Singh</a>, 
+  <a href="https://github.com/navneet-ag">Navneet Agarwal</a>, 
+  <a href="https://github.com/itissandeep98">Sandeep Kumar Singh</a>,
+  <a href="https://github.com/sarthak144">Sarthak Arora</a>
 </p>
+
+<h2 align= "center">Software Requirements Specification Document</h2>
+
+<p align= "center"> <strong>Version:</strong> (1.0) <strong>Date:</strong> (14/02/2021) </p>
 
 <p align="center">
   <img src="https://img.shields.io/github/issues-raw/SDOS-Winter2021/Team_3_Sheroes??style=plastic"> 
