@@ -46,18 +46,19 @@ function Section(props) {
 
 			<Row className="p-4 mb-4 rounded_lg  bg-white">
 				<Col>
-					{queslist.map((ques, i) => (
-						<div key={Math.random()}>
-							<Question
-								{...ques}
-								index={i + 1}
-								remove={() => props.removeQuestion(index - 1, i)}
-								modify={(target, value) =>
-									props.modifyQuestion(index - 1, i, target, value)
-								}
-							/>
-						</div>
-					))}
+					{queslist &&
+						queslist.map((ques, i) => (
+							<div key={Math.random()}>
+								<Question
+									{...ques}
+									index={i + 1}
+									remove={() => props.removeQuestion(index - 1, i)}
+									modify={(target, value) =>
+										props.modifyQuestion(index - 1, i, target, value)
+									}
+								/>
+							</div>
+						))}
 				</Col>
 				<Col xs={12}>
 					<Button floated="right" onClick={props.addQuestion}>

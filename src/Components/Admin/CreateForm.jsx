@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Col, Container, Row } from 'reactstrap';
-import { Button, Icon, List, Tab } from 'semantic-ui-react';
+import { Button, Icon, List } from 'semantic-ui-react';
 import Section from './Section';
 import classNames from 'classnames';
 import './style.css';
@@ -11,10 +11,12 @@ function CreateForm() {
 
 	const addSection = () => {
 		setStructure([...structure, [{ type: 'text' }]]);
+		setCurr(structure.length);
 	};
 
 	const removeSection = index => {
 		setStructure([...structure.slice(0, index), ...structure.slice(index + 1)]);
+		setCurr(curr - 1);
 	};
 
 	const addQuestion = index => {
@@ -47,22 +49,6 @@ function CreateForm() {
 			...structure.slice(section + 1),
 		]);
 	};
-	const panes = structure.map((section, i) => ({
-		menuItem: `Section ${i + 1}`,
-		render: () => (
-			<Tab.Pane attached={false}>
-				<Section
-					key={Math.random()}
-					queslist={section}
-					index={i + 1}
-					remove={() => removeSection(i)}
-					addQuestion={() => addQuestion(i)}
-					removeQuestion={removeQuestion}
-					modifyQuestion={modifyQuestion}
-				/>
-			</Tab.Pane>
-		),
-	}));
 
 	return (
 		<Container className="mt-3" fluid>
@@ -75,28 +61,31 @@ function CreateForm() {
 					</Row>
 
 					<Row className="mt-4">
-						<Col xs={2} className="">
-							<List>
-								{structure.map((section, i) => (
-									<List.Item
-										as="a"
-										key={i}
-										onClick={() => setCurr(i)}
-										className={classNames(
-											'text-dark d-block text-center mb-2',
-											{
-												'border-bottom bg-white text-danger rounded_lg p-2':
-													curr === i,
-											}
-										)}>
-										Section {i + 1}
-									</List.Item>
-								))}
-							</List>
-							<Button onClick={addSection} className="mb-5" size="tiny">
-								<Icon name="plus" />
-								Add Section
-							</Button>
+						<Col xs={2}>
+							<div className="sticky-top text-center" style={{ zIndex: 0 }}>
+								<br />
+								<Button onClick={addSection} size="mini">
+									<Icon name="plus" />
+									Add Section
+								</Button>
+								<List>
+									{structure.map((section, i) => (
+										<List.Item
+											as="a"
+											key={i}
+											onClick={() => setCurr(i)}
+											className={classNames(
+												'text-dark d-block text-center mb-2',
+												{
+													'border-bottom bg-white text-danger rounded_lg p-2':
+														curr === i,
+												}
+											)}>
+											Section {i + 1}
+										</List.Item>
+									))}
+								</List>
+							</div>
 						</Col>
 
 						<Col>
