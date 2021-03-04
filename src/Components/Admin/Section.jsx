@@ -1,24 +1,40 @@
 import { Col, Container, Row } from 'reactstrap';
-import { Button, Form, Icon, Input, TextArea } from 'semantic-ui-react';
+import {
+	Button,
+	Dropdown,
+	Form,
+	Icon,
+	Input,
+	TextArea,
+} from 'semantic-ui-react';
 import Question from './Question';
 
 function Section(props) {
 	const { queslist, index } = props;
 	return (
-		<Container className=" p-4 mb-4 rounded_lg shadow bg-white">
-			<Row>
+		<Container className="  ">
+			<Row className="p-4 mb-4 rounded_lg  bg-white">
 				<Col>
 					<h1 className="section_name d-inline-block pr-4">Section {index}</h1>
-					<Icon
-						name="trash"
-						size="big"
-						className="text-danger float-right"
-						onClick={props.remove}
-					/>
+					<Dropdown
+						className="float-right"
+						item
+						direction="left"
+						icon={<Icon name="ellipsis vertical" size="large" />}
+						simple>
+						<Dropdown.Menu>
+							<Dropdown.Item onClick={props.remove}>
+								<Icon name="trash" />
+								Delete
+							</Dropdown.Item>
+							<Dropdown.Item disabled>
+								<Icon name="copy outline" />
+								Duplicate
+							</Dropdown.Item>
+						</Dropdown.Menu>
+					</Dropdown>
 				</Col>
-			</Row>
-			<Row>
-				<Col>
+				<Col xs={12}>
 					<Form>
 						<Form.Field>
 							<label>Description</label>
@@ -27,10 +43,9 @@ function Section(props) {
 					</Form>
 				</Col>
 			</Row>
-			<Row>
+
+			<Row className="p-4 mb-4 rounded_lg  bg-white">
 				<Col>
-					<br />
-					<hr />
 					{queslist.map((ques, i) => (
 						<div key={Math.random()}>
 							<Question
