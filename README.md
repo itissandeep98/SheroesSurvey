@@ -3,8 +3,8 @@
 <h2 align="center">Team #3</h2>
 
 <p align= "center">
-  <a href="https://github.com/underhood31">Manavjeet Singh</a>, 
-  <a href="https://github.com/navneet-ag">Navneet Agarwal</a>, 
+  <a href="https://github.com/underhood31">Manavjeet Singh</a>,
+  <a href="https://github.com/navneet-ag">Navneet Agarwal</a>,
   <a href="https://github.com/itissandeep98">Sandeep Kumar Singh</a>,
   <a href="https://github.com/sarthak144">Sarthak Arora</a>
 </p>
@@ -14,12 +14,13 @@
 <p align= "center"> <strong>Version:</strong> (1.0) <strong>Date:</strong> (14/02/2021) </p>
 
 <p align="center">
-  <img src="https://img.shields.io/github/issues-raw/SDOS-Winter2021/Team_3_Sheroes??style=plastic"> 
-  <img src="https://img.shields.io/website?url=https://sdos-winter2021.github.io/Team_3_Sheroes/&style=plastic">
-  <img src="https://img.shields.io/github/languages/count/SDOS-Winter2021/Team_3_Sheroes?style=plastic">
-  <img src="https://img.shields.io/github/languages/code-size/SDOS-Winter2021/Team_3_Sheroes?style=plastic"> 
-  <img src="https://img.shields.io/github/workflow/status/SDOS-Winter2021/Team_3_Sheroes/gh%20pages%20publish/master?style=plastic"> 
-  <img src="https://img.shields.io/tokei/lines/github/SDOS-Winter2021/Team_3_Sheroes?style=plastic"> 
+  <img src="https://img.shields.io/github/issues-raw/SDOS-Winter2021/Team_3_Sheroes?style=for-the-badge">
+  <img src="https://img.shields.io/website?url=https://sdos-winter2021.github.io/Team_3_Sheroes/&style=for-the-badge">
+   <img src="https://img.shields.io/github/workflow/status/SDOS-Winter2021/Team_3_Sheroes/gh%20pages%20publish?style=for-the-badge">
+  <img src="https://img.shields.io/github/languages/count/SDOS-Winter2021/Team_3_Sheroes?style=for-the-badge">
+  <img src="https://img.shields.io/github/languages/code-size/SDOS-Winter2021/Team_3_Sheroes?style=for-the-badge">
+
+  <img src="https://img.shields.io/tokei/lines/github/SDOS-Winter2021/Team_3_Sheroes?style=for-the-badge">
 </p>
 
 - [1. Introduction](#1-introduction)
@@ -40,8 +41,8 @@
   - [4.2 Meeting](#42-meeting)
   - [4.3 Meeting](#43-meeting)
   - [4.4 SRS Review Meetings](#44-srs-review-meetings)
-  - [Briefly describe the method of review used:](#briefly-describe-the-method-of-review-used)
-  - [List of critical issues identified in the review:](#list-of-critical-issues-identified-in-the-review)
+  - [Briefly describe the method of review used](#briefly-describe-the-method-of-review-used)
+  - [List of critical issues identified in the review](#list-of-critical-issues-identified-in-the-review)
 
 ## 1. Introduction
 
@@ -56,19 +57,19 @@ The main aim is to develop a new form platform for conducting surveys and online
 ### 1.3 References
 
 ● "9 Types of Design Constraint," published Jun '17 on Simplicable.
-https://simplicable.com/new/design-constraints.
+<https://simplicable.com/new/design-constraints>.
 
 ● "AcceptanceCriteria: Purposes, Formats, and best practices," published July'
 on AltexSoft.
-https://www.altexsoft.com/blog/business/acceptance-criteria-purposes-formats-an
+<https://www.altexsoft.com/blog/business/acceptance-criteria-purposes-formats-an>
 d-best-practices/
 
 ● "How to elicit performance requirements," published Jan '21 on
 SearchSoftwareQuality
-https://searchsoftwarequality.techtarget.com/answer/How-to-elicit-performance-requirements
+<https://searchsoftwarequality.techtarget.com/answer/How-to-elicit-performance-requirements>
 
 ● "Index of /~chengb/RE-491/Papers." published Nov' 1 1
-https://www.cse.msu.edu/~chengb/RE-491/Papers/~$SExample-webapp.doc
+<https://www.cse.msu.edu/~chengb/RE-491/Papers/~$SExample-webapp.doc>
 (accessed Feb. 07, 2021).
 
 ### 1.4 Initial Architecture
@@ -319,13 +320,13 @@ _Attendees, Date and Duration:_ Meetings 2 and 3 were the review meetings
 
 Size of the SRS being reviewed (in pages): 7
 
-### Briefly describe the method of review used:
+### Briefly describe the method of review used
 
 SRS was reviewed in a modular manner. The requirements document was shared with the sponsors before the second meeting to share their thoughts by commenting on the document. The doc was based upon the points mentioned in the previously shared problem statement by the sponsors.
 In the second meeting, the team presented their understanding of the requirements using the pre-shared doc. The sponsors cleared any misunderstanding.
 In the third meeting remaining doubts regarding the requirements were put forward from the team's side. The sponsors cleared them.
 
-### List of critical issues identified in the review:
+### List of critical issues identified in the review
 
 ● Feature prioritisation was missing in the initial iteration. The basic functionality (like the creation of form, accepting responses etc.) features were given a higher priority. Other features which will act as accessories to the basic functionality (like email notifications ) were given lower priority.
 

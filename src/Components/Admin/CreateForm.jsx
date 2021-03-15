@@ -39,6 +39,13 @@ function CreateForm() {
 		}
 	};
 
+	const reOrderQuestion = (section, list) => {
+		console.log(list);
+		const temp = [...structure];
+		temp[section] = list;
+		setStructure(temp);
+	};
+
 	const modifyQuestion = (section, index, target, value) => {
 		// console.log(target,value);
 		const temp = structure[section];
@@ -61,7 +68,7 @@ function CreateForm() {
 					</Row>
 
 					<Row className="mt-4">
-						<Col xs={2}>
+						<Col>
 							<div className="sticky-top text-center" style={{ zIndex: 0 }}>
 								<br />
 								<Button onClick={addSection} size="mini">
@@ -74,32 +81,31 @@ function CreateForm() {
 											as="a"
 											key={i}
 											onClick={() => setCurr(i)}
-											className={classNames(
-												'text-dark d-block text-center mb-2',
-												{
-													'border-bottom bg-white text-danger rounded_lg p-2':
-														curr === i,
-												}
-											)}>
+											className={classNames('text-center mb-2', {
+												'text-danger': curr === i,
+												'text-dark ': curr !== i,
+											})}>
 											Section {i + 1}
 										</List.Item>
 									))}
 								</List>
 							</div>
 						</Col>
-
-						<Col>
-							{curr > -1 && (
+						{curr > -1 && (
+							<Col xs={10}>
 								<Section
 									queslist={structure[curr]}
 									index={curr + 1}
 									remove={() => removeSection(curr)}
 									addQuestion={() => addQuestion(curr)}
-									removeQuestion={removeQuestion}
-									modifyQuestion={modifyQuestion}
+									removeQuestion={q => removeQuestion(curr, q)}
+									modifyQuestion={(q, target, value) =>
+										modifyQuestion(curr, q, target, value)
+									}
+									reOrderQuestion={list => reOrderQuestion(curr, list)}
 								/>
-							)}
-						</Col>
+							</Col>
+						)}
 					</Row>
 				</Col>
 			</Row>
