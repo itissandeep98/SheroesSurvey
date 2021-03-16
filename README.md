@@ -13,7 +13,7 @@
 
 <p align= "center"> <strong>Version:</strong> (1.0) <strong>Date:</strong> (14/02/2021) </p>
 
-<p align="center">
+<!-- <p align="center">
   <img src="https://img.shields.io/github/issues-raw/SDOS-Winter2021/Team_3_Sheroes?style=for-the-badge">
   <img src="https://img.shields.io/website?url=https://sdos-winter2021.github.io/Team_3_Sheroes/&style=for-the-badge">
    <img src="https://img.shields.io/github/workflow/status/SDOS-Winter2021/Team_3_Sheroes/gh%20pages%20publish?style=for-the-badge">
@@ -21,7 +21,7 @@
   <img src="https://img.shields.io/github/languages/code-size/SDOS-Winter2021/Team_3_Sheroes?style=for-the-badge">
 
   <img src="https://img.shields.io/tokei/lines/github/SDOS-Winter2021/Team_3_Sheroes?style=for-the-badge">
-</p>
+</p> -->
 
 - [1. Introduction](#1-introduction)
   - [1.1 Purpose of this document](#11-purpose-of-this-document)
