@@ -6,6 +6,7 @@ class FormSerializers(serializers.ModelSerializer):
         model = Forms
         fields = '__all__'
 
+
 class UserSerializers(serializers.ModelSerializer):
     class Meta:
         model = Users
