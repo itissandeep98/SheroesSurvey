@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
-import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -21,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'c&e!-d6)57f3pr_tmlqgh4ji4j%yq7mtrr^cq5@cl+q%soxwr8'
+SECRET_KEY = 'qm*4l+^g41a45@-5)cub_=zt_jx=+o!)6*990$ta1sf1w4%fob'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -38,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework'
+    'main'
 ]
 
 MIDDLEWARE = [
@@ -77,9 +78,9 @@ WSGI_APPLICATION = 'sheroes_forms.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'WBwDzFErO7',
-        'USER': 'WBwDzFErO7',
-        'PASSWORD' : 'OCkHAle559',
+        'NAME': 't2ODZIpFcq',
+        'USER': 't2ODZIpFcq',
+        'PASSWORD' : 'omP9iiyKrE',
         'HOST' : 'remotemysql.com',
         'PORT' : '3306',
     }
@@ -110,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = "Asia/Kolkata"
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
@@ -123,4 +124,3 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, "static/")

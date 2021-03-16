@@ -1,0 +1,20 @@
+URL:
+https://sheroes-forms.herokuapp.com/
+
+Database:
+Username: t2ODZIpFcq
+
+Database name: t2ODZIpFcq
+
+Password: omP9iiyKrE
+
+Server: remotemysql.com
+
+Port: 3306
+
+
+
+Run locally:
+gunicorn sheroes_forms.wsgi
+OR after setting up the procfile: 
+heroku local

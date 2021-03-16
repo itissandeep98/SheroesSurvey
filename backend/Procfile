@@ -1,1 +1,1 @@
-web: gunicorn sheroes_forms.wsgi --log-file -
+web: gunicorn sheroes_forms.sheroes_forms.wsgi --log-file -
