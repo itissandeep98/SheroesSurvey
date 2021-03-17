@@ -24,3 +24,7 @@ yarn-error.log*
 .vscode
 
 __pycache__
+
+
+/backend/Pipfile
+/backend/Pipfile.lock
