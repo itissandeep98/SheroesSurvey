@@ -7,12 +7,14 @@ import {
 	Input,
 	TextArea,
 } from 'semantic-ui-react';
+import { ReactSortable } from 'react-sortablejs';
 import Question from './Question';
 
 function Section(props) {
 	const { queslist, index } = props;
+
 	return (
-		<Container className="  ">
+		<Container>
 			<Row className="p-4 mb-4 rounded_lg  bg-white">
 				<Col>
 					<h1 className="section_name d-inline-block pr-4">Section {index}</h1>
@@ -46,19 +48,27 @@ function Section(props) {
 
 			<Row className="p-4 mb-4 rounded_lg  bg-white">
 				<Col>
+					{/* <ReactSortable
+						list={queslist}
+						setList={props.reOrderQuestion}
+						animation={200}
+						delayOnTouchStart={true}
+						delay={20}
+					> */}
 					{queslist &&
 						queslist.map((ques, i) => (
 							<div key={Math.random()}>
 								<Question
 									{...ques}
 									index={i + 1}
-									remove={() => props.removeQuestion(index - 1, i)}
+									remove={() => props.removeQuestion(i)}
 									modify={(target, value) =>
-										props.modifyQuestion(index - 1, i, target, value)
+										props.modifyQuestion(i, target, value)
 									}
 								/>
 							</div>
 						))}
+					{/* </ReactSortable> */}
 				</Col>
 				<Col xs={12}>
 					<Button floated="right" onClick={props.addQuestion}>

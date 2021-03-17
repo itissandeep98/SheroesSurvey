@@ -2,15 +2,17 @@ URL:
 https://sheroes-forms.herokuapp.com/
 
 Database:
-Username: WBwDzFErO7
+Username: t2ODZIpFcq
 
-Database name: WBwDzFErO7
+Database name: t2ODZIpFcq
 
-Password: OCkHAle559
+Password: omP9iiyKrE
 
 Server: remotemysql.com
 
 Port: 3306
+
+
 
 Run locally:
 gunicorn sheroes_forms.wsgi
