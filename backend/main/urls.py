@@ -1,10 +1,10 @@
-from rest_framework import routers
-from .api import FormsViewSet, UsersViewSet
+from rest_framework.routers import DefaultRouter
+from .views import (FormsViewSet, UsersViewSet)
 from django.urls import path, include
 
-router = routers.DefaultRouter()
-router.register('api/forms/', FormsViewSet, 'Forms')
-router.register('api/users', UsersViewSet, 'Users')
-router.register('api/', UsersViewSet, 'Forms')
+router = DefaultRouter()
+router.register(r'api/forms', FormsViewSet)
+router.register(r'api/users', UsersViewSet)
+router.register(r'api', UsersViewSet)
 
 urlpatterns = [path("", include(router.urls)), ]
