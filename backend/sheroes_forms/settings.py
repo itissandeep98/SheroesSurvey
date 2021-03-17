@@ -23,10 +23,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'a5nczn17h#6@g@psrt3argdqi22$%kwk4@2$cvy=4_099&0vpr'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ["sheroes-form.herokuapp.com","127.0.0.1","0.0.0.0"]
-
+# ALLOWED_HOSTS = ["sheroes-form.herokuapp.com","127.0.0.1","0.0.0.0"]
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -112,7 +112,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
