@@ -67,8 +67,8 @@ class Sections(models.Model):
     #update in form_id
     # deete.cascade option
     randomize_toggle = models.BooleanField(null=False)
-    created_on = models.DateTimeField(auto_now_add = False, null= False ) 
-    updated_on = models.DateTimeField(auto_now_add = True, null= False )
+    created_on = models.DateTimeField(auto_now = False, null= False ) 
+    updated_on = models.DateTimeField(auto_now = True, null= False )
     created_by =  models.ForeignKey(Users,on_delete=models.CASCADE,related_name = "section_created_by") #edit
     updated_by =  models.ForeignKey(Users,on_delete=models.CASCADE,related_name = "section_updated_by") #edit
 
