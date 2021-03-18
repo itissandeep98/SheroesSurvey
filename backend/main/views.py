@@ -1,8 +1,8 @@
-from main.models import Forms, Users, Sections
+from main.models import Forms, Users, Sections, Questions, Options, ShortPara
 from rest_framework import viewsets, permissions, status
 from rest_framework.decorators import action
 from rest_framework.decorators import api_view
-from .serializers import FormSerializers, UserSerializers, SectionSerializers
+from .serializers import FormSerializers, UserSerializers, SectionSerializers, QuestionSerializers, OptionsSerializers, ShortParaSerializers
 from rest_framework.response import Response
 
 
@@ -17,10 +17,11 @@ class FormsViewSet(viewsets.ModelViewSet):
     def update_section_sequence(self, request, pk=None):
         """
         Format:
+            url: https://sheroes-form.herokuapp.com/forms/<form-id>/update_section_sequence/
             url: http://127.0.0.1:8000/forms/<form-id>/update_section_sequence/
             {
                 "updated_by": 4,
-                "section_sequence" : [1,2]
+                "section_sequence" : [1,3,2]
             }
         """
         try:
@@ -58,6 +59,7 @@ class SectionsViewSet(viewsets.ModelViewSet):
     def update_question_sequence(self, request, pk=None):
         """
         Format:
+            url: https://sheroes-form.herokuapp.com/forms/<section-id>/update_question_sequence/
             url: http://127.0.0.1:8000/sections/<section-id>/update_question_sequence/
             {
                 "updated_by": 4,
@@ -79,3 +81,25 @@ class SectionsViewSet(viewsets.ModelViewSet):
 
         # Teacher.objects.filter(pk=pk).update(voting=F('voting') + 1)
         return Response("Update Accepted", status=status.HTTP_200_OK)
+
+class QuestionsViewSet(viewsets.ModelViewSet):
+    queryset = Users.objects.all()
+    permission_classes = [
+        permissions.AllowAny
+    ]
+    serializer_class = UserSerializers
+
+
+class ShortParaViewSet(viewsets.ModelViewSet):
+    queryset = Users.objects.all()
+    permission_classes = [
+        permissions.AllowAny
+    ]
+    serializer_class = ShortParaSerializers
+
+class OptionsViewSet(viewsets.ModelViewSet):
+    queryset = Users.objects.all()
+    permission_classes = [
+        permissions.AllowAny
+    ]
+    serializer_class = OptionsSerializers

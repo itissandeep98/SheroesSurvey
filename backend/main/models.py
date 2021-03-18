@@ -93,7 +93,7 @@ class Questions(models.Model):
     quiz_toggle = models.BooleanField(null=False, default=False)
     correct_score = models.IntegerField(null=True, default=0)
     incorrect_score = models.IntegerField(null=True, default=0)
-    title = models.CharField(max_length=255, null=False)
+    # title = models.CharField(max_length=255, null=False)
     created_on = models.DateTimeField(null=False)
     updated_on = models.DateTimeField(auto_now=True, null=False) #update
     created_by =  models.ForeignKey(Users,on_delete=models.CASCADE,related_name = "question_created_by") #edit
