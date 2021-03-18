@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from main.models import Forms, Users
+from main.models import Forms, Users, Sections
 
 class FormSerializers(serializers.ModelSerializer):
     class Meta:
@@ -10,4 +10,9 @@ class FormSerializers(serializers.ModelSerializer):
 class UserSerializers(serializers.ModelSerializer):
     class Meta:
         model = Users
+        fields = '__all__'
+
+class SectionSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Sections
         fields = '__all__'

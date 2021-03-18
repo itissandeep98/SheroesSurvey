@@ -59,7 +59,7 @@ class Forms(models.Model):
 #     created_by =  models.ForeignKey(User)
 #     updated_by =  models.ForeignKey(User)
 
-class Section(models.Model):
+class Sections(models.Model):
     heading = models.TextField(max_length=50,null=False)
     description = models.TextField(max_length=50,null=False)
     question_sequence = models.JSONField()
@@ -79,7 +79,7 @@ class Questions(models.Model):
         LONG = 'LP', 'Long Para'
         FILE = 'FU', 'File Upload'
     statement = models.TextField(null=False)
-    section_id = models.ForeignKey(Section,on_delete=models.CASCADE) #edit
+    section_id = models.ForeignKey(Sections,on_delete=models.CASCADE) #edit
     qtype = models.CharField(
         max_length=2, 
         choices=QuestionType.choices,
