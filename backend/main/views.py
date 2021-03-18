@@ -1,8 +1,8 @@
-from main.models import Forms, Users, Sections, Questions, Options, ShortPara
+from main.models import Forms, Users, Sections, Questions, Options, ShortPara, Responses
 from rest_framework import viewsets, permissions, status
 from rest_framework.decorators import action
 from rest_framework.decorators import api_view
-from .serializers import FormSerializers, UserSerializers, SectionSerializers, QuestionSerializers, OptionsSerializers, ShortParaSerializers
+from .serializers import FormSerializers, UserSerializers, SectionSerializers, QuestionSerializers, OptionsSerializers, ShortParaSerializers, ResponsesSerializers
 from rest_framework.response import Response
 
 
@@ -83,8 +83,8 @@ class UsersViewSet(viewsets.ModelViewSet):
     def update_fields(self, request, pk=None):
         """
         Format:
-            url: https://sheroes-form.herokuapp.com/forms/<user-id>/update_fields/
-            url: http://127.0.0.1:8000/forms/<user-id>/update_fields/
+            url: https://sheroes-form.herokuapp.com/users/<user-id>/update_fields/
+            url: http://127.0.0.1:8000/users/<user-id>/update_fields/
             {
                 "fields": ["first_name" , "partner_id" , "user_type"]
                 "first_name": "Bond",
@@ -117,8 +117,8 @@ class SectionsViewSet(viewsets.ModelViewSet):
     def update_fields(self, request, pk=None):
         """
         Format:
-            url: https://sheroes-form.herokuapp.com/forms/<section-id>/update_fields/
-            url: http://127.0.0.1:8000/forms/<form-id>/section_fields/
+            url: https://sheroes-form.herokuapp.com/sections/<section-id>/update_fields/
+            url: http://127.0.0.1:8000/sections/<section-id>/section_fields/
             {
                 "fields": ["updated_by" , "question_sequence" , "description"]
                 "updated_by": 4,
@@ -158,8 +158,8 @@ class QuestionsViewSet(viewsets.ModelViewSet):
     def update_fields(self, request, pk=None):
         """
         Format:
-            url: https://sheroes-form.herokuapp.com/forms/<question-id>/update_fields/
-            url: http://127.0.0.1:8000/forms/<question-id>/section_fields/
+            url: https://sheroes-form.herokuapp.com/questions/<question-id>/update_fields/
+            url: http://127.0.0.1:8000/questions/<question-id>/section_fields/
             {
                 "fields": ["updated_by" , "statement", "section_id"]
                 "updated_by": 4,
@@ -199,8 +199,8 @@ class ShortParaViewSet(viewsets.ModelViewSet):
     def update_fields(self, request, pk=None):
         """
         Format:
-            url: https://sheroes-form.herokuapp.com/forms/<shortpara-id>/update_fields/
-            url: http://127.0.0.1:8000/forms/<shortpara-id>/section_fields/
+            url: https://sheroes-form.herokuapp.com/shortparas/<shortpara-id>/update_fields/
+            url: http://127.0.0.1:8000/shortparas/<shortpara-id>/section_fields/
             {
                 "fields": ["limit_length" , "datatype"]
                 "limit_length": 4,
@@ -235,8 +235,8 @@ class OptionsViewSet(viewsets.ModelViewSet):
     def update_fields(self, request, pk=None):
         """
         Format:
-            url: https://sheroes-form.herokuapp.com/forms/<option-id>/update_fields/
-            url: http://127.0.0.1:8000/forms/<option-id>/section_fields/
+            url: https://sheroes-form.herokuapp.com/options/<option-id>/update_fields/
+            url: http://127.0.0.1:8000/options/<option-id>/section_fields/
             {
                 "fields": ["content" , "image_toggle", "correct_answer]
                 "content": "Yo, this ma option",
@@ -255,6 +255,58 @@ class OptionsViewSet(viewsets.ModelViewSet):
                 else:
                     setattr(option_instance,field,request.data[field])
             option_instance.save()
+        except:
+            return Response("Invalid Request", status=status.HTTP_400_BAD_REQUEST)
+
+        return Response("Update Accepted", status=status.HTTP_200_OK)
+
+
+class ResponsesViewSet(viewsets.ModelViewSet):
+    queryset = Options.objects.all()
+    permission_classes = [
+        permissions.AllowAny
+    ]
+    serializer_class = ResponsesSerializers
+
+    @action(methods=['patch','post'], detail=True)
+    def update_fields(self, request, pk=None):
+        """
+        Format:
+            url: https://sheroes-form.herokuapp.com/responses/<response-id>/update_fields/
+            url: http://127.0.0.1:8000/responses/<response-id>/section_fields/
+            {
+                "fields": ["is_deleted" , "response"]
+                "is_deleted": false,
+                "response" : {"MC" : [<optionid_1>, <optionid_2>]}
+            }
+
+            OR
+
+            {
+                "fields": ["is_deleted" , "response"]
+                "is_deleted": false,
+                "response" : {"SP" : <shortparaid_1>}
+            }
+
+            OR
+
+            {
+                "fields": ["is_deleted" , "response"]
+                "is_deleted": false,
+                "response" : {"LP" : "This is a sample long para response" }
+            }
+        """
+        try:
+            if(pk == None):
+                raise Exception()
+            response_id = pk
+            response_instance = Responses.objects.get(id=response_id)
+            for field in request.data["fields"]:
+                if field=="question_id" or field=="user_id" or field=="form_id" or field=="created_on":   #Changing question id after creating is not sensible
+                    pass
+                else:
+                    setattr(response_instance,field,request.data[field])
+            response_instance.save()
         except:
             return Response("Invalid Request", status=status.HTTP_400_BAD_REQUEST)
 
