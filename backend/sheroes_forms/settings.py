@@ -132,8 +132,9 @@ STATIC_URL = '/static/'
 
 django_heroku.settings(locals())
 
-CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = (
     'http://127.0.0.1:3000',
-    'https://sheroes-front.herokuapp.com/'
+    'http://127.0.0.1:8000',
+    'https://sheroes-front.herokuapp.com'
 )
