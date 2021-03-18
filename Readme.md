@@ -17,7 +17,7 @@
 - npm run start
 ```
 
-# Backend: <https://sheroes-forms.herokuapp.com/>
+# Backend: <https://sheroes-form.herokuapp.com/>
 
 ```
 - cd backend/
