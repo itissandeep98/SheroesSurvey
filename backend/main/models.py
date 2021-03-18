@@ -120,7 +120,7 @@ class Responses(models.Model):
     updated_on = models.DateTimeField(auto_now_add = True, null= False )
     is_deleted = models.BooleanField(null=False)
     question_id = models.ForeignKey(Questions,on_delete = models.CASCADE)     
-    response = models.TextField(max_length=500)
+    response = models.JSONField()
 
 class ShortPara(models.Model):
     class DataType(models.TextChoices):

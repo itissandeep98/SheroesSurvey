@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from main.models import Forms, Users, Sections, Questions, Options, ShortPara
+from main.models import Forms, Users, Sections, Questions, Options, ShortPara, Responses
 
 class FormSerializers(serializers.ModelSerializer):
     class Meta:
@@ -30,4 +30,9 @@ class ShortParaSerializers(serializers.ModelSerializer):
 class OptionsSerializers(serializers.ModelSerializer):
     class Meta:
         model = Options
+        fields = '__all__'
+
+class ResponsesSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Responses
         fields = '__all__'
