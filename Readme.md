@@ -12,14 +12,13 @@
 
 ## Steps to browse the website
 
-- Visit the website here. The current version only has one user with editor rights so you can view all the forms created till now.
+- Visit the website [here](https://sheroes-front.herokuapp.com/). The current version only has one user with editor rights so you can view all the forms created till now.
 - Click on login without entering any credentials.
 - Now, you can view all the previous forms and have the option to create new form.
 - Clicking on any of the old forms or clicking on the option to create a new form lands the user on the form editing page.
 - On the form editing page, you have the following options:
 	- Add banner to the form. 
 	- Change form name and description.
-	- View responses to the form.
 	- Add sections.
 	- Add and delete questions to different sections.
 <br> </br>
