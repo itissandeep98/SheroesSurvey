@@ -6,18 +6,18 @@ import classNames from 'classnames';
 import './style.css';
 import Banner from './Banner';
 import { useDispatch, useSelector } from 'react-redux';
-import { formFetch } from '../../Store/ActionCreators/form';
+import { formFetch, formUpdate } from '../../Store/ActionCreators/form';
 import { sectionCreate } from '../../Store/ActionCreators/section';
 
 function CreateForm(props) {
 	const [details, setDetails] = useState('');
 	const [structure, setStructure] = useState([]);
 	const dispatch = useDispatch();
-	const form = useSelector(state => state.form);
+
 	useEffect(() => {
 		const { id } = props?.match?.params;
 		dispatch(formFetch(id)).then(res => {
-			setStructure(res.section_sequence);
+			setStructure(res?.section_sequence);
 			setDetails(res);
 		});
 	}, [dispatch]);
@@ -46,6 +46,11 @@ function CreateForm(props) {
 		setCurr(curr - 1);
 	};
 
+	const updateForm = data => {
+		const { id } = props?.match?.params;
+		dispatch(formUpdate({id,data}));
+	};
+
 	return (
 		<Container className="mt-3" fluid>
 			<Row className="d-flex justify-content-center">
@@ -56,7 +61,7 @@ function CreateForm(props) {
 						</Col>
 					</Row>
 					<Row>
-						<Banner {...details} />
+						<Banner {...details} update={updateForm} />
 					</Row>
 
 					<Row className="mt-4">

@@ -1,10 +1,22 @@
 import { useState } from 'react';
 import { Col, Container, Input, Label, Row } from 'reactstrap';
-import { Form, Icon, Image, TextArea } from 'semantic-ui-react';
+import { Button, Form, Icon, Image, TextArea } from 'semantic-ui-react';
 
 function Banner(props) {
 	const { heading, description, banner_path } = props;
-	const [bannerimg, setBannerimg] = useState('');
+	const [bannerimg, setBannerimg] = useState(props.banner_path);
+
+	const [head, setheading] = useState(heading);
+	const [desc, setdescription] = useState(description);
+
+	const handleUpdate = () => {
+		const data = {
+			heading: head,
+			description: desc,
+		};
+		props.update(data);
+	};
+
 	const handleImage = e => {
 		console.log(e.target.files);
 		const file = e.target.files[0];
@@ -33,7 +45,7 @@ function Banner(props) {
 							<Image src={bannerimg} />
 						) : (
 							<>
-							<br/>
+								<br />
 								<Icon name="add" /> Add Banner
 							</>
 						)}
@@ -43,11 +55,23 @@ function Banner(props) {
 				<Col xs={12} className="my-3">
 					<Form>
 						<Form.Field>
-							<Input placeholder="Form title" defaultValue={heading}/>
+							<Input
+								placeholder="Form title"
+								defaultValue={heading}
+								onChange={e => setheading(e.target.value)}
+							/>
 						</Form.Field>
 						<Form.Field>
-							<TextArea placeholder="Form Description" defaultValue={description} />
+							<TextArea
+								placeholder="Form Description"
+								defaultValue={description}
+								onChange={e => setdescription(e.target.value)}
+							/>
 						</Form.Field>
+						<Button className="float-right" onClick={handleUpdate}>
+							<Icon name="check" />
+							Update
+						</Button>
 					</Form>
 				</Col>
 			</Row>
