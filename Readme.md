@@ -27,3 +27,7 @@
 - python manage.py migrate
 - python manage.py runserver
 ```
+
+# API's workspace on Postman 
+
+<https://app.getpostman.com/join-team?invite_code=9e4cd864749b9f9dec30f01425d3066b&ws=883ef5e5-878f-4249-8a3b-0a5ef3c4b5a3>
