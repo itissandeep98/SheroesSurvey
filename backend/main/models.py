@@ -60,8 +60,8 @@ class Forms(models.Model):
 #     updated_by =  models.ForeignKey(User)
 
 class Sections(models.Model):
-    heading = models.TextField(max_length=50,null=False)
-    description = models.TextField(max_length=50,null=False)
+    heading = models.TextField(max_length=50,null=True)
+    description = models.TextField(max_length=50,null=True)
     question_sequence = models.JSONField()
     form_id = models.ForeignKey(Forms,on_delete=models.CASCADE) #edit
     #update in form_id
