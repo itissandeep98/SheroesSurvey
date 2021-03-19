@@ -29,7 +29,7 @@
 	- View responses to the form.
 	- Add sections.
 	- Add and delete questions to different sections.
-<br>
+<br> </br>
 ![sheroesfront](https://user-images.githubusercontent.com/43843585/111822534-e5ea9880-8909-11eb-967c-ab8ad958a3b8.gif)
 
 # Backend: <https://sheroes-form.herokuapp.com/>
