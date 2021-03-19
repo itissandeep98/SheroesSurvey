@@ -41,7 +41,7 @@ function Admin(props) {
 					<Col xs={3} className="my-2 h-100">
 						<NavLink to={`/admin/${card.id}`}>
 							<Card>
-								<Card.Content header={`Form ${card.id}`} />
+								<Card.Content header={`${card.heading}`} />
 								<Card.Content className="text-justify text-dark">
 									{card.description}
 								</Card.Content>
