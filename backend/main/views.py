@@ -113,6 +113,7 @@ class SectionsViewSet(viewsets.ModelViewSet):
     ]
     serializer_class = SectionSerializers
 
+
     @action(methods=['patch','post'], detail=True)
     def update_fields(self, request, pk=None):
         """
@@ -152,7 +153,7 @@ class QuestionsViewSet(viewsets.ModelViewSet):
     permission_classes = [
         permissions.AllowAny
     ]
-    serializer_class = UserSerializers
+    serializer_class = QuestionSerializers
 
     @action(methods=['patch','post'], detail=True)
     def update_fields(self, request, pk=None):

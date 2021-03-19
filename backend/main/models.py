@@ -71,6 +71,11 @@ class Sections(models.Model):
     updated_on = models.DateTimeField(auto_now=True, null=False) #update
     created_by =  models.ForeignKey(Users,on_delete=models.CASCADE,related_name = "section_created_by") #edit
     updated_by =  models.ForeignKey(Users,on_delete=models.CASCADE,related_name = "section_updated_by") #edit
+    def save(self,*args,**kwargs):
+        new_section = super().save(*args, **kwargs)
+        current_form = self.form_id
+        current_form.section_sequence.append(self.id)
+        current_form.save()
 
 class Questions(models.Model):
     class QuestionType(models.TextChoices): #edit
@@ -98,6 +103,11 @@ class Questions(models.Model):
     updated_on = models.DateTimeField(auto_now=True, null=False) #update
     created_by =  models.ForeignKey(Users,on_delete=models.CASCADE,related_name = "question_created_by") #edit
     updated_by =  models.ForeignKey(Users,on_delete=models.CASCADE,related_name = "question_updated_by") #edit
+    def save(self,*args,**kwargs):
+        new_question = super().save(*args, **kwargs)
+        current_section = self.section_id
+        current_section.question_sequence.append(self.id)
+        current_section.save()
 
 
 class Options(models.Model):
