@@ -1,17 +1,44 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Col, Container, Row } from 'reactstrap';
 import { Button, Icon, List } from 'semantic-ui-react';
 import Section from './Section';
 import classNames from 'classnames';
 import './style.css';
+import Banner from './Banner';
+import { useDispatch, useSelector } from 'react-redux';
+import { formFetch, formUpdate } from '../../Store/ActionCreators/form';
+import { sectionCreate } from '../../Store/ActionCreators/section';
 
-function CreateForm() {
+function CreateForm(props) {
+	const [details, setDetails] = useState('');
 	const [structure, setStructure] = useState([]);
-	const [curr, setCurr] = useState(-1);
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		const { id } = props?.match?.params;
+		dispatch(formFetch(id)).then(res => {
+			setStructure(res?.section_sequence);
+			setDetails(res);
+		});
+	}, [dispatch]);
+
+	const [curr, setCurr] = useState(0);
 
 	const addSection = () => {
-		setStructure([...structure, [{ type: 'text' }]]);
-		setCurr(structure.length);
+		const data = {
+			question_sequence: [],
+			form_id: props?.match?.params?.id,
+			created_by: 2,
+			updated_by: 2,
+		};
+		dispatch(sectionCreate(data)).then(res => {
+			if (structure) {
+				setStructure([...structure, res.id]);
+			} else {
+				setStructure([res.id]);
+			}
+			setCurr(structure.length);
+		});
 	};
 
 	const removeSection = index => {
@@ -19,42 +46,9 @@ function CreateForm() {
 		setCurr(curr - 1);
 	};
 
-	const addQuestion = index => {
-		const temp = [...structure];
-		temp[index] = [...temp[index], { type: 'text' }];
-		setStructure(temp);
-	};
-
-	const removeQuestion = (section, index) => {
-		const temp = [...structure];
-
-		if (temp[section].length === 1) {
-			removeSection(section);
-		} else {
-			temp[section] = [
-				...temp[section].slice(0, index),
-				...temp[section].slice(index + 1),
-			];
-			setStructure(temp);
-		}
-	};
-
-	const reOrderQuestion = (section, list) => {
-		console.log(list);
-		const temp = [...structure];
-		temp[section] = list;
-		setStructure(temp);
-	};
-
-	const modifyQuestion = (section, index, target, value) => {
-		// console.log(target,value);
-		const temp = structure[section];
-		temp[index] = { ...temp[index], [target]: value };
-		setStructure([
-			...structure.slice(0, section),
-			temp,
-			...structure.slice(section + 1),
-		]);
+	const updateForm = data => {
+		const { id } = props?.match?.params;
+		dispatch(formUpdate({id,data}));
 	};
 
 	return (
@@ -66,6 +60,9 @@ function CreateForm() {
 							<h1>Create a new Form</h1>
 						</Col>
 					</Row>
+					<Row>
+						<Banner {...details} update={updateForm} />
+					</Row>
 
 					<Row className="mt-4">
 						<Col>
@@ -76,7 +73,7 @@ function CreateForm() {
 									Add Section
 								</Button>
 								<List>
-									{structure.map((section, i) => (
+									{structure?.map((section, i) => (
 										<List.Item
 											as="a"
 											key={i}
@@ -91,19 +88,16 @@ function CreateForm() {
 								</List>
 							</div>
 						</Col>
-						{curr > -1 && (
+						{structure?.length > 0 && (
 							<Col xs={10}>
-								<Section
-									queslist={structure[curr]}
-									index={curr + 1}
-									remove={() => removeSection(curr)}
-									addQuestion={() => addQuestion(curr)}
-									removeQuestion={q => removeQuestion(curr, q)}
-									modifyQuestion={(q, target, value) =>
-										modifyQuestion(curr, q, target, value)
-									}
-									reOrderQuestion={list => reOrderQuestion(curr, list)}
-								/>
+								{
+									<Section
+										key={structure[curr]}
+										id={structure[curr]}
+										index={curr + 1}
+										remove={() => removeSection(curr)}
+									/>
+								}
 							</Col>
 						)}
 					</Row>

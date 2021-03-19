@@ -1,7 +1,11 @@
 import { Col, Container, Row } from 'reactstrap';
 import { Button, Form, Input } from 'semantic-ui-react';
+import { withRouter } from 'react-router-dom';
 
-export default function Login(props) {
+function Login(props) {
+	const handleSubmit = () => {
+		props.history.push('/admin');
+	};
 	return (
 		<Container className="shadow p-4 mt-5 h-100 bg-white">
 			<Row>
@@ -22,7 +26,7 @@ export default function Login(props) {
 							<Input placeholder="Password" type="password" fluid />
 						</Form.Field>
 						<Form.Field inline>
-							<Button>Submit</Button>
+							<Button onClick={handleSubmit}>Submit</Button>
 						</Form.Field>
 					</Form>
 				</Col>
@@ -30,3 +34,5 @@ export default function Login(props) {
 		</Container>
 	);
 }
+
+export default withRouter(Login);

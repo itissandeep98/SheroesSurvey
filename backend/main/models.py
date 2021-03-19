@@ -32,18 +32,18 @@ class Users(models.Model):
 
 # Create your models here.
 class Forms(models.Model):
-    heading = models.TextField(max_length=50,null=False)
-    banner_toggle = models.BooleanField(null=False)
+    heading = models.TextField(max_length=50,null=True)
+    banner_toggle = models.BooleanField(null=False, default=False)
     banner_path = models.CharField(max_length=500, null=True)
     description = models.TextField(null=True)
     section_sequence = models.JSONField()
-    consent_toggle = models.BooleanField(null=False)
+    consent_toggle = models.BooleanField(null=False, default=False)
     consent_text = models.TextField(null=True)
     start_time = models.DateTimeField(null=True)
     end_time = models.DateTimeField(null=True)
-    is_active = models.BooleanField(null=False)
-    edit_response_toggle = models.BooleanField(null=False)
-    created_on = models.DateTimeField(null=False)
+    is_active = models.BooleanField(null=False, default=True)
+    edit_response_toggle = models.BooleanField(null=False, default=False)
+    created_on = models.DateTimeField(auto_now_add=True,null=False)
     updated_on = models.DateTimeField(auto_now=True, null=False) #update
     created_by =  models.ForeignKey(Users,on_delete=models.CASCADE,related_name = "form_created_by") #edit
     updated_by =  models.ForeignKey(Users,on_delete=models.CASCADE,related_name = "form_updated_by") #edit
@@ -59,18 +59,23 @@ class Forms(models.Model):
 #     created_by =  models.ForeignKey(User)
 #     updated_by =  models.ForeignKey(User)
 
-class Section(models.Model):
-    heading = models.TextField(max_length=50,null=False)
-    description = models.TextField(max_length=50,null=False)
+class Sections(models.Model):
+    heading = models.TextField(max_length=50,null=True)
+    description = models.TextField(max_length=50,null=True)
     question_sequence = models.JSONField()
     form_id = models.ForeignKey(Forms,on_delete=models.CASCADE) #edit
     #update in form_id
     # deete.cascade option
-    randomize_toggle = models.BooleanField(null=False)
-    created_on = models.DateTimeField(auto_now_add = False, null= False ) 
-    updated_on = models.DateTimeField(auto_now_add = True, null= False )
+    randomize_toggle = models.BooleanField(null=False, default=False)
+    created_on = models.DateTimeField(auto_now_add=True,null=False)
+    updated_on = models.DateTimeField(auto_now=True, null=False) #update
     created_by =  models.ForeignKey(Users,on_delete=models.CASCADE,related_name = "section_created_by") #edit
     updated_by =  models.ForeignKey(Users,on_delete=models.CASCADE,related_name = "section_updated_by") #edit
+    def save(self,*args,**kwargs):
+        new_section = super().save(*args, **kwargs)
+        current_form = self.form_id
+        current_form.section_sequence.append(self.id)
+        current_form.save()
 
 class Questions(models.Model):
     class QuestionType(models.TextChoices): #edit
@@ -79,7 +84,7 @@ class Questions(models.Model):
         LONG = 'LP', 'Long Para'
         FILE = 'FU', 'File Upload'
     statement = models.TextField(null=False)
-    section_id = models.ForeignKey(Section,on_delete=models.CASCADE) #edit
+    section_id = models.ForeignKey(Sections,on_delete=models.CASCADE) #edit
     qtype = models.CharField(
         max_length=2, 
         choices=QuestionType.choices,
@@ -93,11 +98,16 @@ class Questions(models.Model):
     quiz_toggle = models.BooleanField(null=False, default=False)
     correct_score = models.IntegerField(null=True, default=0)
     incorrect_score = models.IntegerField(null=True, default=0)
-    title = models.CharField(max_length=255, null=False)
-    created_on = models.DateTimeField(null=False)
+    # title = models.CharField(max_length=255, null=False)
+    created_on = models.DateTimeField(auto_now_add=True,null=False)
     updated_on = models.DateTimeField(auto_now=True, null=False) #update
     created_by =  models.ForeignKey(Users,on_delete=models.CASCADE,related_name = "question_created_by") #edit
     updated_by =  models.ForeignKey(Users,on_delete=models.CASCADE,related_name = "question_updated_by") #edit
+    def save(self,*args,**kwargs):
+        new_question = super().save(*args, **kwargs)
+        current_section = self.section_id
+        current_section.question_sequence.append(self.id)
+        current_section.save()
 
 
 class Options(models.Model):
@@ -116,11 +126,11 @@ class Dropdown(models.Model):
 class Responses(models.Model):
     user_id = models.ForeignKey(Users,on_delete=models.CASCADE) #edit
     form_id = models.ForeignKey(Forms,on_delete=models.CASCADE) #edit
-    created_on = models.DateTimeField(auto_now_add = False, null= False ) 
-    updated_on = models.DateTimeField(auto_now_add = True, null= False )
+    created_on = models.DateTimeField(auto_now_add=True,null=False)
+    updated_on = models.DateTimeField(auto_now=True, null=False) #update
     is_deleted = models.BooleanField(null=False)
     question_id = models.ForeignKey(Questions,on_delete = models.CASCADE)     
-    response = models.TextField(max_length=500)
+    response = models.JSONField()
 
 class ShortPara(models.Model):
     class DataType(models.TextChoices):

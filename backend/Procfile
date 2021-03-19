@@ -1,1 +1,2 @@
+release: python manage.py migrate
 web: gunicorn sheroes_forms.wsgi --log-file -
