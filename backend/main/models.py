@@ -33,17 +33,17 @@ class Users(models.Model):
 # Create your models here.
 class Forms(models.Model):
     heading = models.TextField(max_length=50,null=True)
-    banner_toggle = models.BooleanField(null=False)
+    banner_toggle = models.BooleanField(null=False, default=False)
     banner_path = models.CharField(max_length=500, null=True)
     description = models.TextField(null=True)
     section_sequence = models.JSONField()
-    consent_toggle = models.BooleanField(null=False)
+    consent_toggle = models.BooleanField(null=False, default=False)
     consent_text = models.TextField(null=True)
     start_time = models.DateTimeField(null=True)
     end_time = models.DateTimeField(null=True)
-    is_active = models.BooleanField(null=False)
-    edit_response_toggle = models.BooleanField(null=False)
-    created_on = models.DateTimeField(null=False)
+    is_active = models.BooleanField(null=False, default=True)
+    edit_response_toggle = models.BooleanField(null=False, default=False)
+    created_on = models.DateTimeField(auto_now_add=True,null=False)
     updated_on = models.DateTimeField(auto_now=True, null=False) #update
     created_by =  models.ForeignKey(Users,on_delete=models.CASCADE,related_name = "form_created_by") #edit
     updated_by =  models.ForeignKey(Users,on_delete=models.CASCADE,related_name = "form_updated_by") #edit
@@ -67,8 +67,8 @@ class Sections(models.Model):
     #update in form_id
     # deete.cascade option
     randomize_toggle = models.BooleanField(null=False)
-    created_on = models.DateTimeField(auto_now = False, null= False ) 
-    updated_on = models.DateTimeField(auto_now = True, null= False )
+    created_on = models.DateTimeField(auto_now_add=True,null=False)
+    updated_on = models.DateTimeField(auto_now=True, null=False) #update
     created_by =  models.ForeignKey(Users,on_delete=models.CASCADE,related_name = "section_created_by") #edit
     updated_by =  models.ForeignKey(Users,on_delete=models.CASCADE,related_name = "section_updated_by") #edit
 
@@ -94,7 +94,7 @@ class Questions(models.Model):
     correct_score = models.IntegerField(null=True, default=0)
     incorrect_score = models.IntegerField(null=True, default=0)
     # title = models.CharField(max_length=255, null=False)
-    created_on = models.DateTimeField(null=False)
+    created_on = models.DateTimeField(auto_now_add=True,null=False)
     updated_on = models.DateTimeField(auto_now=True, null=False) #update
     created_by =  models.ForeignKey(Users,on_delete=models.CASCADE,related_name = "question_created_by") #edit
     updated_by =  models.ForeignKey(Users,on_delete=models.CASCADE,related_name = "question_updated_by") #edit
@@ -116,8 +116,8 @@ class Dropdown(models.Model):
 class Responses(models.Model):
     user_id = models.ForeignKey(Users,on_delete=models.CASCADE) #edit
     form_id = models.ForeignKey(Forms,on_delete=models.CASCADE) #edit
-    created_on = models.DateTimeField(auto_now_add = False, null= False ) 
-    updated_on = models.DateTimeField(auto_now_add = True, null= False )
+    created_on = models.DateTimeField(auto_now_add=True,null=False)
+    updated_on = models.DateTimeField(auto_now=True, null=False) #update
     is_deleted = models.BooleanField(null=False)
     question_id = models.ForeignKey(Questions,on_delete = models.CASCADE)     
     response = models.JSONField()
