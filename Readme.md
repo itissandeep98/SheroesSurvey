@@ -1,3 +1,4 @@
+
 <h1 align="center"> SHEROES</h1>
 
 <h2 align="center">Team #3</h2>
@@ -16,6 +17,19 @@
 - npm install
 - npm run start
 ```
+## Steps to browse the website
+
+- Visit the website here. The current version only has one user with editor rights so you can view all the forms created till now.
+- Click on login without entering any credentials.
+- Now, you can view all the previous forms and have the option to create new form.
+- Clicking on any of the old forms or clicking on the option to create a new form lands the user on the form editing page.
+- On the form editing page, you have the following options:
+	- Add banner to the form. 
+	- Change form name and description.
+	- View responses to the form.
+	- Add sections.
+	- Add and delete questions to different sections.
+<br>
 ![sheroesfront](https://user-images.githubusercontent.com/43843585/111822534-e5ea9880-8909-11eb-967c-ab8ad958a3b8.gif)
 
 # Backend: <https://sheroes-form.herokuapp.com/>
