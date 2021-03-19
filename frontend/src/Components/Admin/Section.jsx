@@ -31,6 +31,8 @@ function Section(props) {
 			section_id: id,
 			created_by: 2,
 			updated_by: 2,
+			statement:"demo question",
+			qtype:"LP"
 		};
 		dispatch(questionCreate(data)).then(res => {
 			setQuesList([...quesList, res?.id]);
