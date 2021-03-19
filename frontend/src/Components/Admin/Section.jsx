@@ -10,6 +10,7 @@ import {
 	Input,
 	TextArea,
 } from 'semantic-ui-react';
+import { questionCreate } from '../../Store/ActionCreators/question';
 import { sectionFetch } from '../../Store/ActionCreators/section';
 import Question from './Question';
 
@@ -24,6 +25,17 @@ function Section(props) {
 			setDetails(res);
 		});
 	}, [dispatch]);
+
+	const addQuestion = () => {
+		const data = {
+			section_id: id,
+			created_by: 2,
+			updated_by: 2,
+		};
+		dispatch(questionCreate(data)).then(res => {
+			setQuesList([...quesList, res?.id]);
+		});
+	};
 
 	return (
 		<Container>
@@ -80,15 +92,15 @@ function Section(props) {
 						delay={20}
 					> */}
 					{quesList &&
-						quesList.map((quesid,i) => (
+						quesList.map((quesid, i) => (
 							<div key={Math.random()}>
-								<Question id={quesid} index={i+1} />
+								<Question id={quesid} index={i + 1} />
 							</div>
 						))}
 					{/* </ReactSortable> */}
 				</Col>
 				<Col xs={12}>
-					<Button floated="right" onClick={props.addQuestion}>
+					<Button floated="right" onClick={addQuestion}>
 						<Icon name="plus" />
 						Add Question
 					</Button>
