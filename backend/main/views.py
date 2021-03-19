@@ -56,13 +56,16 @@ class FormsViewSet(viewsets.ModelViewSet):
         try:
             if(pk == None):
                 raise Exception()
+
             form_id = pk
             form_instance = Forms.objects.get(id=form_id)
-            for field in request.data["fields"]:
+            for field in request.data:
+
                 if field=="updated_by":      #special conditions for foreign key
                     setattr(form_instance,field,Users.objects.get(id=request.data[field]))
-                elif field=="created_by":   #Cannot update created by
+                elif field=="created_by" or field == "created_on":   #Cannot update created by
                     pass
+                
                 else:
                     setattr(form_instance,field,request.data[field])
             form_instance.save()
@@ -97,7 +100,7 @@ class UsersViewSet(viewsets.ModelViewSet):
                 raise Exception()
             user_id = pk
             user_instance = Users.objects.get(id=user_id)
-            for field in request.data["fields"]:
+            for field in request.data:
                 setattr(user_instance,field,request.data[field])
             user_instance.save()
         except:
@@ -132,12 +135,12 @@ class SectionsViewSet(viewsets.ModelViewSet):
                 raise Exception()
             section_id = pk
             section_instance = Sections.objects.get(id=section_id)
-            for field in request.data["fields"]:
+            for field in request.data:
                 if field=="updated_by":     #special conditions for foreign key
                     setattr(section_instance,field,Users.objects.get(id=request.data[field]))
                 elif field=="form_id":      #special conditions for foreign key
                     setattr(section_instance,field,Forms.objects.get(id=request.data[field]))
-                elif field=="created_by":   #Cannot update created by
+                elif field=="created_by" or field == "created_on":   #Cannot update created by
                     pass
                 else:
                     setattr(section_instance,field,request.data[field])
@@ -170,15 +173,16 @@ class QuestionsViewSet(viewsets.ModelViewSet):
         """
         try:
             if(pk == None):
+
                 raise Exception()
             question_id = pk
             question_instance = Questions.objects.get(id=question_id)
-            for field in request.data["fields"]:
+            for field in request.data:
                 if field=="updated_by":     #special conditions for foreign key
                     setattr(question_instance,field,Users.objects.get(id=request.data[field]))
                 elif field=="section_id":      #special conditions for foreign key
                     setattr(question_instance,field,Sections.objects.get(id=request.data[field]))
-                elif field=="created_by":   #Cannot update created by
+                elif field=="created_by" or field == "created_on":   #Cannot update created by
                     pass
                 else:
                     setattr(question_instance,field,request.data[field])
@@ -213,7 +217,7 @@ class ShortParaViewSet(viewsets.ModelViewSet):
                 raise Exception()
             shortpara_id = pk
             shortpara_instance = ShortPara.objects.get(id=shortpara_id)
-            for field in request.data["fields"]:
+            for field in request.data:
                 if field=="question_id":   #Changing question id after creating is not sensible
                     pass
                 else:
@@ -248,9 +252,10 @@ class OptionsViewSet(viewsets.ModelViewSet):
         try:
             if(pk == None):
                 raise Exception()
+
             option_id = pk
             option_instance = Options.objects.get(id=option_id)
-            for field in request.data["fields"]:
+            for field in request.data:
                 if field=="question_id":   #Changing question id after creating is not sensible
                     pass
                 else:
@@ -302,7 +307,7 @@ class ResponsesViewSet(viewsets.ModelViewSet):
                 raise Exception()
             response_id = pk
             response_instance = Responses.objects.get(id=response_id)
-            for field in request.data["fields"]:
+            for field in request.data:
                 if field=="question_id" or field=="user_id" or field=="form_id" or field=="created_on":   #Changing question id after creating is not sensible
                     pass
                 else:
