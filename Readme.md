@@ -10,13 +10,6 @@
   <a href="https://github.com/sarthak144">Sarthak Arora</a>
 </p>
 
-# Frontend: <https://sheroes-front.herokuapp.com/>
-
-```
-- cd frontend/
-- npm install
-- npm run start
-```
 ## Steps to browse the website
 
 - Visit the website here. The current version only has one user with editor rights so you can view all the forms created till now.
@@ -31,6 +24,15 @@
 	- Add and delete questions to different sections.
 <br> </br>
 ![sheroesfront](https://user-images.githubusercontent.com/43843585/111822534-e5ea9880-8909-11eb-967c-ab8ad958a3b8.gif)
+
+
+# Frontend: <https://sheroes-front.herokuapp.com/>
+
+```
+- cd frontend/
+- npm install
+- npm run start
+```
 
 # Backend: <https://sheroes-form.herokuapp.com/>
 
