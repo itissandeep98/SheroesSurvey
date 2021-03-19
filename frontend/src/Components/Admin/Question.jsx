@@ -2,7 +2,7 @@ import { Dropdown, Form, Icon, Input } from 'semantic-ui-react';
 import { QuestionTypes } from '../../Utils/QuestionTypes';
 
 function Question(props) {
-	const { index, ques, type, modify } = props;
+	const { id, index } = props;
 	return (
 		<>
 			Question {index}
@@ -13,7 +13,7 @@ function Question(props) {
 				icon={<Icon name="ellipsis vertical" />}
 				simple>
 				<Dropdown.Menu>
-					<Dropdown.Item onClick={props.remove}>
+					<Dropdown.Item disabled>
 						<Icon name="trash" />
 						Delete
 					</Dropdown.Item>
@@ -27,8 +27,8 @@ function Question(props) {
 				<Form className=" mr-2 w-100">
 					<Input
 						fluid
-						defaultValue={ques}
-						onBlur={e => modify('ques', e.target.value)}
+						// defaultValue={ques}
+						// onBlur={e => modify('ques', e.target.value)}
 						placeholder="Type Your Question Here"
 					/>
 					<br />
@@ -37,8 +37,8 @@ function Question(props) {
 						search
 						selection
 						options={QuestionTypes}
-						value={type}
-						onChange={(e, { value }) => modify('type', value)}
+						// value={type}
+						// onChange={(e, { value }) => modify('type', value)}
 					/>
 				</Form>
 			</div>

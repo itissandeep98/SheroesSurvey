@@ -1,18 +1,27 @@
+import moment from 'moment';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Col, Container, Row } from 'reactstrap';
-import { Button, Dropdown, Form, Icon, TextArea } from 'semantic-ui-react';
+import { Col, Container, Row, Spinner } from 'reactstrap';
+import {
+	Button,
+	Dropdown,
+	Form,
+	Icon,
+	Input,
+	TextArea,
+} from 'semantic-ui-react';
 import { sectionFetch } from '../../Store/ActionCreators/section';
 import Question from './Question';
 
 function Section(props) {
 	const { id, index } = props;
 	const [quesList, setQuesList] = useState([]);
+	const [details, setDetails] = useState({});
 	const dispatch = useDispatch();
 	useEffect(() => {
-		console.log("here",id);
 		dispatch(sectionFetch(id)).then(res => {
-			console.log(res);
+			setQuesList(res.question_sequence);
+			setDetails(res);
 		});
 	}, [dispatch]);
 
@@ -21,6 +30,7 @@ function Section(props) {
 			<Row className="p-4 mb-4 rounded_lg  bg-white">
 				<Col>
 					<h1 className="section_name d-inline-block pr-4">Section {index}</h1>
+
 					<Dropdown
 						className="float-right"
 						item
@@ -38,12 +48,23 @@ function Section(props) {
 							</Dropdown.Item>
 						</Dropdown.Menu>
 					</Dropdown>
+					<small className="float-right text-muted">
+						{details.created_on ? (
+							<>Created {moment(details.created_on).fromNow()}</>
+						) : (
+							<Spinner size="sm" />
+						)}
+					</small>
 				</Col>
 				<Col xs={12}>
 					<Form>
 						<Form.Field>
+							<label>Heading</label>
+							<Input defaultValue={details.heading} />
+						</Form.Field>
+						<Form.Field>
 							<label>Description</label>
-							<TextArea />
+							<TextArea defaultValue={details.description} />
 						</Form.Field>
 					</Form>
 				</Col>
@@ -59,16 +80,9 @@ function Section(props) {
 						delay={20}
 					> */}
 					{quesList &&
-						quesList.map((ques, i) => (
+						quesList.map((quesid,i) => (
 							<div key={Math.random()}>
-								<Question
-									{...ques}
-									index={i + 1}
-									remove={() => props.removeQuestion(i)}
-									modify={(target, value) =>
-										props.modifyQuestion(i, target, value)
-									}
-								/>
+								<Question id={quesid} index={i+1} />
 							</div>
 						))}
 					{/* </ReactSortable> */}

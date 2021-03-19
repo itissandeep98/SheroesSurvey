@@ -17,8 +17,8 @@ function CreateForm(props) {
 	useEffect(() => {
 		const { id } = props?.match?.params;
 		dispatch(formFetch(id)).then(res => {
-			setStructure(form?.data?.section_sequence);
-			setDetails(form?.data);
+			setStructure(res.section_sequence);
+			setDetails(res);
 		});
 	}, [dispatch]);
 
@@ -32,60 +32,18 @@ function CreateForm(props) {
 			updated_by: 2,
 		};
 		dispatch(sectionCreate(data)).then(res => {
-			console.log(structure);
 			if (structure) {
 				setStructure([...structure, res.id]);
 			} else {
-				setStructure([res]);
+				setStructure([res.id]);
 			}
 			setCurr(structure.length);
 		});
-
-		setStructure([...structure, [{ type: 'text' }]]);
-		setCurr(structure.length);
 	};
 
 	const removeSection = index => {
 		setStructure([...structure.slice(0, index), ...structure.slice(index + 1)]);
 		setCurr(curr - 1);
-	};
-
-	const addQuestion = index => {
-		const temp = [...structure];
-		temp[index] = [...temp[index], { type: 'text' }];
-		setStructure(temp);
-	};
-
-	const removeQuestion = (section, index) => {
-		const temp = [...structure];
-
-		if (temp[section].length === 1) {
-			removeSection(section);
-		} else {
-			temp[section] = [
-				...temp[section].slice(0, index),
-				...temp[section].slice(index + 1),
-			];
-			setStructure(temp);
-		}
-	};
-
-	const reOrderQuestion = (section, list) => {
-		console.log(list);
-		const temp = [...structure];
-		temp[section] = list;
-		setStructure(temp);
-	};
-
-	const modifyQuestion = (section, index, target, value) => {
-		// console.log(target,value);
-		const temp = structure[section];
-		temp[index] = { ...temp[index], [target]: value };
-		setStructure([
-			...structure.slice(0, section),
-			temp,
-			...structure.slice(section + 1),
-		]);
 	};
 
 	return (
@@ -98,7 +56,7 @@ function CreateForm(props) {
 						</Col>
 					</Row>
 					<Row>
-						<Banner />
+						<Banner {...details} />
 					</Row>
 
 					<Row className="mt-4">
@@ -127,17 +85,14 @@ function CreateForm(props) {
 						</Col>
 						{structure?.length > 0 && (
 							<Col xs={10}>
-								<Section
-									id={structure[curr]}
-									index={curr + 1}
-									remove={() => removeSection(curr)}
-									addQuestion={() => addQuestion(curr)}
-									removeQuestion={q => removeQuestion(curr, q)}
-									modifyQuestion={(q, target, value) =>
-										modifyQuestion(curr, q, target, value)
-									}
-									reOrderQuestion={list => reOrderQuestion(curr, list)}
-								/>
+								{
+									<Section
+										key={structure[curr]}
+										id={structure[curr]}
+										index={curr + 1}
+										remove={() => removeSection(curr)}
+									/>
+								}
 							</Col>
 						)}
 					</Row>

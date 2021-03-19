@@ -3,7 +3,7 @@ import { Col, Container, Input, Label, Row } from 'reactstrap';
 import { Form, Icon, Image, TextArea } from 'semantic-ui-react';
 
 function Banner(props) {
-	const { name, desc, banner } = props;
+	const { heading, description, banner_path } = props;
 	const [bannerimg, setBannerimg] = useState('');
 	const handleImage = e => {
 		console.log(e.target.files);
@@ -43,10 +43,10 @@ function Banner(props) {
 				<Col xs={12} className="my-3">
 					<Form>
 						<Form.Field>
-							<Input placeholder="Form title" />
+							<Input placeholder="Form title" defaultValue={heading}/>
 						</Form.Field>
 						<Form.Field>
-							<TextArea placeholder="Form Description" />
+							<TextArea placeholder="Form Description" defaultValue={description} />
 						</Form.Field>
 					</Form>
 				</Col>
