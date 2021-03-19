@@ -4,10 +4,11 @@ import { Button, Icon, List } from 'semantic-ui-react';
 import Section from './Section';
 import classNames from 'classnames';
 import './style.css';
+import Banner from './Banner';
 
 function CreateForm() {
-	const [structure, setStructure] = useState([]);
-	const [curr, setCurr] = useState(-1);
+	const [structure, setStructure] = useState([[{ type: 'text' }]]);
+	const [curr, setCurr] = useState(0);
 
 	const addSection = () => {
 		setStructure([...structure, [{ type: 'text' }]]);
@@ -65,6 +66,9 @@ function CreateForm() {
 						<Col className="text-center">
 							<h1>Create a new Form</h1>
 						</Col>
+					</Row>
+					<Row>
+						<Banner />
 					</Row>
 
 					<Row className="mt-4">

@@ -1,19 +1,37 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { Col, Container, Row } from 'reactstrap';
 import { Card, Icon } from 'semantic-ui-react';
 import './style.css';
+import { formCreate } from '../../Store/ActionCreators/form';
 
-function Admin() {
+function Admin(props) {
+	const dispatch = useDispatch();
+	const handleCreate = () => {
+		const data = {
+			heading: '',
+			banner_toggle: false,
+			description: '',
+			section_sequence: {},
+			consent_toggle: false,
+			is_active: true,
+			edit_response_toggle: false,
+			created_on: new Date(),
+			created_by: '2',
+			updated_by: '2',
+		};
+		dispatch(formCreate(data)).then(res => {
+			props.history.push(`/admin/${Math.floor(Math.random() * 90000) + 10000}`);
+		});
+	};
 	return (
 		<Container className="mt-3" fluid>
 			<Row className="d-flex justify-content-center">
 				<Col lg={8}>
-					<NavLink
-						to={`/admin/${Math.floor(Math.random() * 90000) + 10000}`}
-						className="border p-3 bg-white text-dark">
+					<div onClick={handleCreate} className="border p-3 bg-white text-dark">
 						<Icon name="plus circle" size="big" />
 						Create New Form
-					</NavLink>
+					</div>
 				</Col>
 			</Row>
 			<Row className="d-flex justify-content-center  mt-5">
@@ -78,4 +96,4 @@ function Admin() {
 	);
 }
 
-export default Admin;
+export default withRouter(Admin);

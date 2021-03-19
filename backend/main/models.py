@@ -32,7 +32,7 @@ class Users(models.Model):
 
 # Create your models here.
 class Forms(models.Model):
-    heading = models.TextField(max_length=50,null=False)
+    heading = models.TextField(max_length=50,null=True)
     banner_toggle = models.BooleanField(null=False)
     banner_path = models.CharField(max_length=500, null=True)
     description = models.TextField(null=True)
