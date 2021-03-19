@@ -1,17 +1,20 @@
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Col, Container, Row } from 'reactstrap';
-import {
-	Button,
-	Dropdown,
-	Form,
-	Icon,
-	Input,
-	TextArea,
-} from 'semantic-ui-react';
-import { ReactSortable } from 'react-sortablejs';
+import { Button, Dropdown, Form, Icon, TextArea } from 'semantic-ui-react';
+import { sectionFetch } from '../../Store/ActionCreators/section';
 import Question from './Question';
 
 function Section(props) {
-	const { queslist, index } = props;
+	const { id, index } = props;
+	const [quesList, setQuesList] = useState([]);
+	const dispatch = useDispatch();
+	useEffect(() => {
+		console.log("here",id);
+		dispatch(sectionFetch(id)).then(res => {
+			console.log(res);
+		});
+	}, [dispatch]);
 
 	return (
 		<Container>
@@ -55,8 +58,8 @@ function Section(props) {
 						delayOnTouchStart={true}
 						delay={20}
 					> */}
-					{queslist &&
-						queslist.map((ques, i) => (
+					{quesList &&
+						quesList.map((ques, i) => (
 							<div key={Math.random()}>
 								<Question
 									{...ques}

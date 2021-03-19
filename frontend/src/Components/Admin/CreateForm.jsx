@@ -1,16 +1,46 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Col, Container, Row } from 'reactstrap';
 import { Button, Icon, List } from 'semantic-ui-react';
 import Section from './Section';
 import classNames from 'classnames';
 import './style.css';
 import Banner from './Banner';
+import { useDispatch, useSelector } from 'react-redux';
+import { formFetch } from '../../Store/ActionCreators/form';
+import { sectionCreate } from '../../Store/ActionCreators/section';
 
-function CreateForm() {
-	const [structure, setStructure] = useState([[{ type: 'text' }]]);
+function CreateForm(props) {
+	const [details, setDetails] = useState('');
+	const [structure, setStructure] = useState([]);
+	const dispatch = useDispatch();
+	const form = useSelector(state => state.form);
+	useEffect(() => {
+		const { id } = props?.match?.params;
+		dispatch(formFetch(id)).then(res => {
+			setStructure(form?.data?.section_sequence);
+			setDetails(form?.data);
+		});
+	}, [dispatch]);
+
 	const [curr, setCurr] = useState(0);
 
 	const addSection = () => {
+		const data = {
+			question_sequence: [],
+			form_id: props?.match?.params?.id,
+			created_by: 2,
+			updated_by: 2,
+		};
+		dispatch(sectionCreate(data)).then(res => {
+			console.log(structure);
+			if (structure) {
+				setStructure([...structure, res.id]);
+			} else {
+				setStructure([res]);
+			}
+			setCurr(structure.length);
+		});
+
 		setStructure([...structure, [{ type: 'text' }]]);
 		setCurr(structure.length);
 	};
@@ -80,7 +110,7 @@ function CreateForm() {
 									Add Section
 								</Button>
 								<List>
-									{structure.map((section, i) => (
+									{structure?.map((section, i) => (
 										<List.Item
 											as="a"
 											key={i}
@@ -95,10 +125,10 @@ function CreateForm() {
 								</List>
 							</div>
 						</Col>
-						{curr > -1 && (
+						{structure?.length > 0 && (
 							<Col xs={10}>
 								<Section
-									queslist={structure[curr]}
+									id={structure[curr]}
 									index={curr + 1}
 									remove={() => removeSection(curr)}
 									addQuestion={() => addQuestion(curr)}

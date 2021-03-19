@@ -1,5 +1,5 @@
 import { NavLink, withRouter } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Col, Container, Row } from 'reactstrap';
 import { Card, Icon } from 'semantic-ui-react';
 import './style.css';
@@ -7,21 +7,17 @@ import { formCreate } from '../../Store/ActionCreators/form';
 
 function Admin(props) {
 	const dispatch = useDispatch();
+	const form = useSelector(state => state.form);
 	const handleCreate = () => {
 		const data = {
-			heading: '',
-			banner_toggle: false,
-			description: '',
-			section_sequence: {},
-			consent_toggle: false,
-			is_active: true,
-			edit_response_toggle: false,
-			created_on: new Date(),
 			created_by: '2',
 			updated_by: '2',
+			section_sequence: [],
 		};
 		dispatch(formCreate(data)).then(res => {
-			props.history.push(`/admin/${Math.floor(Math.random() * 90000) + 10000}`);
+			console.log(form);
+
+			props.history.push(`/admin/${form.data.id}`);
 		});
 	};
 	return (
