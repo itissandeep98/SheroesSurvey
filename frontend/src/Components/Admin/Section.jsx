@@ -21,9 +21,9 @@ function Section(props) {
 	const { id, index } = props;
 	const [quesList, setQuesList] = useState([]);
 	const [details, setDetails] = useState({});
+	const [loading, setLoading] = useState(false);
 	const dispatch = useDispatch();
 	useEffect(() => {
-		console.log('here');
 		dispatch(sectionFetch(id)).then(res => {
 			setQuesList(res.question_sequence);
 			setDetails(res);
@@ -31,15 +31,17 @@ function Section(props) {
 	}, [dispatch]);
 
 	const addQuestion = () => {
+		setLoading(true);
 		const data = {
 			section_id: id,
 			created_by: 2,
 			updated_by: 2,
-			statement: 'demo question',
+			statement: 'Question',
 			qtype: 'LP',
 		};
 		dispatch(questionCreate(data)).then(res => {
 			setQuesList([...quesList, res?.id]);
+			setLoading(false);
 		});
 	};
 
@@ -118,9 +120,15 @@ function Section(props) {
 						))}
 				</Col>
 				<Col xs={12}>
-					<Button floated="right" onClick={addQuestion}>
-						<Icon name="plus" />
-						Add Question
+					<Button floated="right" onClick={addQuestion} disabled={loading}>
+						{loading ? (
+							<Spinner />
+						) : (
+							<>
+								<Icon name="plus" />
+								Add Question
+							</>
+						)}
 					</Button>
 				</Col>
 			</Row>

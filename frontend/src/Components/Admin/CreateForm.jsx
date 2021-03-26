@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Container, Row } from 'reactstrap';
+import { Col, Container, Row, Spinner } from 'reactstrap';
 import { Button, Icon, List } from 'semantic-ui-react';
 import Section from './Section';
 import classNames from 'classnames';
@@ -12,6 +12,7 @@ import { sectionCreate } from '../../Store/ActionCreators/section';
 function CreateForm(props) {
 	const [details, setDetails] = useState('');
 	const [structure, setStructure] = useState([]);
+	const [loading, setLoading] = useState(false);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -25,6 +26,7 @@ function CreateForm(props) {
 	const [curr, setCurr] = useState(0);
 
 	const addSection = () => {
+		setLoading(true);
 		const data = {
 			question_sequence: [],
 			form_id: props?.match?.params?.id,
@@ -38,6 +40,7 @@ function CreateForm(props) {
 				setStructure([res.id]);
 			}
 			setCurr(structure.length);
+			setLoading(false);
 		});
 	};
 
@@ -48,7 +51,7 @@ function CreateForm(props) {
 
 	const updateForm = data => {
 		const { id } = props?.match?.params;
-		dispatch(formUpdate({id,data}));
+		dispatch(formUpdate({ id, data }));
 	};
 
 	return (
@@ -68,9 +71,15 @@ function CreateForm(props) {
 						<Col>
 							<div className="sticky-top text-center" style={{ zIndex: 0 }}>
 								<br />
-								<Button onClick={addSection} size="mini">
-									<Icon name="plus" />
-									Add Section
+								<Button onClick={addSection} size="mini" disabled={loading}>
+									{loading ? (
+										<Spinner />
+									) : (
+										<>
+											<Icon name="plus" />
+											Add Section
+										</>
+									)}
 								</Button>
 								<List>
 									{structure?.map((section, i) => (
