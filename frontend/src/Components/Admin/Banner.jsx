@@ -1,14 +1,18 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Col, Container, Input, Label, Row } from 'reactstrap';
-import { Button, Form, Icon, Image, TextArea } from 'semantic-ui-react';
+import { Form, Icon, Image, TextArea } from 'semantic-ui-react';
+import { uploadContent } from '../../Store/ActionCreators/upload';
 
 function Banner(props) {
 	const { heading, description, banner_path } = props;
-	const [bannerimg, setBannerimg] = useState(props.banner_path);
-
+	const [bannerimg, setBannerimg] = useState(banner_path);
 	const [head, setheading] = useState(heading);
 	const [desc, setdescription] = useState(description);
-
+	useEffect(() => {
+		setBannerimg(props.banner_path);
+	}, [props.banner_path]);
+	const dispatch = useDispatch();
 	const handleUpdate = () => {
 		const data = {
 			heading: head,
@@ -18,13 +22,18 @@ function Banner(props) {
 	};
 
 	const handleImage = e => {
-		console.log(e.target.files);
 		const file = e.target.files[0];
 		if (file) {
-			setBannerimg(URL.createObjectURL(file));
+			dispatch(
+				uploadContent({
+					file: file,
+				})
+			).then(res => {
+				setBannerimg(res);
+				props.update({ banner_path: res });
+			});
 		}
 	};
-
 	return (
 		<Container
 			fluid

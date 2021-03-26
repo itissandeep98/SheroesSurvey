@@ -64,7 +64,7 @@ function CreateForm(props) {
 						</Col>
 					</Row>
 					<Row>
-						<Banner {...details} update={updateForm} />
+						<Banner {...details} update={updateForm} key={3} />
 					</Row>
 
 					<Row className="mt-4">
