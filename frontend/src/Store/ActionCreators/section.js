@@ -46,6 +46,27 @@ export const sectionFetch = id => {
 	};
 };
 
+export const sectionDelete = id => {
+	return async dispatch => {
+		dispatch({ type: ActionTypes.SECTION_DELETE_REQUEST });
+		return await axios
+			.delete(`${apiUrl}/sections/${id}/`)
+			.then(response => {
+				dispatch({
+					type: ActionTypes.SECTION_DELETE_SUCCESS,
+					data: response.data,
+				});
+			})
+			.catch(error => {
+				console.log(error.response);
+				dispatch({
+					type: ActionTypes.SECTION_DELETE_FAILED,
+					errmess: 'Error in connection with Server',
+				});
+			});
+	};
+};
+
 export const sectionUpdate = ({ id, data }) => {
 	return async dispatch => {
 		dispatch({ type: ActionTypes.SECTION_UPDATE_REQUEST });

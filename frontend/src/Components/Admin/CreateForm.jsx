@@ -7,7 +7,7 @@ import './style.css';
 import Banner from './Banner';
 import { useDispatch, useSelector } from 'react-redux';
 import { formFetch, formUpdate } from '../../Store/ActionCreators/form';
-import { sectionCreate } from '../../Store/ActionCreators/section';
+import { sectionCreate, sectionDelete } from '../../Store/ActionCreators/section';
 
 function CreateForm(props) {
 	const [details, setDetails] = useState('');
@@ -46,7 +46,8 @@ function CreateForm(props) {
 
 	const removeSection = index => {
 		// setStructure([...structure.slice(0, index), ...structure.slice(index + 1)]);
-		// setCurr(curr - 1);
+		dispatch(sectionDelete(index))
+		setCurr(curr - 1);
 	};
 
 	const updateForm = data => {
@@ -104,7 +105,7 @@ function CreateForm(props) {
 										key={structure[curr]}
 										id={structure[curr]}
 										index={curr + 1}
-										remove={() => removeSection(curr)}
+										remove={() => removeSection(structure[curr])}
 									/>
 								}
 							</Col>
