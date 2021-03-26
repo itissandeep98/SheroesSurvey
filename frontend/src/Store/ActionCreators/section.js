@@ -2,7 +2,7 @@ import axios from 'axios';
 import * as ActionTypes from '../ActionTypes';
 import { apiUrl } from '../Url';
 
-export const sectionCreate = ( data ) => {
+export const sectionCreate = data => {
 	return async dispatch => {
 		dispatch({ type: ActionTypes.SECTION_CREATE_REQUEST });
 		return await axios
@@ -12,7 +12,7 @@ export const sectionCreate = ( data ) => {
 					type: ActionTypes.SECTION_CREATE_SUCCESS,
 					data: response.data,
 				});
-				return response.data
+				return response.data;
 			})
 			.catch(error => {
 				console.log(error.response);
@@ -40,6 +40,28 @@ export const sectionFetch = id => {
 				console.log(error.response);
 				dispatch({
 					type: ActionTypes.SECTION_FETCH_FAILED,
+					errmess: 'Error in connection with Server',
+				});
+			});
+	};
+};
+
+export const sectionUpdate = ({ id, data }) => {
+	return async dispatch => {
+		dispatch({ type: ActionTypes.SECTION_UPDATE_REQUEST });
+		return await axios
+			.post(`${apiUrl}/sections/${id}/update_fields/`, data)
+			.then(response => {
+				dispatch({
+					type: ActionTypes.SECTION_UPDATE_SUCCESS,
+					data: response.data,
+				});
+				return response.data;
+			})
+			.catch(error => {
+				console.log(error.response);
+				dispatch({
+					type: ActionTypes.SECTION_UPDATE_FAILED,
 					errmess: 'Error in connection with Server',
 				});
 			});
