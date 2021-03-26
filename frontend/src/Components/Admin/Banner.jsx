@@ -59,6 +59,7 @@ function Banner(props) {
 								placeholder="Form title"
 								defaultValue={heading}
 								onChange={e => setheading(e.target.value)}
+								onKeyUp={handleUpdate}
 							/>
 						</Form.Field>
 						<Form.Field>
@@ -66,12 +67,13 @@ function Banner(props) {
 								placeholder="Form Description"
 								defaultValue={description}
 								onChange={e => setdescription(e.target.value)}
+								onKeyUp={handleUpdate}
 							/>
 						</Form.Field>
-						<Button className="float-right" onClick={handleUpdate}>
+						{/* <Button className="float-right" onClick={handleUpdate}>
 							<Icon name="check" />
 							Update
-						</Button>
+						</Button> */}
 					</Form>
 				</Col>
 			</Row>

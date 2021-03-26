@@ -42,8 +42,8 @@ function CreateForm(props) {
 	};
 
 	const removeSection = index => {
-		setStructure([...structure.slice(0, index), ...structure.slice(index + 1)]);
-		setCurr(curr - 1);
+		// setStructure([...structure.slice(0, index), ...structure.slice(index + 1)]);
+		// setCurr(curr - 1);
 	};
 
 	const updateForm = data => {

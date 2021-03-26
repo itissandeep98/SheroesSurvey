@@ -13,6 +13,8 @@ function Question(props) {
 	useEffect(() => {
 		dispatch(questionFetch(id)).then(res => setQues(res));
 	}, [dispatch]);
+
+	
 	return (
 		<>
 			Question {index}

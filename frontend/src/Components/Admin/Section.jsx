@@ -11,7 +11,10 @@ import {
 	TextArea,
 } from 'semantic-ui-react';
 import { questionCreate } from '../../Store/ActionCreators/question';
-import { sectionFetch } from '../../Store/ActionCreators/section';
+import {
+	sectionFetch,
+	sectionUpdate,
+} from '../../Store/ActionCreators/section';
 import Question from './Question';
 
 function Section(props) {
@@ -20,6 +23,7 @@ function Section(props) {
 	const [details, setDetails] = useState({});
 	const dispatch = useDispatch();
 	useEffect(() => {
+		console.log('here');
 		dispatch(sectionFetch(id)).then(res => {
 			setQuesList(res.question_sequence);
 			setDetails(res);
@@ -31,10 +35,20 @@ function Section(props) {
 			section_id: id,
 			created_by: 2,
 			updated_by: 2,
+			statement: 'demo question',
+			qtype: 'LP',
 		};
 		dispatch(questionCreate(data)).then(res => {
 			setQuesList([...quesList, res?.id]);
 		});
+	};
+
+	const updateSection = () => {
+		const data = {
+			heading: details.heading,
+			description: details.description,
+		};
+		dispatch(sectionUpdate({ id, data }));
 	};
 
 	return (
@@ -72,11 +86,23 @@ function Section(props) {
 					<Form>
 						<Form.Field>
 							<label>Heading</label>
-							<Input defaultValue={details.heading} />
+							<Input
+								defaultValue={details.heading}
+								onChange={e =>
+									setDetails({ ...details, heading: e.target.value })
+								}
+								onKeyUp={updateSection}
+							/>
 						</Form.Field>
 						<Form.Field>
 							<label>Description</label>
-							<TextArea defaultValue={details.description} />
+							<TextArea
+								defaultValue={details.description}
+								onChange={e =>
+									setDetails({ ...details, description: e.target.value })
+								}
+								onKeyUp={updateSection}
+							/>
 						</Form.Field>
 					</Form>
 				</Col>
@@ -84,20 +110,12 @@ function Section(props) {
 
 			<Row className="p-4 mb-4 rounded_lg  bg-white">
 				<Col>
-					{/* <ReactSortable
-						list={queslist}
-						setList={props.reOrderQuestion}
-						animation={200}
-						delayOnTouchStart={true}
-						delay={20}
-					> */}
 					{quesList &&
 						quesList.map((quesid, i) => (
-							<div key={Math.random()}>
+							<div>
 								<Question id={quesid} index={i + 1} />
 							</div>
 						))}
-					{/* </ReactSortable> */}
 				</Col>
 				<Col xs={12}>
 					<Button floated="right" onClick={addQuestion}>
