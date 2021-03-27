@@ -8,6 +8,7 @@ import {
 	questionUpdate,
 } from '../../Store/ActionCreators/question';
 import { QuestionTypes } from '../../Utils/QuestionTypes';
+import Options from './Options';
 
 function Question(props) {
 	const { id, index } = props;
@@ -76,6 +77,7 @@ function Question(props) {
 						value={ques.qtype}
 						onChange={handleType}
 					/>
+					{ques.qtype === 'MC' && <Options />}
 				</Form>
 			</div>
 		</>
