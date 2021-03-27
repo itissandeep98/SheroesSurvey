@@ -41,7 +41,7 @@ function Question(props) {
 				icon={<Icon name="ellipsis vertical" />}
 				simple>
 				<Dropdown.Menu>
-					<Dropdown.Item disabled>
+					<Dropdown.Item onClick={props.remove}>
 						<Icon name="trash" />
 						Delete
 					</Dropdown.Item>

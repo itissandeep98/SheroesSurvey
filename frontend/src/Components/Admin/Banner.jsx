@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Col, Container, Input, Label, Row } from 'reactstrap';
-import { Form, Icon, Image, TextArea } from 'semantic-ui-react';
+import { Col, Container, Label, Row } from 'reactstrap';
+import { Form, Icon, Image, Input, TextArea } from 'semantic-ui-react';
 import { uploadContent } from '../../Store/ActionCreators/upload';
 
 function Banner(props) {
@@ -69,6 +69,7 @@ function Banner(props) {
 								defaultValue={heading}
 								onChange={e => setheading(e.target.value)}
 								onKeyUp={handleUpdate}
+								
 							/>
 						</Form.Field>
 						<Form.Field>
@@ -79,10 +80,6 @@ function Banner(props) {
 								onKeyUp={handleUpdate}
 							/>
 						</Form.Field>
-						{/* <Button className="float-right" onClick={handleUpdate}>
-							<Icon name="check" />
-							Update
-						</Button> */}
 					</Form>
 				</Col>
 			</Row>

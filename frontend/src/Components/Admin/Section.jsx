@@ -10,7 +10,10 @@ import {
 	Input,
 	TextArea,
 } from 'semantic-ui-react';
-import { questionCreate } from '../../Store/ActionCreators/question';
+import {
+	questionCreate,
+	questionDelete,
+} from '../../Store/ActionCreators/question';
 import {
 	sectionFetch,
 	sectionUpdate,
@@ -37,12 +40,15 @@ function Section(props) {
 			created_by: 2,
 			updated_by: 2,
 			statement: 'Question',
-			qtype: 'LP',
+			qtype: 'SP',
 		};
 		dispatch(questionCreate(data)).then(res => {
 			setQuesList([...quesList, res?.id]);
 			setLoading(false);
 		});
+	};
+	const removeQuestion = index => {
+		dispatch(questionDelete(index));
 	};
 
 	const updateSection = () => {
@@ -115,7 +121,11 @@ function Section(props) {
 					{quesList &&
 						quesList.map((quesid, i) => (
 							<div>
-								<Question id={quesid} index={i + 1} />
+								<Question
+									id={quesid}
+									index={i + 1}
+									remove={() => removeQuestion(quesid)}
+								/>
 							</div>
 						))}
 				</Col>
