@@ -5,9 +5,13 @@ import Section from './Section';
 import classNames from 'classnames';
 import './style.css';
 import Banner from './Banner';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { formFetch, formUpdate } from '../../Store/ActionCreators/form';
-import { sectionCreate, sectionDelete } from '../../Store/ActionCreators/section';
+import {
+	sectionCreate,
+	sectionDelete,
+} from '../../Store/ActionCreators/section';
+import { withRouter } from 'react-router';
 
 function CreateForm(props) {
 	const [details, setDetails] = useState('');
@@ -46,7 +50,7 @@ function CreateForm(props) {
 
 	const removeSection = index => {
 		// setStructure([...structure.slice(0, index), ...structure.slice(index + 1)]);
-		dispatch(sectionDelete(index))
+		dispatch(sectionDelete(index));
 		setCurr(curr - 1);
 	};
 
@@ -61,7 +65,15 @@ function CreateForm(props) {
 				<Col lg={8}>
 					<Row>
 						<Col className="text-center">
-							<h1>Create a new Form</h1>
+							<h1 className="d-inline text-capitalize">{details.heading}</h1>
+							<a
+								className="zoom_on_hover float-right d-inline"
+								style={{ cursor: 'pointer' }}
+								href={`/${props?.match?.params?.id}`}
+								target="_blank"
+								rel="noopener noreferrer">
+								<Icon name="eye" size="large" />
+							</a>
 						</Col>
 					</Row>
 					<Row>
@@ -117,4 +129,4 @@ function CreateForm(props) {
 	);
 }
 
-export default CreateForm;
+export default withRouter(CreateForm);

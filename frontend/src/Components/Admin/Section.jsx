@@ -76,10 +76,6 @@ function Section(props) {
 								<Icon name="trash" />
 								Delete
 							</Dropdown.Item>
-							<Dropdown.Item disabled>
-								<Icon name="copy outline" />
-								Duplicate
-							</Dropdown.Item>
 						</Dropdown.Menu>
 					</Dropdown>
 					<small className="float-right text-muted">

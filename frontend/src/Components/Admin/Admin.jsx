@@ -1,7 +1,7 @@
 import { NavLink, withRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Col, Container, Row } from 'reactstrap';
-import { Card, Icon, List } from 'semantic-ui-react';
+import { Card, Header, Icon, IconGroup, List } from 'semantic-ui-react';
 import './style.css';
 import { allformFetch, formCreate } from '../../Store/ActionCreators/form';
 import { useEffect, useState } from 'react';
@@ -50,7 +50,17 @@ function Admin(props) {
 						<Card
 							className="zoom_on_hover"
 							onClick={() => props.history.push(`/admin/${card.id}`)}>
-							<Card.Content header={`${card.heading}`} />
+							<Card.Content>
+								<Header className="d-inline">{card.heading}</Header>
+								<a
+									className="zoom_on_hover float-right d-inline text-dark"
+									style={{ cursor: 'pointer' }}
+									href={`/${card.id}`}
+									target="_blank"
+									rel="noopener noreferrer">
+									<Icon name="eye" size="large" />
+								</a>
+							</Card.Content>
 							<Card.Content className="text-justify text-dark">
 								{card.description}
 								<List bulleted>
