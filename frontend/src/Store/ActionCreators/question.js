@@ -45,3 +45,25 @@ export const questionFetch = id => {
 			});
 	};
 };
+
+export const questionUpdate = ({ id, data }) => {
+	return async dispatch => {
+		dispatch({ type: ActionTypes.QUESTION_UPDATE_REQUEST });
+		return await axios
+			.post(`${apiUrl}/questions/${id}/update_fields/`, data)
+			.then(response => {
+				dispatch({
+					type: ActionTypes.QUESTION_UPDATE_SUCCESS,
+					data: response.data,
+				});
+				return response.data;
+			})
+			.catch(error => {
+				console.log(error.response);
+				dispatch({
+					type: ActionTypes.QUESTION_UPDATE_FAILED,
+					errmess: 'Error in connection with Server',
+				});
+			});
+	};
+};

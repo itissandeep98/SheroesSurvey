@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Container, Row } from 'reactstrap';
+import { Col, Container, Row, Spinner } from 'reactstrap';
 import { Button, Icon, List } from 'semantic-ui-react';
 import Section from './Section';
 import classNames from 'classnames';
@@ -7,11 +7,12 @@ import './style.css';
 import Banner from './Banner';
 import { useDispatch, useSelector } from 'react-redux';
 import { formFetch, formUpdate } from '../../Store/ActionCreators/form';
-import { sectionCreate } from '../../Store/ActionCreators/section';
+import { sectionCreate, sectionDelete } from '../../Store/ActionCreators/section';
 
 function CreateForm(props) {
 	const [details, setDetails] = useState('');
 	const [structure, setStructure] = useState([]);
+	const [loading, setLoading] = useState(false);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -25,6 +26,7 @@ function CreateForm(props) {
 	const [curr, setCurr] = useState(0);
 
 	const addSection = () => {
+		setLoading(true);
 		const data = {
 			question_sequence: [],
 			form_id: props?.match?.params?.id,
@@ -38,17 +40,19 @@ function CreateForm(props) {
 				setStructure([res.id]);
 			}
 			setCurr(structure.length);
+			setLoading(false);
 		});
 	};
 
 	const removeSection = index => {
 		// setStructure([...structure.slice(0, index), ...structure.slice(index + 1)]);
-		// setCurr(curr - 1);
+		dispatch(sectionDelete(index))
+		setCurr(curr - 1);
 	};
 
 	const updateForm = data => {
 		const { id } = props?.match?.params;
-		dispatch(formUpdate({id,data}));
+		dispatch(formUpdate({ id, data }));
 	};
 
 	return (
@@ -61,16 +65,22 @@ function CreateForm(props) {
 						</Col>
 					</Row>
 					<Row>
-						<Banner {...details} update={updateForm} />
+						<Banner {...details} update={updateForm} key={3} />
 					</Row>
 
 					<Row className="mt-4">
 						<Col>
 							<div className="sticky-top text-center" style={{ zIndex: 0 }}>
 								<br />
-								<Button onClick={addSection} size="mini">
-									<Icon name="plus" />
-									Add Section
+								<Button onClick={addSection} size="mini" disabled={loading}>
+									{loading ? (
+										<Spinner />
+									) : (
+										<>
+											<Icon name="plus" />
+											Add Section
+										</>
+									)}
 								</Button>
 								<List>
 									{structure?.map((section, i) => (
@@ -95,7 +105,7 @@ function CreateForm(props) {
 										key={structure[curr]}
 										id={structure[curr]}
 										index={curr + 1}
-										remove={() => removeSection(curr)}
+										remove={() => removeSection(structure[curr])}
 									/>
 								}
 							</Col>
