@@ -17,6 +17,7 @@ function CreateForm(props) {
 	const [details, setDetails] = useState('');
 	const [structure, setStructure] = useState([]);
 	const [loading, setLoading] = useState(false);
+	const [curr, setCurr] = useState(0);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -26,8 +27,6 @@ function CreateForm(props) {
 			setDetails(res);
 		});
 	}, [dispatch]);
-
-	const [curr, setCurr] = useState(0);
 
 	const addSection = () => {
 		setLoading(true);
@@ -48,10 +47,10 @@ function CreateForm(props) {
 		});
 	};
 
-	const removeSection = index => {
-		// setStructure([...structure.slice(0, index), ...structure.slice(index + 1)]);
-		dispatch(sectionDelete(index));
-		setCurr(curr - 1);
+	const removeSection = (id, index) => {
+		setStructure([...structure.slice(0, index), ...structure.slice(index + 1)]);
+		dispatch(sectionDelete(id));
+		setCurr(index - 1);
 	};
 
 	const updateForm = data => {
@@ -110,14 +109,14 @@ function CreateForm(props) {
 								</List>
 							</div>
 						</Col>
-						{structure?.length > 0 && (
+						{structure?.length > 0 && curr>-1 && (
 							<Col xs={10}>
 								{
 									<Section
 										key={structure[curr]}
 										id={structure[curr]}
 										index={curr + 1}
-										remove={() => removeSection(structure[curr])}
+										remove={() => removeSection(structure[curr], curr)}
 									/>
 								}
 							</Col>

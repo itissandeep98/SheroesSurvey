@@ -51,7 +51,7 @@ function Banner(props) {
 							cursor: 'pointer',
 						}}>
 						{bannerimg ? (
-							<Image src={bannerimg} />
+							<Image src={bannerimg} fluid/>
 						) : (
 							<>
 								<br />

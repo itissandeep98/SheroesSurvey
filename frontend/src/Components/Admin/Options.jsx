@@ -23,7 +23,7 @@ function Options() {
 		<Form.Field className="mt-3">
 			<List >
 				{options.map(option => (
-					<List.Item>
+					<List.Item key={Math.random()}>
 						<List.Icon name="circle outline" size="small" verticalAlign="middle" className="text-danger" />
 						<List.Content>
 							<Input defaultValue={option.text} />

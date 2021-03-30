@@ -1,7 +1,7 @@
-import { NavLink, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Col, Container, Row } from 'reactstrap';
-import { Card, Header, Icon, IconGroup, List } from 'semantic-ui-react';
+import { Card, Header, Icon, List } from 'semantic-ui-react';
 import './style.css';
 import { allformFetch, formCreate } from '../../Store/ActionCreators/form';
 import { useEffect, useState } from 'react';
@@ -46,6 +46,7 @@ function Admin(props) {
 						sm={6}
 						md={4}
 						lg={3}
+						key={Math.random()}
 						className="my-2 h-100  justify-content-center d-flex">
 						<Card
 							className="zoom_on_hover"

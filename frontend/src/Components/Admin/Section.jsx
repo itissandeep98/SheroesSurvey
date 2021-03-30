@@ -47,8 +47,9 @@ function Section(props) {
 			setLoading(false);
 		});
 	};
-	const removeQuestion = index => {
-		dispatch(questionDelete(index));
+	const removeQuestion = (id, index) => {
+		dispatch(questionDelete(id));
+		setQuesList([...quesList.slice(0, index), ...quesList.slice(index + 1)]);
 	};
 
 	const updateSection = () => {
@@ -116,11 +117,11 @@ function Section(props) {
 				<Col>
 					{quesList &&
 						quesList.map((quesid, i) => (
-							<div>
+							<div key={Math.random()}>
 								<Question
 									id={quesid}
 									index={i + 1}
-									remove={() => removeQuestion(quesid)}
+									remove={() => removeQuestion(quesid, i)}
 								/>
 							</div>
 						))}
