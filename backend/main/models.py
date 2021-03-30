@@ -71,12 +71,24 @@ class Sections(models.Model):
     updated_on = models.DateTimeField(auto_now=True, null=False) #update
     created_by =  models.ForeignKey(Users,on_delete=models.CASCADE,related_name = "section_created_by") #edit
     updated_by =  models.ForeignKey(Users,on_delete=models.CASCADE,related_name = "section_updated_by") #edit
+    
     def save(self,*args,**kwargs):
         new_section = super().save(*args, **kwargs)
         current_form = self.form_id
         if(self.id not in current_form.section_sequence):
             current_form.section_sequence.append(self.id)
         current_form.save()
+
+    def delete(self, *args, **kwargs):
+        form_instance=self.form_id
+        # print("Form id:", form_instance.id, "Sec id:",self.id)
+        try:
+            form_instance.section_sequence.remove(self.id)
+        except:
+            print("Section not in form.section_sequence; this should never happen")
+        form_instance.save()
+        deleted=super().delete(*args, **kwargs)
+        return deleted
 
 class Questions(models.Model):
     class QuestionType(models.TextChoices): #edit
@@ -104,12 +116,24 @@ class Questions(models.Model):
     updated_on = models.DateTimeField(auto_now=True, null=False) #update
     created_by =  models.ForeignKey(Users,on_delete=models.CASCADE,related_name = "question_created_by") #edit
     updated_by =  models.ForeignKey(Users,on_delete=models.CASCADE,related_name = "question_updated_by") #edit
+    
     def save(self,*args,**kwargs):
         new_question = super().save(*args, **kwargs)
         current_section = self.section_id
         if(self.id not in current_section.question_sequence):
             current_section.question_sequence.append(self.id)
         current_section.save()
+
+    def delete(self, *args, **kwargs):
+        section_instance=self.section_id
+        # print("Section id:", section_instance.id, "question id:",self.id)
+        try:
+            section_instance.question_sequence.remove(self.id)
+        except:
+            print("Question not in section.question_sequence; this should never happen")
+        section_instance.save()
+        deleted=super().delete(*args, **kwargs)
+        return deleted
 
 
 class Options(models.Model):
