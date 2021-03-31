@@ -41,7 +41,7 @@ function Section(props) {
 						<h2 className="section_name d-inline-block pr-4">
 							Section {index}
 						</h2>
-						<h3>{details.heading}</h3>
+						<h3 className="text-capitalize">{details.heading}</h3>
 						<p className="text-justify text-muted">{details.description}</p>
 						<hr />
 						{quesList &&

@@ -37,7 +37,7 @@ function Banner(props) {
 			</Row>
 			<Row>
 				<Col className="text-center mt-n3">
-					<Button icon className="bg-white" onClick={() => setHidden(!hidden)}>
+					<Button icon className="bg-white" fluid onClick={() => setHidden(!hidden)}>
 						<Icon
 							name={classNames('chevron', {
 								up: hidden,
