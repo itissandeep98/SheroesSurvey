@@ -63,7 +63,7 @@ function Admin(props) {
 								</a>
 							</Card.Content>
 							<Card.Content className="text-justify text-dark">
-								{card.description}
+								{card.description?.substring(0, 100)}
 								<List bulleted>
 									<List.Item>
 										{card.section_sequence?.length} Sections

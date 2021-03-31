@@ -22,16 +22,19 @@ function Form(props) {
 	return (
 		<Container className="mb-5">
 			<Banner {...details} key={3} />
-			<Row>
-				<Col>
-					<Progress value={curr + 1} max={structure.length} color="danger">
-						{((curr + 1) / structure.length) * 100}%
-					</Progress>
-					<br />
-				</Col>
-			</Row>
 			{structure.length > 0 && (
-				<Section key={Math.random()} index={curr + 1} id={structure[curr]} />
+				<>
+					<Row>
+						<Col>
+							<Progress value={curr + 1} max={structure.length} color="danger">
+								{Math.floor(((curr + 1) / structure.length) * 100)}%
+							</Progress>
+							<br />
+						</Col>
+					</Row>
+
+					<Section key={Math.random()} index={curr + 1} id={structure[curr]} />
+				</>
 			)}
 			{curr > 0 && (
 				<Button
@@ -62,6 +65,9 @@ function Form(props) {
 			)}
 			<br />
 			<br />
+			<br />
+			<br />
+		
 		</Container>
 	);
 }

@@ -127,7 +127,7 @@ function Section(props) {
 						))}
 				</Col>
 				<Col xs={12}>
-					<Button floated="right" onClick={addQuestion} disabled={loading}>
+					<Button floated="right" onClick={addQuestion} disabled={loading} className="rounded-pill">
 						{loading ? (
 							<Spinner />
 						) : (
