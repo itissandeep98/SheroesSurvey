@@ -21,7 +21,7 @@ function Banner(props) {
 					<Image src={banner_path} fluid />
 				</div>
 				<Col className="my-3">
-					<h1 className="text-capitalize">{heading}</h1>
+					<h1 className="text-capitalize text-center">{heading}</h1>
 					<p
 						className={classNames(
 							'text-justify',
