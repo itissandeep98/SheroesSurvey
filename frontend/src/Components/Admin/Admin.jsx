@@ -1,7 +1,7 @@
-import { NavLink, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Col, Container, Row } from 'reactstrap';
-import { Card, Icon } from 'semantic-ui-react';
+import { Card, Header, Icon, List } from 'semantic-ui-react';
 import './style.css';
 import { allformFetch, formCreate } from '../../Store/ActionCreators/form';
 import { useEffect, useState } from 'react';
@@ -12,7 +12,8 @@ function Admin(props) {
 	const [cards, setCards] = useState([]);
 	useEffect(() => {
 		dispatch(allformFetch()).then(res => {
-			setCards(res);
+			const temp = res.sort((a, b) => (a.updated_on < b.updated_on ? 1 : -1));
+			setCards(temp);
 		});
 	}, [dispatch]);
 
@@ -30,26 +31,50 @@ function Admin(props) {
 		<Container className="mt-3" fluid>
 			<Row className="d-flex justify-content-center">
 				<Col lg={8}>
-					<div onClick={handleCreate} className="border p-3 bg-white text-dark">
+					<div
+						onClick={handleCreate}
+						className="border p-3 bg-white text-dark"
+						style={{ cursor: 'pointer' }}>
 						<Icon name="plus circle" size="big" />
 						Create New Form
 					</div>
 				</Col>
 			</Row>
-			<Row className=" mt-5">
+			<Row className=" mt-5 justify-content-center">
 				{cards?.map(card => (
-					<Col xs={3} className="my-2 h-100">
-						<NavLink to={`/admin/${card.id}`}>
-							<Card>
-								<Card.Content header={`${card.heading}`} />
-								<Card.Content className="text-justify text-dark">
-									{card.description}
-								</Card.Content>
-								<Card.Content extra>
-									<small>Created {moment(card.created_on).fromNow()}</small>
-								</Card.Content>
-							</Card>
-						</NavLink>
+					<Col
+						sm={6}
+						md={4}
+						lg={3}
+						key={Math.random()}
+						className="my-2 h-100  justify-content-center d-flex">
+						<Card
+							className="zoom_on_hover"
+							onClick={() => props.history.push(`/admin/${card.id}`)}>
+							<Card.Content>
+								<Header className="d-inline">{card.heading}</Header>
+								<a
+									className="zoom_on_hover float-right d-inline text-dark"
+									style={{ cursor: 'pointer' }}
+									href={`/${card.id}`}
+									target="_blank"
+									rel="noopener noreferrer">
+									<Icon name="eye" size="large" />
+								</a>
+							</Card.Content>
+							<Card.Content className="text-justify text-dark">
+								{card.description?.substring(0,100)}
+								<List bulleted>
+									<List.Item>
+										{card.section_sequence?.length} Sections
+									</List.Item>
+									<List.Item>Created by {card.created_by}</List.Item>
+								</List>
+							</Card.Content>
+							<Card.Content extra>
+								<small>Updated {moment(card.updated_on).fromNow()}</small>
+							</Card.Content>
+						</Card>
 					</Col>
 				))}
 			</Row>

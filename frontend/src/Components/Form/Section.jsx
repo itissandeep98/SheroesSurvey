@@ -1,31 +1,58 @@
-import { Col, Container, Row } from 'reactstrap';
-import NumberInput from './Inputs/NumberInput';
-import ParagraphInput from './Inputs/ParagraphInput';
-import TextInput from './Inputs/TextInput';
-import MultipleChoiceInput from './Inputs/MultipleChoiceInput';
+import { Col, Container, Row, Spinner } from 'reactstrap';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { sectionFetch } from '../../Store/ActionCreators/section';
+import Question from './Question';
+import { Placeholder } from 'semantic-ui-react';
 
 function Section(props) {
-	const { questions, heading, desc, index } = props;
+	const { index } = props;
+	const [quesList, setQuesList] = useState([]);
+	const [details, setDetails] = useState({});
+	const [loading, setLoading] = useState(true);
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(sectionFetch(props.id)).then(res => {
+			setQuesList(res.question_sequence);
+			setDetails(res);
+			setLoading(false);
+		});
+	}, [dispatch]);
 	return (
 		<Container fluid className=" p-4 mb-4 rounded_lg  bg-white">
 			<Row>
-				<Col>
-					<h1 className="section_name d-inline-block pr-4">Section {index}</h1>
-					<h3>{heading}</h3>
-					<p className="text-justify">{desc}</p>
-					{questions.map((ques, i) => (
-						<>
-							{ques.type == 'text' && <TextInput {...ques} index={i + 1} />}
-							{ques.type == 'number' && <NumberInput {...ques} index={i + 1} />}
-							{ques.type == 'paragraph' && (
-								<ParagraphInput {...ques} index={i + 1} />
-							)}
-							{ques.type == 'multiple' && (
-								<MultipleChoiceInput {...ques} index={i + 1} />
-							)}
-						</>
-					))}
-				</Col>
+				{loading ? (
+					<Col>
+						<Placeholder fluid>
+							<Placeholder.Header image>
+								<Placeholder.Line />
+								<Placeholder.Line />
+							</Placeholder.Header>
+							<Placeholder.Paragraph>
+								<Placeholder.Line />
+								<Placeholder.Line />
+								<Placeholder.Line />
+								<Placeholder.Line />
+							</Placeholder.Paragraph>
+						</Placeholder>
+					</Col>
+				) : (
+					<Col>
+						<h2 className="section_name d-inline-block pr-4">
+							Section {index}
+						</h2>
+						<h3 className="text-capitalize">{details.heading}</h3>
+						<p className="text-justify text-muted">{details.description}</p>
+						<hr />
+						{quesList &&
+							quesList.map((ques, i) => (
+								<div>
+									<Question id={ques} index={i + 1} />
+									<br />
+								</div>
+							))}
+					</Col>
+				)}
 			</Row>
 		</Container>
 	);

@@ -67,3 +67,24 @@ export const questionUpdate = ({ id, data }) => {
 			});
 	};
 };
+
+export const questionDelete = id => {
+	return async dispatch => {
+		dispatch({ type: ActionTypes.QUESTION_DELETE_REQUEST });
+		return await axios
+			.delete(`${apiUrl}/questions/${id}/`)
+			.then(response => {
+				dispatch({
+					type: ActionTypes.QUESTION_DELETE_SUCCESS,
+					data: response.data,
+				});
+			})
+			.catch(error => {
+				console.log(error.response);
+				dispatch({
+					type: ActionTypes.QUESTION_DELETE_FAILED,
+					errmess: 'Error in connection with Server',
+				});
+			});
+	};
+};

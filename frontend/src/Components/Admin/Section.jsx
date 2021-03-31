@@ -10,7 +10,10 @@ import {
 	Input,
 	TextArea,
 } from 'semantic-ui-react';
-import { questionCreate } from '../../Store/ActionCreators/question';
+import {
+	questionCreate,
+	questionDelete,
+} from '../../Store/ActionCreators/question';
 import {
 	sectionFetch,
 	sectionUpdate,
@@ -37,12 +40,16 @@ function Section(props) {
 			created_by: 2,
 			updated_by: 2,
 			statement: 'Question',
-			qtype: 'LP',
+			qtype: 'SP',
 		};
 		dispatch(questionCreate(data)).then(res => {
 			setQuesList([...quesList, res?.id]);
 			setLoading(false);
 		});
+	};
+	const removeQuestion = (id, index) => {
+		dispatch(questionDelete(id));
+		setQuesList([...quesList.slice(0, index), ...quesList.slice(index + 1)]);
 	};
 
 	const updateSection = () => {
@@ -69,10 +76,6 @@ function Section(props) {
 							<Dropdown.Item onClick={props.remove}>
 								<Icon name="trash" />
 								Delete
-							</Dropdown.Item>
-							<Dropdown.Item disabled>
-								<Icon name="copy outline" />
-								Duplicate
 							</Dropdown.Item>
 						</Dropdown.Menu>
 					</Dropdown>
@@ -114,13 +117,17 @@ function Section(props) {
 				<Col>
 					{quesList &&
 						quesList.map((quesid, i) => (
-							<div>
-								<Question id={quesid} index={i + 1} />
+							<div key={Math.random()}>
+								<Question
+									id={quesid}
+									index={i + 1}
+									remove={() => removeQuestion(quesid, i)}
+								/>
 							</div>
 						))}
 				</Col>
 				<Col xs={12}>
-					<Button floated="right" onClick={addQuestion} disabled={loading}>
+					<Button floated="right" onClick={addQuestion} disabled={loading} className="rounded-pill">
 						{loading ? (
 							<Spinner />
 						) : (

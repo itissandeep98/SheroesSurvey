@@ -8,6 +8,7 @@ import {
 	questionUpdate,
 } from '../../Store/ActionCreators/question';
 import { QuestionTypes } from '../../Utils/QuestionTypes';
+import Options from './Options';
 
 function Question(props) {
 	const { id, index } = props;
@@ -41,7 +42,7 @@ function Question(props) {
 				icon={<Icon name="ellipsis vertical" />}
 				simple>
 				<Dropdown.Menu>
-					<Dropdown.Item disabled>
+					<Dropdown.Item onClick={props.remove}>
 						<Icon name="trash" />
 						Delete
 					</Dropdown.Item>
@@ -76,6 +77,7 @@ function Question(props) {
 						value={ques.qtype}
 						onChange={handleType}
 					/>
+					{ques.qtype === 'MC' && <Options />}
 				</Form>
 			</div>
 		</>
