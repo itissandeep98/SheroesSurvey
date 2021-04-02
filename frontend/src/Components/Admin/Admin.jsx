@@ -1,7 +1,7 @@
 import { withRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Col, Container, Row } from 'reactstrap';
-import { Card, Header, Icon, List } from 'semantic-ui-react';
+import { Icon } from 'semantic-ui-react';
 import './style.css';
 import {
 	allformFetch,
@@ -9,7 +9,6 @@ import {
 	formDelete,
 } from '../../Store/ActionCreators/form';
 import { useEffect, useState } from 'react';
-import moment from 'moment';
 import FormCard from './FormCard';
 
 function Admin(props) {
@@ -51,12 +50,7 @@ function Admin(props) {
 			</Row>
 			<Row className=" mt-4 justify-content-center d-flex">
 				{cards?.map((card, index) => (
-					<Col
-						sm={6}
-						md={4}
-						lg={3}
-						key={Math.random()}
-						className="h-100 ">
+					<Col sm={6} md={4} lg={3} key={Math.random()} className="h-100 ">
 						<FormCard {...card} delete={() => handleDelete(card.id, index)} />
 					</Col>
 				))}

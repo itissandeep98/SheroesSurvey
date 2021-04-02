@@ -7,10 +7,11 @@ import {
 	ModalHeader,
 	Row,
 } from 'reactstrap';
-import { Button, Icon, List } from 'semantic-ui-react';
+import { Button, Icon, Image, List } from 'semantic-ui-react';
 import { useState } from 'react';
 import moment from 'moment';
 import { withRouter } from 'react-router';
+import { NavLink } from 'react-router-dom';
 
 function FormCard(props) {
 	const {
@@ -20,14 +21,22 @@ function FormCard(props) {
 		section_sequence,
 		created_by,
 		updated_on,
+		banner_path,
 	} = props;
 	const [modal, setModal] = useState(false);
 
 	const toggle = () => setModal(!modal);
 	return (
-		<Container className="shadow bg-white zoom_on_hover pt-3 rounded_lg border-danger border mt-3 h-100 d-flex justify-content-between flex-column">
+		<Container className="shadow bg-white zoom_on_hover overflow-hidden rounded_lg border-danger border mt-3 h-100 d-flex justify-content-between flex-column">
 			<Row
-				className=" text-center h-100"
+				style={{
+					maxHeight: '10rem',
+				}}
+				className="overflow-hidden">
+				<Image src={banner_path} fluid />
+			</Row>
+			<Row
+				className="mt-2 text-center h-100"
 				onClick={() => props.history.push(`/admin/${id}`)}
 				style={{ cursor: 'pointer' }}>
 				<Col>
@@ -47,7 +56,9 @@ function FormCard(props) {
 							</List>
 						</Col>
 					</Row>
-					<small>Updated {moment(updated_on).fromNow()}</small>
+					<small>
+						<em>Updated {moment(updated_on).fromNow()}</em>
+					</small>
 				</Col>
 			</Row>
 			<Row>
@@ -55,13 +66,17 @@ function FormCard(props) {
 					<hr />
 					<div className="d-flex justify-content-around mb-3 w-100">
 						<a
-							className="zoom_on_hover float-right d-inline text-dark"
+							className="zoom_on_hover text-dark"
 							style={{ cursor: 'pointer' }}
 							href={`/${id}`}
 							target="_blank"
 							rel="noopener noreferrer">
 							<Icon name="eye" size="large" />
 						</a>
+
+						<NavLink to={`/admin/${id}/responses`} className="text-dark">
+							<Icon name="users" size="large" />
+						</NavLink>
 
 						<Icon
 							name="trash"
@@ -78,10 +93,10 @@ function FormCard(props) {
 					Are you sure you want to delete form titled <em>"{heading}"</em>?
 				</ModalBody>
 				<ModalFooter>
-					<Button color="primary" onClick={props.delete}>
+					<Button primary onClick={props.delete}>
 						Yes
 					</Button>
-					<Button color="secondary" onClick={toggle}>
+					<Button secondary onClick={toggle}>
 						Cancel
 					</Button>
 				</ModalFooter>
