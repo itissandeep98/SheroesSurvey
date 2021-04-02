@@ -25,3 +25,22 @@ export const QuestionTypes = [
 		value: 'MC',
 	},
 ];
+
+export const ShortQuestions = [
+	{
+		key: 1,
+		text: 'Text',
+		value: 'TXT',
+	},
+	{
+		key: 2,
+		text: 'Integer',
+		value: 'INT',
+	},
+	{
+		key: 3,
+		text: 'Float',
+		value: 'FLT',
+	},
+];
+
