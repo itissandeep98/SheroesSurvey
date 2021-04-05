@@ -268,7 +268,7 @@ class OptionsViewSet(viewsets.ModelViewSet):
 
 
 class ResponsesViewSet(viewsets.ModelViewSet):
-    queryset = Options.objects.all()
+    queryset = Responses.objects.all()
     permission_classes = [
         permissions.AllowAny
     ]
