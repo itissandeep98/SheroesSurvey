@@ -142,7 +142,8 @@ class Options(models.Model):
     image_toggle = models.BooleanField(default=False, null=False)
     image_path = models.CharField(max_length=500, null=True)
     correct_answer = models.BooleanField(null=False, default=False)
-    
+
+
 class Dropdown(models.Model):
     question_id = models.ForeignKey(Questions,on_delete=models.CASCADE) #edit
     dropdown_json = models.JSONField()
