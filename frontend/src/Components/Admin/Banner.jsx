@@ -43,20 +43,22 @@ function Banner(props) {
 					className="w-100"
 					style={{
 						overflow: 'hidden',
-						maxHeight: '20rem',
+						height: '20rem',
+						backgroundColor: '#bfbaba',
 					}}>
 					<Label
-						className="text-info w-100 h-100 text-center "
+						className="text-white w-100 h-100 text-center d-flex justify-content-center align-items-center"
 						style={{
 							cursor: 'pointer',
 						}}>
 						{bannerimg ? (
-							<Image src={bannerimg} fluid/>
+							<Image src={bannerimg} fluid />
 						) : (
-							<>
-								<br />
+							<div
+								className="display-4 p-5"
+								style={{ borderStyle: 'dotted' }}>
 								<Icon name="add" /> Add Banner
-							</>
+							</div>
 						)}
 						<Input type="file" accept="image/*" hidden onChange={handleImage} />
 					</Label>
@@ -69,7 +71,6 @@ function Banner(props) {
 								defaultValue={heading}
 								onChange={e => setheading(e.target.value)}
 								onKeyUp={handleUpdate}
-								
 							/>
 						</Form.Field>
 						<Form.Field>

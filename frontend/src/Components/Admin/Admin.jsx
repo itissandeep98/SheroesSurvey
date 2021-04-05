@@ -1,11 +1,15 @@
 import { withRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Col, Container, Row } from 'reactstrap';
-import { Card, Header, Icon, List } from 'semantic-ui-react';
+import { Icon } from 'semantic-ui-react';
 import './style.css';
-import { allformFetch, formCreate } from '../../Store/ActionCreators/form';
+import {
+	allformFetch,
+	formCreate,
+	formDelete,
+} from '../../Store/ActionCreators/form';
 import { useEffect, useState } from 'react';
-import moment from 'moment';
+import FormCard from './FormCard';
 
 function Admin(props) {
 	const dispatch = useDispatch();
@@ -26,6 +30,10 @@ function Admin(props) {
 		dispatch(formCreate(data)).then(res => {
 			props.history.push(`/admin/${res.id}`);
 		});
+	};
+	const handleDelete = (id, index) => {
+		setCards([...cards.slice(0, index), ...cards.slice(index + 1)]);
+		dispatch(formDelete(id));
 	};
 	return (
 		<Container className="mt-3" fluid>

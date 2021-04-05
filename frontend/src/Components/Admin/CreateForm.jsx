@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Col, Container, Row, Spinner } from 'reactstrap';
 import { Button, Icon, List } from 'semantic-ui-react';
 import Section from './Section';
@@ -50,7 +50,13 @@ function CreateForm(props) {
 	const removeSection = (id, index) => {
 		setStructure([...structure.slice(0, index), ...structure.slice(index + 1)]);
 		dispatch(sectionDelete(id));
-		setCurr(index - 1);
+		if (index == 0) {
+			if (structure.length > 0) {
+				setCurr(0);
+			}
+		} else {
+			setCurr(index - 1);
+		}
 	};
 
 	const updateForm = data => {
@@ -80,7 +86,7 @@ function CreateForm(props) {
 					</Row>
 
 					<Row className="mt-4">
-						<Col>
+						<Col xs={2}>
 							<div className="sticky-top text-center" style={{ zIndex: 0 }}>
 								<br />
 								<Button onClick={addSection} size="mini" disabled={loading}>
@@ -109,8 +115,8 @@ function CreateForm(props) {
 								</List>
 							</div>
 						</Col>
-						{structure?.length > 0 && curr>-1 && (
-							<Col xs={10}>
+						{structure?.length > 0 && curr > -1 && (
+							<Col>
 								{
 									<Section
 										key={structure[curr]}

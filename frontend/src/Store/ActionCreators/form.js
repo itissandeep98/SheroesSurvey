@@ -67,11 +67,11 @@ export const formFetch = id => {
 	};
 };
 
-export const formUpdate = ({id,data}) => {
+export const formUpdate = ({ id, data }) => {
 	return async dispatch => {
 		dispatch({ type: ActionTypes.FORM_UPDATE_REQUEST });
 		return await axios
-			.post(`${apiUrl}/forms/${id}/update_fields/`,data)
+			.post(`${apiUrl}/forms/${id}/update_fields/`, data)
 			.then(response => {
 				dispatch({
 					type: ActionTypes.FORM_UPDATE_SUCCESS,
@@ -83,6 +83,28 @@ export const formUpdate = ({id,data}) => {
 				console.log(error.response);
 				dispatch({
 					type: ActionTypes.FORM_UPDATE_FAILED,
+					errmess: 'Error in connection with Server',
+				});
+			});
+	};
+};
+
+export const formDelete = id => {
+	return async dispatch => {
+		dispatch({ type: ActionTypes.FORM_DELETE_REQUEST });
+		return await axios
+			.delete(`${apiUrl}/forms/${id}/`)
+			.then(response => {
+				dispatch({
+					type: ActionTypes.FORM_DELETE_SUCCESS,
+					data: response.data,
+				});
+				return response.data;
+			})
+			.catch(error => {
+				console.log(error.response);
+				dispatch({
+					type: ActionTypes.FORM_DELETE_FAILED,
 					errmess: 'Error in connection with Server',
 				});
 			});
