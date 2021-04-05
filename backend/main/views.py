@@ -230,6 +230,18 @@ class ShortParaViewSet(viewsets.ModelViewSet):
 
 
 class OptionsViewSet(viewsets.ModelViewSet):
+    """
+    Posting a new option for a MCQ question,
+    Format:
+        heroku url: https://sheroes-form.herokuapp.com/options/
+        local url:  http://127.0.0.1:8000/options/
+        {
+            "question_id" : <question_id>,
+            "content": <content of the ption>,
+            "image_toggle" : <if option is an image>,
+            "correct_answer" : <whether it is the correct answer>   
+        }
+    """
     queryset = Options.objects.all()
     permission_classes = [
         permissions.AllowAny
@@ -243,8 +255,7 @@ class OptionsViewSet(viewsets.ModelViewSet):
             url: https://sheroes-form.herokuapp.com/options/<option-id>/update_fields/
             url: http://127.0.0.1:8000/options/<option-id>/section_fields/
             {
-                "fields": ["content" , "image_toggle", "correct_answer]
-                "content": "Yo, this ma option",
+                "content": "Yo, this is my option",
                 "image_toggle" : false,
                 "correct_answer" : true
             }
