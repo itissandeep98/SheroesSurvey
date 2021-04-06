@@ -48,7 +48,29 @@ class Forms(models.Model):
     created_by =  models.ForeignKey(Users,on_delete=models.CASCADE,related_name = "form_created_by") #edit
     updated_by =  models.ForeignKey(Users,on_delete=models.CASCADE,related_name = "form_updated_by") #edit
     is_deleted = models.BooleanField(null=False,default=False)
-  
+
+    def delete(self, *args, **kwargs):
+        """
+        This function was Overriden because we want to soft delete instead of hard delete.
+        """
+        self.is_deleted = True
+        current_section_sequence = self.section_sequence
+        # for i in current_section_sequence:
+        #     print(i,type(i))
+
+        section_obj_list = Sections.objects.all()
+
+        #Can optimize these two for loops
+        for sec_object in section_obj_list:
+            for section_id in current_section_sequence:
+                if(sec_object.id == section_id): 
+                    print(sec_object.id,section_id)
+                    #instead of calling delete we can directly do soft delete
+                    sec_object.soft_delete()       
+
+
+
+
 # class Page(models.Model):
 #     form_id = models.ForeignKey(Forms)
 #     #update in form_id
@@ -89,6 +111,15 @@ class Sections(models.Model):
         form_instance.save()
         deleted=super().delete(*args, **kwargs)
         return deleted
+
+    #no is_deleted field here .    
+    def soft_delete(self):
+        ques_seq = self.question_sequence
+        ques_seq_obj = Questions.objects.all()
+        for ques in ques_seq:
+            for ques_obj in ques_seq_obj:
+                if(ques_obj.id == ques.id):
+                    ques_obj.delete()
 
 class Questions(models.Model):
     class QuestionType(models.TextChoices): #edit
