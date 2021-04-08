@@ -1,7 +1,13 @@
-import { FormGroup, Input, Label } from 'reactstrap';
-import { Form } from 'semantic-ui-react';
+import {
+	FormControl,
+	FormControlLabel,
+	Radio,
+	RadioGroup,
+} from '@material-ui/core';
 
+import { useState } from 'react';
 function MultipleChoiceInput(props) {
+	const [value, setValue] = useState(0);
 	const options = [
 		{
 			key: 1,
@@ -20,19 +26,20 @@ function MultipleChoiceInput(props) {
 			text: 'option 4',
 		},
 	];
+	console.log(value);
 	return (
-		<Form className="mt-3 ui form field">
-			<Form.Field>
-				<div className="d-flex flex-column ml-4 radio_form">
-					{options.map((option, i) => (
-						<Label key={i}>
-							<Input type="radio" id={i} name="option" />
-							{option.text}
-						</Label>
-					))}
-				</div>
-			</Form.Field>
-		</Form>
+		<FormControl>
+			<RadioGroup value={value} onChange={e => setValue(e.target.value)}>
+				{options.map((option, i) => (
+					<FormControlLabel
+						key={i}
+						value={option.text}
+						control={<Radio />}
+						label={option.text}
+					/>
+				))}
+			</RadioGroup>
+		</FormControl>
 	);
 }
 

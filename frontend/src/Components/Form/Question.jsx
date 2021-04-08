@@ -35,7 +35,7 @@ function Question(props) {
 					</Col>
 				) : (
 					<Col>
-						<h4>
+						<h4 className="text-justify">
 							Q{index}: {ques?.statement}
 						</h4>
 					</Col>

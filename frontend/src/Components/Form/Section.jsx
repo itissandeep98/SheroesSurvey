@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { sectionFetch } from '../../Store/ActionCreators/section';
 import Question from './Question';
-import { Placeholder } from 'semantic-ui-react';
+import { List, Placeholder } from 'semantic-ui-react';
 
 function Section(props) {
 	const { index } = props;
@@ -44,13 +44,14 @@ function Section(props) {
 						<h3 className="text-capitalize">{details.heading}</h3>
 						<p className="text-justify text-muted">{details.description}</p>
 						<hr />
-						{quesList &&
-							quesList.map((ques, i) => (
-								<div>
-									<Question id={ques} index={i + 1} />
-									<br />
-								</div>
-							))}
+						<List>
+							{quesList &&
+								quesList.map((ques, i) => (
+									<List.Item>
+										<Question id={ques} index={i + 1} />
+									</List.Item>
+								))}
+						</List>
 					</Col>
 				)}
 			</Row>

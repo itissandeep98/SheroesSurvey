@@ -1,12 +1,15 @@
-import { Form, Input } from 'semantic-ui-react';
+import { TextField } from '@material-ui/core';
 
 function TextInput(props) {
 	return (
-		<Form className="mt-3">
-			<Form.Field>
-				<Input fluid placeholder="Type Your Answer Here" />
-			</Form.Field>
-		</Form>
+		<form className="mt-3">
+				<TextField
+					id="outlined-basic"
+					label="Type Your Answer Here"
+					variant="outlined"
+					fullWidth
+				/>
+		</form>
 	);
 }
 
