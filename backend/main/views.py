@@ -192,6 +192,27 @@ class QuestionsViewSet(viewsets.ModelViewSet):
 
         return Response("Update Accepted", status=status.HTTP_200_OK)
 
+    @action(methods=['get'], detail=True)
+    def get_options(self, request, pk=None):
+        """
+        Returns all the options related the this MCQ 
+        Format:
+            url: https://sheroes-form.herokuapp.com/question/<question-id>/get_options/
+            url: http://127.0.0.1:8000/question/<question-id>/get_options/
+        """
+        # print(Questions.objects.get(id=pk).qtype)
+        try:
+            this_question=Questions.objects.get(id=pk)
+        except:
+            return Response("Question does not exists", status=status.HTTP_400_BAD_REQUEST)
+            
+        if(Questions.objects.get(id=pk).qtype == Questions.QuestionType.MULTIPLE):
+            all_=Options.objects.all().filter(question_id=this_question)
+        else:
+            return Response("Not a MCQ", status=status.HTTP_400_BAD_REQUEST)    
+        
+        return Response(all_.values(), status=status.HTTP_200_OK)
+
 
 class ShortParaViewSet(viewsets.ModelViewSet):
     queryset = ShortPara.objects.all()
@@ -277,7 +298,7 @@ class OptionsViewSet(viewsets.ModelViewSet):
 
         return Response("Update Accepted", status=status.HTTP_200_OK)
 
-
+   
 class ResponsesViewSet(viewsets.ModelViewSet):
     queryset = Options.objects.all()
     permission_classes = [
