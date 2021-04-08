@@ -88,3 +88,47 @@ export const questionDelete = id => {
 			});
 	};
 };
+
+export const optionCreate = data => {
+	return async dispatch => {
+		dispatch({ type: ActionTypes.OPTION_CREATE_REQUEST });
+		return await axios
+			.post(`${apiUrl}/options/`, data)
+			.then(response => {
+				dispatch({
+					type: ActionTypes.OPTION_CREATE_SUCCESS,
+					data: response.data,
+				});
+				return response.data;
+			})
+			.catch(error => {
+				console.log(error.response);
+				dispatch({
+					type: ActionTypes.OPTION_CREATE_FAILED,
+					errmess: 'Error in connection with Server',
+				});
+			});
+	};
+};
+
+export const optionFetch = () => {
+	return async dispatch => {
+		dispatch({ type: ActionTypes.OPTION_FETCH_REQUEST });
+		return await axios
+			.get(`${apiUrl}/options/`)
+			.then(response => {
+				dispatch({
+					type: ActionTypes.OPTION_FETCH_SUCCESS,
+					data: response.data,
+				});
+				return response.data;
+			})
+			.catch(error => {
+				console.log(error.response);
+				dispatch({
+					type: ActionTypes.OPTION_FETCH_FAILED,
+					errmess: 'Error in connection with Server',
+				});
+			});
+	};
+};

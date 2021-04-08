@@ -102,7 +102,7 @@ function Question(props) {
 						</Col>
 						{ques.qtype === 'MC' && (
 							<Col xs={12}>
-								<Options />
+								<Options quesId={id}/>
 							</Col>
 						)}
 					</Row>

@@ -69,6 +69,7 @@ function Question(props) {
 					{ques.qtype === 'MC' && (
 						<MultipleChoiceInput
 							modifyQuestion={modifyQuestion}
+							quesId={id}
 							value={props.response?.[section]?.[id]}
 						/>
 					)}
