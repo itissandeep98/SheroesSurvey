@@ -199,6 +199,10 @@ class Responses(models.Model):
     is_deleted = models.BooleanField(default=False)
     question_id = models.ForeignKey(Questions,on_delete = models.CASCADE)     
     response = models.JSONField()
+    def save(self,*args,**kwargs):        
+        current_form = self.form_id
+        if( current_form.is_active and not(current_form.is_deleted) ):
+            new_response = super().save(*args, **kwargs)
 
 class ShortPara(models.Model):
     class DataType(models.TextChoices):
