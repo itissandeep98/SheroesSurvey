@@ -1,3 +1,4 @@
+import { TextField } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Col, Container, Label, Row } from 'reactstrap';
@@ -54,9 +55,7 @@ function Banner(props) {
 						{bannerimg ? (
 							<Image src={bannerimg} fluid />
 						) : (
-							<div
-								className="display-4 p-5"
-								style={{ borderStyle: 'dotted' }}>
+							<div className="display-4 p-5" style={{ borderStyle: 'dotted' }}>
 								<Icon name="add" /> Add Banner
 							</div>
 						)}
@@ -64,24 +63,30 @@ function Banner(props) {
 					</Label>
 				</div>
 				<Col xs={12} className="my-3">
-					<Form>
-						<Form.Field>
-							<Input
-								placeholder="Form title"
-								defaultValue={heading}
-								onChange={e => setheading(e.target.value)}
-								onKeyUp={handleUpdate}
-							/>
-						</Form.Field>
-						<Form.Field>
-							<TextArea
-								placeholder="Form Description"
-								defaultValue={description}
-								onChange={e => setdescription(e.target.value)}
-								onKeyUp={handleUpdate}
-							/>
-						</Form.Field>
-					</Form>
+					<form>
+						<TextField
+							label="Form Title"
+							variant="outlined"
+							fullWidth
+							defaultValue={heading}
+							onChange={e => setheading(e.target.value)}
+							onKeyUp={handleUpdate}
+							InputLabelProps={{ shrink: true }}
+						/>
+						<br />
+						<br />
+						<TextField
+							label="Form Description"
+							variant="outlined"
+							fullWidth
+							multiline
+							defaultValue={description}
+							rows={10}
+							onChange={e => setdescription(e.target.value)}
+							onKeyUp={handleUpdate}
+							InputLabelProps={{ shrink: true }}
+						/>
+					</form>
 				</Col>
 			</Row>
 		</Container>
