@@ -6,7 +6,7 @@ import Question from './Question';
 import { List, Placeholder } from 'semantic-ui-react';
 
 function Section(props) {
-	const { index } = props;
+	const { id, index } = props;
 	const [quesList, setQuesList] = useState([]);
 	const [details, setDetails] = useState({});
 	const [loading, setLoading] = useState(true);
@@ -47,8 +47,8 @@ function Section(props) {
 						<List>
 							{quesList &&
 								quesList.map((ques, i) => (
-									<List.Item>
-										<Question id={ques} index={i + 1} />
+									<List.Item key={i}>
+										<Question id={ques} index={i + 1} section={id} />
 									</List.Item>
 								))}
 						</List>

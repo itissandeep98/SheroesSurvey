@@ -67,7 +67,6 @@ function Form(props) {
 			<br />
 			<br />
 			<br />
-		
 		</Container>
 	);
 }

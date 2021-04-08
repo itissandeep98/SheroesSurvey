@@ -1,6 +1,10 @@
 import TextField from '@material-ui/core/TextField';
 
 function ParagraphInput(props) {
+	const { value } = props;
+	const handleChange = e => {
+		props.modifyQuestion(e.target.value);
+	};
 	return (
 		<form className="mt-3">
 			<TextField
@@ -9,7 +13,9 @@ function ParagraphInput(props) {
 				variant="outlined"
 				fullWidth
 				multiline
+				defaultValue={value}
 				rows={10}
+				onChange={handleChange}
 			/>
 		</form>
 	);

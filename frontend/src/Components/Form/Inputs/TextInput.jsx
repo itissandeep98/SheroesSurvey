@@ -1,14 +1,20 @@
 import { TextField } from '@material-ui/core';
 
 function TextInput(props) {
+	const { value } = props;
+	const handleChange = e => {
+		props.modifyQuestion(e.target.value);
+	};
 	return (
 		<form className="mt-3">
-				<TextField
-					id="outlined-basic"
-					label="Type Your Answer Here"
-					variant="outlined"
-					fullWidth
-				/>
+			<TextField
+				id="outlined-basic"
+				label="Type Your Answer Here"
+				variant="outlined"
+				fullWidth
+				defaultValue={value}
+				onChange={handleChange}
+			/>
 		</form>
 	);
 }

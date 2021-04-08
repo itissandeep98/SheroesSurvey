@@ -7,7 +7,11 @@ import {
 
 import { useState } from 'react';
 function MultipleChoiceInput(props) {
-	const [value, setValue] = useState(0);
+	const [value, setValue] = useState(props.value);
+	const handleChange = e => {
+		setValue(e.target.value);
+		props.modifyQuestion(e.target.value);
+	};
 	const options = [
 		{
 			key: 1,
@@ -26,10 +30,9 @@ function MultipleChoiceInput(props) {
 			text: 'option 4',
 		},
 	];
-	console.log(value);
 	return (
 		<FormControl>
-			<RadioGroup value={value} onChange={e => setValue(e.target.value)}>
+			<RadioGroup value={value} onChange={handleChange}>
 				{options.map((option, i) => (
 					<FormControlLabel
 						key={i}
