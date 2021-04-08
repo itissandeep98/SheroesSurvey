@@ -182,11 +182,21 @@ class Dropdown(models.Model):
 
 
 class Responses(models.Model):
+    """
+    Send response at https://sheroes-form.herokuapp.com/responses/
+    Example: 
+            {
+                "user_id": "2",
+                "form_id": "30",
+                "question_id": "29",
+                "response": "Hello"
+            }   
+    """
     user_id = models.ForeignKey(Users,on_delete=models.CASCADE) #edit
     form_id = models.ForeignKey(Forms,on_delete=models.CASCADE) #edit
     created_on = models.DateTimeField(auto_now_add=True,null=False)
     updated_on = models.DateTimeField(auto_now=True, null=False) #update
-    is_deleted = models.BooleanField(null=False)
+    is_deleted = models.BooleanField(default=False)
     question_id = models.ForeignKey(Questions,on_delete = models.CASCADE)     
     response = models.JSONField()
 
