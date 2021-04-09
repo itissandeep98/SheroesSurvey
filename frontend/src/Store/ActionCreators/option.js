@@ -2,86 +2,85 @@ import axios from 'axios';
 import * as ActionTypes from '../ActionTypes';
 import { apiUrl } from '../Url';
 
-export const questionCreate = data => {
+export const optionCreate = data => {
 	return async dispatch => {
-		dispatch({ type: ActionTypes.QUESTION_CREATE_REQUEST });
+		dispatch({ type: ActionTypes.OPTION_CREATE_REQUEST });
 		return await axios
-			.post(`${apiUrl}/questions/`, data)
+			.post(`${apiUrl}/options/`, data)
 			.then(response => {
 				dispatch({
-					type: ActionTypes.QUESTION_CREATE_SUCCESS,
+					type: ActionTypes.OPTION_CREATE_SUCCESS,
 					data: response.data,
 				});
 				return response.data;
 			})
 			.catch(error => {
 				dispatch({
-					type: ActionTypes.QUESTION_CREATE_FAILED,
+					type: ActionTypes.OPTION_CREATE_FAILED,
 					errmess: 'Error in connection with Server',
 				});
 			});
 	};
 };
 
-export const questionFetch = id => {
+export const optionUpdate = ({ id, data }) => {
 	return async dispatch => {
-		dispatch({ type: ActionTypes.QUESTION_FETCH_REQUEST });
+		dispatch({ type: ActionTypes.OPTION_UPDATE_REQUEST });
 		return await axios
-			.get(`${apiUrl}/questions/${id}/`)
+			.post(`${apiUrl}/options/${id}/update_fields/`, data)
 			.then(response => {
 				dispatch({
-					type: ActionTypes.QUESTION_FETCH_SUCCESS,
+					type: ActionTypes.OPTION_UPDATE_SUCCESS,
 					data: response.data,
 				});
 				return response.data;
 			})
 			.catch(error => {
 				dispatch({
-					type: ActionTypes.QUESTION_FETCH_FAILED,
+					type: ActionTypes.OPTION_UPDATE_FAILED,
 					errmess: 'Error in connection with Server',
 				});
 			});
 	};
 };
 
-export const questionUpdate = ({ id, data }) => {
+export const optionFetch = id => {
 	return async dispatch => {
-		dispatch({ type: ActionTypes.QUESTION_UPDATE_REQUEST });
+		dispatch({ type: ActionTypes.OPTION_FETCH_REQUEST });
 		return await axios
-			.post(`${apiUrl}/questions/${id}/update_fields/`, data)
+			.get(`${apiUrl}/questions/${id}/get_options/`)
 			.then(response => {
 				dispatch({
-					type: ActionTypes.QUESTION_UPDATE_SUCCESS,
+					type: ActionTypes.OPTION_FETCH_SUCCESS,
 					data: response.data,
 				});
 				return response.data;
 			})
 			.catch(error => {
 				dispatch({
-					type: ActionTypes.QUESTION_UPDATE_FAILED,
+					type: ActionTypes.OPTION_FETCH_FAILED,
 					errmess: 'Error in connection with Server',
 				});
 			});
 	};
 };
 
-export const questionDelete = id => {
+export const optionDelete = id => {
 	return async dispatch => {
-		dispatch({ type: ActionTypes.QUESTION_DELETE_REQUEST });
+		dispatch({ type: ActionTypes.OPTION_DELETE_REQUEST });
 		return await axios
-			.delete(`${apiUrl}/questions/${id}/`)
+			.delete(`${apiUrl}/options/${id}/`)
 			.then(response => {
 				dispatch({
-					type: ActionTypes.QUESTION_DELETE_SUCCESS,
+					type: ActionTypes.OPTION_DELETE_SUCCESS,
 					data: response.data,
 				});
 			})
 			.catch(error => {
 				dispatch({
-					type: ActionTypes.QUESTION_DELETE_FAILED,
+					type: ActionTypes.OPTION_DELETE_FAILED,
 					errmess: 'Error in connection with Server',
 				});
 			});
 	};
 };
-

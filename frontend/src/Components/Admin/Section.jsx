@@ -93,6 +93,7 @@ function Section(props) {
 						<TextField
 							label="Heading"
 							variant="outlined"
+							multiline
 							fullWidth
 							defaultValue={details.heading}
 							onChange={e =>
@@ -107,7 +108,6 @@ function Section(props) {
 							variant="outlined"
 							fullWidth
 							multiline
-							rows={8}
 							defaultValue={details.description}
 							onChange={e =>
 								setDetails({ ...details, description: e.target.value })

@@ -80,7 +80,6 @@ function Question(props) {
 						variant="outlined"
 						fullWidth
 						multiline
-						rows={7}
 						defaultValue={ques?.statement}
 						onChange={e => setQues({ ...ques, statement: e.target.value })}
 						onKeyUp={updateQuestion}

@@ -67,8 +67,9 @@ function Banner(props) {
 						<TextField
 							label="Form Title"
 							variant="outlined"
+							multiline
 							fullWidth
-							defaultValue={heading}
+							defaultValue={props.heading}
 							onChange={e => setheading(e.target.value)}
 							onKeyUp={handleUpdate}
 							InputLabelProps={{ shrink: true }}
@@ -81,7 +82,6 @@ function Banner(props) {
 							fullWidth
 							multiline
 							defaultValue={description}
-							rows={10}
 							onChange={e => setdescription(e.target.value)}
 							onKeyUp={handleUpdate}
 							InputLabelProps={{ shrink: true }}

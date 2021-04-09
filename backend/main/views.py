@@ -197,8 +197,8 @@ class QuestionsViewSet(viewsets.ModelViewSet):
         """
         Returns all the options related the this MCQ 
         Format:
-            url: https://sheroes-form.herokuapp.com/question/<question-id>/get_options/
-            url: http://127.0.0.1:8000/question/<question-id>/get_options/
+            url: https://sheroes-form.herokuapp.com/questions/<question-id>/get_options/
+            url: http://127.0.0.1:8000/questions/<question-id>/get_options/
         """
         # print(Questions.objects.get(id=pk).qtype)
         try:

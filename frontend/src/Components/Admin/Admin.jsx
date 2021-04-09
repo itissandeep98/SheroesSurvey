@@ -1,7 +1,7 @@
 import { withRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { Col, Container, Row } from 'reactstrap';
-import { Icon } from 'semantic-ui-react';
+import { Col, Container, Row, Spinner } from 'reactstrap';
+import { Icon, Placeholder } from 'semantic-ui-react';
 import './style.css';
 import {
 	allformFetch,
@@ -13,11 +13,13 @@ import FormCard from './FormCard';
 
 function Admin(props) {
 	const dispatch = useDispatch();
+	const [loading, setLoading] = useState(true);
 	const [cards, setCards] = useState([]);
 	useEffect(() => {
 		dispatch(allformFetch()).then(res => {
 			const temp = res.sort((a, b) => (a.updated_on < b.updated_on ? 1 : -1));
 			setCards(temp);
+			setLoading(false)
 		});
 	}, [dispatch]);
 
@@ -48,13 +50,21 @@ function Admin(props) {
 					</div>
 				</Col>
 			</Row>
-			<Row className=" mt-5 justify-content-center">
-				{cards?.map((card, index) => (
-					<Col sm={6} md={4} lg={3} key={Math.random()} className="h-100 ">
-						<FormCard {...card} delete={() => handleDelete(card.id, index)} />
-					</Col>
-				))}
-			</Row>
+			{loading ? (
+				<Row className=" mt-5 justify-content-center">
+					<h2 className="text-muted">
+						<Spinner /> Fetching Latest Forms
+					</h2>
+				</Row>
+			) : (
+				<Row className=" mt-5 justify-content-center">
+					{cards?.map((card, index) => (
+						<Col sm={6} md={4} lg={3} key={Math.random()} className="h-100 ">
+							<FormCard {...card} delete={() => handleDelete(card.id, index)} />
+						</Col>
+					))}
+				</Row>
+			)}
 		</Container>
 	);
 }

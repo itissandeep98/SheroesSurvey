@@ -1,19 +1,21 @@
-import { Form, Input, List } from 'semantic-ui-react';
+import { Form, List } from 'semantic-ui-react';
 import Button from '@material-ui/core/Button';
 import { Icon } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {
 	optionCreate,
+	optionDelete,
 	optionFetch,
-} from '../../../Store/ActionCreators/question';
+} from '../../../Store/ActionCreators/option';
+import Option from './Option';
 
 function Options(props) {
 	const { quesId } = props;
 	const [options, setOptions] = useState([]);
 	const dispatch = useDispatch();
 	useEffect(() => {
-		dispatch(optionFetch()).then(res => {
+		dispatch(optionFetch(quesId)).then(res => {
 			setOptions(res);
 		});
 	}, [dispatch]);
@@ -27,10 +29,15 @@ function Options(props) {
 			setOptions([...options, res]);
 		});
 	};
+
+	const deleteOption = (id, index) => {
+		setOptions([...options.slice(0, index), ...options.slice(index + 1)]);
+		dispatch(optionDelete(id));
+	};
 	return (
 		<Form.Field className="mt-3">
-			<List>
-				{options.map(option => (
+			<List verticalAlign="middle">
+				{options.map((option, i) => (
 					<List.Item key={Math.random()}>
 						<List.Icon
 							name="circle outline"
@@ -39,7 +46,11 @@ function Options(props) {
 							className="text-danger"
 						/>
 						<List.Content>
-							<Input defaultValue={option.content} />
+							<Option
+								{...option}
+								index={i + 1}
+								deleteOption={() => deleteOption(option.id, i)}
+							/>
 						</List.Content>
 					</List.Item>
 				))}

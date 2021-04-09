@@ -7,14 +7,14 @@ import {
 
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { optionFetch } from '../../../Store/ActionCreators/question';
+import { optionFetch } from '../../../Store/ActionCreators/option';
 function MultipleChoiceInput(props) {
 	const { quesId } = props;
 	const [value, setValue] = useState(props.value);
 	const [options, setOptions] = useState([]);
 	const dispatch = useDispatch();
 	useEffect(() => {
-		dispatch(optionFetch()).then(res => {
+		dispatch(optionFetch(quesId)).then(res => {
 			setOptions(res);
 		});
 	}, [dispatch]);
