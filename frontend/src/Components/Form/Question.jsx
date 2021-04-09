@@ -7,9 +7,10 @@ import MultipleChoiceInput from './Inputs/MultipleChoiceInput';
 import ParagraphInput from './Inputs/ParagraphInput';
 import TextInput from './Inputs/TextInput';
 import * as ActionTypes from '../../Store/ActionTypes';
+import { responseCreate } from '../../Store/ActionCreators/response';
 
 function Question(props) {
-	const { id, index, section } = props;
+	const { id, index, sectionId, formId } = props;
 	const dispatch = useDispatch();
 	const [ques, setQues] = useState({});
 	const [loading, setLoading] = useState(true);
@@ -20,15 +21,21 @@ function Question(props) {
 		});
 	}, [dispatch]);
 
-	const modifyQuestion = value => {
+	const modifyResponse = value => {
+		const data = {
+			user_id: '2',
+			form_id: formId,
+			question_id: id,
+			response: value,
+		};
+		dispatch(responseCreate(data));
 		dispatch({
 			type: ActionTypes.RESPONSE_UPDATE_REQUEST,
-			section: section,
+			section: sectionId,
 			question: id,
 			value: value,
 		});
 	};
-	console.log();
 
 	return (
 		<Container className="my-4">
@@ -56,21 +63,21 @@ function Question(props) {
 				<Col>
 					{ques.qtype === 'SP' && (
 						<TextInput
-							modifyQuestion={modifyQuestion}
-							value={props.response?.[section]?.[id]}
+							modifyResponse={modifyResponse}
+							value={props.response?.[sectionId]?.[id]}
 						/>
 					)}
 					{ques.qtype === 'LP' && (
 						<ParagraphInput
-							modifyQuestion={modifyQuestion}
-							value={props.response?.[section]?.[id]}
+							modifyResponse={modifyResponse}
+							value={props.response?.[sectionId]?.[id]}
 						/>
 					)}
 					{ques.qtype === 'MC' && (
 						<MultipleChoiceInput
-							modifyQuestion={modifyQuestion}
+							modifyResponse={modifyResponse}
 							quesId={id}
-							value={props.response?.[section]?.[id]}
+							value={props.response?.[sectionId]?.[id]}
 						/>
 					)}
 					{/* {ques.qtype == 'number' && <NumberInput />} */}

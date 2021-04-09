@@ -3,7 +3,7 @@ import { TextField } from '@material-ui/core';
 function TextInput(props) {
 	const { value } = props;
 	const handleChange = e => {
-		props.modifyQuestion(e.target.value);
+		props.modifyResponse(e.target.value);
 	};
 	return (
 		<form className="mt-3">

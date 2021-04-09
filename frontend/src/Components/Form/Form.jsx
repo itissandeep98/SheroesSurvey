@@ -6,19 +6,23 @@ import Section from './Section';
 import { useDispatch } from 'react-redux';
 import './style.css';
 import { formFetch } from '../../Store/ActionCreators/form';
+import { useHistory } from 'react-router';
 
 function Form(props) {
+	const { id } = props?.match?.params;
 	const [details, setDetails] = useState('');
 	const [structure, setStructure] = useState([]);
 	const [curr, setCurr] = useState(0);
 	const dispatch = useDispatch();
 	useEffect(() => {
-		const { id } = props?.match?.params;
 		dispatch(formFetch(id)).then(res => {
 			setStructure(res?.section_sequence);
 			setDetails(res);
 		});
 	}, [dispatch]);
+
+	const history = useHistory();
+
 	return (
 		<Container className="mb-5">
 			<Banner {...details} key={3} />
@@ -33,7 +37,12 @@ function Form(props) {
 						</Col>
 					</Row>
 
-					<Section key={Math.random()} index={curr + 1} id={structure[curr]} />
+					<Section
+						key={Math.random()}
+						index={curr + 1}
+						id={structure[curr]}
+						formId={props?.match?.params.id}
+					/>
 				</>
 			)}
 			{curr > 0 && (
@@ -54,7 +63,9 @@ function Form(props) {
 			)}
 			{curr === structure.length - 1 && (
 				<>
-					<Button className="float-right" disabled>
+					<Button
+						className="float-right"
+						onClick={() => history.push(`/${id}/thank`)}>
 						<Icon name="check" />
 						Submit
 					</Button>

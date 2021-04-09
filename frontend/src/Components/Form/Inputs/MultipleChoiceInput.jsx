@@ -20,7 +20,7 @@ function MultipleChoiceInput(props) {
 	}, [dispatch]);
 	const handleChange = e => {
 		setValue(e.target.value);
-		props.modifyQuestion(e.target.value);
+		props.modifyResponse(e.target.value);
 	};
 
 	return (
