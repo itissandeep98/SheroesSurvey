@@ -74,6 +74,33 @@ class FormsViewSet(viewsets.ModelViewSet):
 
         return Response("Update Accepted", status=status.HTTP_200_OK)
 
+    @action(methods=['get'], detail=False)
+    def get_all_not_del(self,request):
+        """
+        Returns all the forms which are not deleted.
+        By deleted it means that they are not soft deleted.
+        This should be used via GET request.
+        Format:
+            heroku url: https://sheroes-form.herokuapp.com/forms/get_all_not_del/
+            local url:  http://127.0.0.1:8000/forms/get_all_not_del/
+            ********************
+            Note: If you want to access a particular form, use the default GET request.
+            Example : If user wants to access form number 37 use the following url
+            https://sheroes-form.herokuapp.com/forms/37/
+        """
+        return Response(Forms.objects.all().filter(is_deleted = False).values(),status=status.HTTP_200_OK)
+
+    @action(methods=['get'], detail=False)
+    def get_all_deleted_forms(self,request):
+        """
+        Returns all the forms which were soft deleted  by using GET request.
+        This should be used via GET request.
+        Format:
+            heroku url: https://sheroes-form.herokuapp.com/forms/get_all_deleted_forms/
+            local url:  http://127.0.0.1:8000/forms/get_all_deleted_forms/
+        """
+        return Response(Forms.objects.all().filter(is_deleted = True).values(),status=status.HTTP_200_OK)
+
 
 class UsersViewSet(viewsets.ModelViewSet):
     queryset = Users.objects.all()
@@ -192,6 +219,27 @@ class QuestionsViewSet(viewsets.ModelViewSet):
 
         return Response("Update Accepted", status=status.HTTP_200_OK)
 
+    @action(methods=['get'], detail=True)
+    def get_options(self, request, pk=None):
+        """
+        Returns all the options related the this MCQ 
+        Format:
+            url: https://sheroes-form.herokuapp.com/questions/<question-id>/get_options/
+            url: http://127.0.0.1:8000/questions/<question-id>/get_options/
+        """
+        # print(Questions.objects.get(id=pk).qtype)
+        try:
+            this_question=Questions.objects.get(id=pk)
+        except:
+            return Response("Question does not exists", status=status.HTTP_400_BAD_REQUEST)
+            
+        if(Questions.objects.get(id=pk).qtype == Questions.QuestionType.MULTIPLE):
+            all_=Options.objects.all().filter(question_id=this_question)
+        else:
+            return Response("Not a MCQ", status=status.HTTP_400_BAD_REQUEST)    
+        
+        return Response(all_.values(), status=status.HTTP_200_OK)
+
 
 class ShortParaViewSet(viewsets.ModelViewSet):
     queryset = ShortPara.objects.all()
@@ -277,7 +325,7 @@ class OptionsViewSet(viewsets.ModelViewSet):
 
         return Response("Update Accepted", status=status.HTTP_200_OK)
 
-
+   
 class ResponsesViewSet(viewsets.ModelViewSet):
     queryset = Responses.objects.all()
     permission_classes = [

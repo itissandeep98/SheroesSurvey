@@ -6,7 +6,7 @@ export const allformFetch = () => {
 	return async dispatch => {
 		dispatch({ type: ActionTypes.ALL_FORM_FETCH_REQUEST });
 		return await axios
-			.get(apiUrl + '/forms/')
+			.get(apiUrl + '/forms/get_all_not_del/')
 			.then(response => {
 				dispatch({
 					type: ActionTypes.ALL_FORM_FETCH_SUCCESS,

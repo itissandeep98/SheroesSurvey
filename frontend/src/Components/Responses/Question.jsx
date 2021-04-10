@@ -3,11 +3,7 @@ import { connect, useDispatch } from 'react-redux';
 import { Col, Container, Row } from 'reactstrap';
 import { Placeholder } from 'semantic-ui-react';
 import { questionFetch } from '../../Store/ActionCreators/question';
-import MultipleChoiceInput from './Inputs/MultipleChoiceInput';
-import ParagraphInput from './Inputs/ParagraphInput';
-import TextInput from './Inputs/TextInput';
-import * as ActionTypes from '../../Store/ActionTypes';
-import { responseCreate } from '../../Store/ActionCreators/response';
+
 
 function Question(props) {
 	const { id, index, sectionId, formId } = props;
@@ -20,22 +16,6 @@ function Question(props) {
 			setLoading(false);
 		});
 	}, [dispatch]);
-
-	const modifyResponse = value => {
-		const data = {
-			user_id: '2',
-			form_id: formId,
-			question_id: id,
-			response: value,
-		};
-		dispatch(responseCreate(data));
-		dispatch({
-			type: ActionTypes.RESPONSE_UPDATE_REQUEST,
-			section: sectionId,
-			question: id,
-			value: value,
-		});
-	};
 
 	return (
 		<Container className="my-4">
@@ -61,26 +41,19 @@ function Question(props) {
 			</Row>
 			<Row>
 				<Col>
-					{ques.qtype === 'SP' && (
-						<TextInput
-							modifyResponse={modifyResponse}
-							value={props.response?.[sectionId]?.[id]}
-						/>
+					{(ques.qtype === 'SP' || ques.qtype === 'LP') && (
+						<p className="mt-2 text-justify border p-2">
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+							eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+							enim ad minim veniam, quis nostrud exercitation ullamco laboris
+							nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+							reprehenderit in voluptate velit esse cillum dolore eu fugiat
+							nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+							sunt in culpa qui officia deserunt mollit anim id est laborum.
+						</p>
 					)}
-					{ques.qtype === 'LP' && (
-						<ParagraphInput
-							modifyResponse={modifyResponse}
-							value={props.response?.[sectionId]?.[id]}
-						/>
-					)}
-					{ques.qtype === 'MC' && (
-						<MultipleChoiceInput
-							modifyResponse={modifyResponse}
-							quesId={id}
-							value={props.response?.[sectionId]?.[id]}
-						/>
-					)}
-					{/* {ques.qtype == 'number' && <NumberInput />} */}
+
+					{ques.qtype === 'MC' && <p className="text-muted text-justify"></p>}
 				</Col>
 			</Row>
 		</Container>

@@ -1,3 +1,4 @@
+import { TextField } from '@material-ui/core';
 import moment from 'moment';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -18,7 +19,7 @@ import {
 	sectionFetch,
 	sectionUpdate,
 } from '../../Store/ActionCreators/section';
-import Question from './Question';
+import Question from './Question/Question';
 
 function Section(props) {
 	const { id, index } = props;
@@ -88,28 +89,33 @@ function Section(props) {
 					</small>
 				</Col>
 				<Col xs={12}>
-					<Form>
-						<Form.Field>
-							<label>Heading</label>
-							<Input
-								defaultValue={details.heading}
-								onChange={e =>
-									setDetails({ ...details, heading: e.target.value })
-								}
-								onKeyUp={updateSection}
-							/>
-						</Form.Field>
-						<Form.Field>
-							<label>Description</label>
-							<TextArea
-								defaultValue={details.description}
-								onChange={e =>
-									setDetails({ ...details, description: e.target.value })
-								}
-								onKeyUp={updateSection}
-							/>
-						</Form.Field>
-					</Form>
+					<form>
+						<TextField
+							label="Heading"
+							variant="outlined"
+							multiline
+							fullWidth
+							defaultValue={details.heading}
+							onChange={e =>
+								setDetails({ ...details, heading: e.target.value })
+							}
+							onKeyUp={updateSection}
+							InputLabelProps={{ shrink: true }}
+						/>
+						<br /> <br />
+						<TextField
+							label="Description"
+							variant="outlined"
+							fullWidth
+							multiline
+							defaultValue={details.description}
+							onChange={e =>
+								setDetails({ ...details, description: e.target.value })
+							}
+							onKeyUp={updateSection}
+							InputLabelProps={{ shrink: true }}
+						/>
+					</form>
 				</Col>
 			</Row>
 
@@ -127,7 +133,11 @@ function Section(props) {
 						))}
 				</Col>
 				<Col xs={12}>
-					<Button floated="right" onClick={addQuestion} disabled={loading} className="rounded-pill">
+					<Button
+						floated="right"
+						onClick={addQuestion}
+						disabled={loading}
+						className="rounded-pill">
 						{loading ? (
 							<Spinner />
 						) : (

@@ -6,7 +6,7 @@ import Question from './Question';
 import { List, Placeholder } from 'semantic-ui-react';
 
 function Section(props) {
-	const { id, index } = props;
+	const { id } = props;
 	const [quesList, setQuesList] = useState([]);
 	const [details, setDetails] = useState({});
 	const [loading, setLoading] = useState(true);
@@ -38,10 +38,9 @@ function Section(props) {
 					</Col>
 				) : (
 					<Col>
-						<h2 className="section_name d-inline-block pr-4">
-							Section {index}
+						<h2 className="section_name d-inline-block pr-4 text-capitalize">
+							{details.heading}
 						</h2>
-						<h3 className="text-capitalize">{details.heading}</h3>
 						<p className="text-justify text-muted">{details.description}</p>
 						<hr />
 						<List>
