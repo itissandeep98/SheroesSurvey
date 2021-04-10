@@ -1,12 +1,23 @@
-import { Form, TextArea } from 'semantic-ui-react';
+import TextField from '@material-ui/core/TextField';
 
 function ParagraphInput(props) {
+	const { value } = props;
+	const handleChange = e => {
+		props.modifyResponse(e.target.value);
+	};
 	return (
-		<Form className="mt-3">
-			<Form.Field>
-				<TextArea rows="10" placeholder="Type Your Answer Here" />
-			</Form.Field>
-		</Form>
+		<form className="mt-3">
+			<TextField
+				id="outlined-basic"
+				label="Type Your Answer Here"
+				variant="outlined"
+				fullWidth
+				multiline
+				defaultValue={value}
+				rows={10}
+				onChange={handleChange}
+			/>
+		</form>
 	);
 }
 

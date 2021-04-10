@@ -1,13 +1,16 @@
-import { Form, Input } from 'semantic-ui-react';
+import { TextField } from '@material-ui/core';
 
 function NumberInput(props) {
 	return (
-		<Form className="mt-3">
-			<Form.Field>
-				
-				<Input fluid type="number" placeholder="Type Your Answer Here" />
-			</Form.Field>
-		</Form>
+		<form className="mt-3">
+			<TextField
+				id="outlined-basic"
+				type="number"
+				label="Type Your Answer Here"
+				variant="outlined"
+				fullWidth
+			/>
+		</form>
 	);
 }
 
