@@ -19,6 +19,7 @@ import { useHistory } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { formDelete } from '../../Store/ActionCreators/form';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import { frontUrl } from '../../Store/Url';
 
 function NavigationBar(props) {
 	const { form_id } = props;
@@ -35,17 +36,18 @@ function NavigationBar(props) {
 		{
 			text: 'Preview Form',
 			icon: <VisibilityIcon />,
-			onClick: () => history.push(`/${form_id}`),
+			onClick: () => window.open(`/${form_id}`, '_blank').focus(),
 		},
 		{
-			text: 'Copy preview Link',
+			text: 'Copy Preview Link',
 			icon: <FileCopyIcon />,
-			onClick: () => console.log('here'),
+			onClick: () => navigator.clipboard.writeText(`${frontUrl}/${form_id}`),
 		},
 		{
 			text: 'View Responses',
 			icon: <GroupIcon />,
-			onClick: () => history.push(`/admin/${form_id}/responses`),
+			onClick: () =>
+				window.open(`/admin/${form_id}/responses`, '_blank').focus(),
 		},
 		{
 			text: 'Delete Form',
