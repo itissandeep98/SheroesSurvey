@@ -109,9 +109,14 @@ class Sections(models.Model):
         try:
             form_instance.section_sequence.remove(self.id)
         except:
-            print("Section not in form.section_sequence; this should never happen")
+            print("Section not in form.section_sequence;this section must have been already soft deleted")
         form_instance.save()
-        deleted=super().delete(*args, **kwargs)
+
+        #hard delete only if there is no response for the question.
+        deleted=[]
+        if len(Responses.objects.all().filter(form_id=form_instance.id))==0:
+            deleted=super().delete(*args, **kwargs)
+
         return deleted
 
     #no is_deleted field here .    
@@ -163,9 +168,14 @@ class Questions(models.Model):
         try:
             section_instance.question_sequence.remove(self.id)
         except:
-            print("Question not in section.question_sequence; this should never happen")
+            print("Question not in section.question_sequence; this should happen if the form is already deleted")
         section_instance.save()
-        deleted=super().delete(*args, **kwargs)
+
+        #hard delete only if there is no response for the question.
+        deleted=[]
+        if len(Responses.objects.all().filter(question_id=self.id)) == 0:
+            deleted=super().delete(*args, **kwargs)
+
         return deleted
 
 
