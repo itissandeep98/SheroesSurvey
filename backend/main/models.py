@@ -53,21 +53,23 @@ class Forms(models.Model):
         """
         This function was Overriden because we want to soft delete instead of hard delete.
         """
+        print("form delete")
         self.is_deleted = True
         current_section_sequence = self.section_sequence
-        # for i in current_section_sequence:
-        #     print(i,type(i))
 
-        section_obj_list = Sections.objects.all()
+        #This can be modified if we have to hard delete the sections
 
-        #Can optimize these two for loops
-        for sec_object in section_obj_list:
-            for section_id in current_section_sequence:
-                if(sec_object.id == section_id): 
-                    print(sec_object.id,section_id)
-                    #instead of calling delete we can directly do soft delete
-                    sec_object.soft_delete()       
+        # for sec_id in current_section_sequence:
+        #     current_section = Sections.objects.get(id = sec_id )
+            # current_section.delete()
 
+        self.save()
+
+    def get(self, *args, **kwargs):
+        print("get")
+        # super().save(*args, **kwargs)
+    def all(self, *args, **kwargs):
+        print("all")
 
 
 
