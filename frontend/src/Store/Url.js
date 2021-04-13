@@ -5,5 +5,5 @@ export const apiUrl =
 
 export const frontUrl =
 	process.env.NODE_ENV === 'production'
-		? 'https://sheroes-front.herokuapp.com'
+		? 'https://sheroes.pages.dev'
 		: 'http://127.0.0.1:3000';

@@ -10,8 +10,12 @@ import {
 import { Button, Icon, Image, List } from 'semantic-ui-react';
 import { useState } from 'react';
 import moment from 'moment';
-import { withRouter } from 'react-router';
+import { useHistory, withRouter } from 'react-router';
 import { NavLink } from 'react-router-dom';
+import { IconButton } from '@material-ui/core';
+import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 function FormCard(props) {
 	const {
@@ -24,6 +28,7 @@ function FormCard(props) {
 		banner_path,
 	} = props;
 	const [modal, setModal] = useState(false);
+	const history = useHistory();
 
 	const toggle = () => setModal(!modal);
 	return (
@@ -65,25 +70,15 @@ function FormCard(props) {
 				<Col>
 					<hr />
 					<div className="d-flex justify-content-around mb-3 w-100">
-						<a
-							className="zoom_on_hover text-dark"
-							style={{ cursor: 'pointer' }}
-							href={`/${id}`}
-							target="_blank"
-							rel="noopener noreferrer">
-							<Icon name="eye" size="large" />
-						</a>
-
-						<NavLink to={`/admin/${id}/responses`} className="text-dark">
-							<Icon name="users" size="large" />
-						</NavLink>
-
-						<Icon
-							name="trash"
-							style={{ cursor: 'pointer' }}
-							size="large"
-							onClick={toggle}
-						/>
+						<IconButton onClick={() => window.open(`/${id}`, '_blank').focus()}>
+							<VisibilityIcon fontSize="large" />
+						</IconButton>
+						<IconButton onClick={() => history.push(`/admin/${id}/responses`)}>
+							<SupervisorAccountIcon fontSize="large" />
+						</IconButton>
+						<IconButton onClick={toggle}>
+							<DeleteIcon fontSize="large" />
+						</IconButton>
 					</div>
 				</Col>
 			</Row>
