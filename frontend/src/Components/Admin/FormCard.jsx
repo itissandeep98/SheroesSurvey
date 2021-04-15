@@ -1,22 +1,19 @@
-import {
-	Col,
-	Container,
-	Modal,
-	ModalBody,
-	ModalFooter,
-	ModalHeader,
-	Row,
-} from 'reactstrap';
-import { Button, Icon, Image, List } from 'semantic-ui-react';
+import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import { Button, Image } from 'semantic-ui-react';
 import { useState } from 'react';
 import moment from 'moment';
 import { useHistory, withRouter } from 'react-router';
-import { NavLink } from 'react-router-dom';
-import { IconButton } from '@material-ui/core';
+import { CardActionArea, IconButton, Tooltip } from '@material-ui/core';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import DeleteIcon from '@material-ui/icons/Delete';
-
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardMedia from '@material-ui/core/CardMedia';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Typography from '@material-ui/core/Typography';
+import './style.scss';
 function FormCard(props) {
 	const {
 		id,
@@ -32,56 +29,7 @@ function FormCard(props) {
 
 	const toggle = () => setModal(!modal);
 	return (
-		<Container className="shadow bg-white zoom_on_hover overflow-hidden rounded_lg border-danger border mt-3 h-100 d-flex justify-content-between flex-column">
-			<Row
-				style={{
-					maxHeight: '10rem',
-				}}
-				className="overflow-hidden">
-				<Image src={banner_path} fluid />
-			</Row>
-			<Row
-				className="mt-2 text-center h-100"
-				onClick={() => props.history.push(`/admin/${id}`)}
-				style={{ cursor: 'pointer' }}>
-				<Col>
-					<Row>
-						<Col>
-							<h3 className="text-capitalize ">{heading}</h3>
-							<small className="text-muted float-right">
-								- Created By Sarthak
-							</small>
-						</Col>
-					</Row>
-					<Row className="mt-1">
-						<Col className="text-justify">
-							{description?.substring(0, 100)}
-							<List bulleted>
-								<List.Item>{section_sequence?.length} Sections</List.Item>
-							</List>
-						</Col>
-					</Row>
-					<small>
-						<em>Updated {moment(updated_on).fromNow()}</em>
-					</small>
-				</Col>
-			</Row>
-			<Row>
-				<Col>
-					<hr />
-					<div className="d-flex justify-content-around mb-3 w-100">
-						<IconButton onClick={() => window.open(`/${id}`, '_blank').focus()}>
-							<VisibilityIcon fontSize="large" />
-						</IconButton>
-						<IconButton onClick={() => history.push(`/admin/${id}/responses`)}>
-							<SupervisorAccountIcon fontSize="large" />
-						</IconButton>
-						<IconButton onClick={toggle}>
-							<DeleteIcon fontSize="large" />
-						</IconButton>
-					</div>
-				</Col>
-			</Row>
+		<>
 			<Modal isOpen={modal} toggle={toggle}>
 				<ModalHeader toggle={toggle}>Delete Form</ModalHeader>
 				<ModalBody>
@@ -96,7 +44,44 @@ function FormCard(props) {
 					</Button>
 				</ModalFooter>
 			</Modal>
-		</Container>
+			<Card className="my-2 border-danger border rounded_lg card_hover">
+				<CardActionArea onClick={() => props.history.push(`/admin/${id}`)}>
+					<CardMedia
+						style={{
+							maxHeight: '8rem',
+						}}
+						className="overflow-hidden">
+						<Image src={banner_path} fluid />
+					</CardMedia>
+					<CardHeader
+						title={heading}
+						subheader={`Updated ${moment(updated_on).fromNow()}`}
+					/>
+					<CardContent>
+						<Typography variant="body2" color="textSecondary" component="p">
+							{description?.substring(0, 100)}
+						</Typography>
+					</CardContent>
+				</CardActionArea>
+				<CardActions disableSpacing>
+					<Tooltip title="Preview Form" placement="top">
+						<IconButton onClick={() => window.open(`/${id}`, '_blank').focus()}>
+							<VisibilityIcon />
+						</IconButton>
+					</Tooltip>
+					<Tooltip title="View Responses" placement="top">
+						<IconButton onClick={() => history.push(`/admin/${id}/responses`)}>
+							<SupervisorAccountIcon />
+						</IconButton>
+					</Tooltip>
+					<Tooltip title="Delete Form" placement="top">
+						<IconButton onClick={toggle}>
+							<DeleteIcon />
+						</IconButton>
+					</Tooltip>
+				</CardActions>
+			</Card>
+		</>
 	);
 }
 

@@ -3,7 +3,6 @@ import { Col, Container, Row, Spinner } from 'reactstrap';
 import { Button, Icon, List } from 'semantic-ui-react';
 import Section from './Section';
 import classNames from 'classnames';
-import './style.css';
 import Banner from './Banner';
 import { useDispatch } from 'react-redux';
 import { formFetch, formUpdate } from '../../Store/ActionCreators/form';

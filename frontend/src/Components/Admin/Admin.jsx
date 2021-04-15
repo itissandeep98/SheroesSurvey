@@ -1,8 +1,7 @@
 import { withRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Col, Container, Row, Spinner } from 'reactstrap';
-import { Icon, Placeholder } from 'semantic-ui-react';
-import './style.css';
+import { Icon } from 'semantic-ui-react';
 import {
 	allformFetch,
 	formCreate,
