@@ -72,14 +72,6 @@ function CreateForm(props) {
 						<Col className="text-center">
 							<NavigationBar form_id={id} />
 							<h1 className="d-inline text-capitalize">{details.heading}</h1>
-							{/* <a
-								className="zoom_on_hover float-right d-inline"
-								style={{ cursor: 'pointer' }}
-								href={`/${props?.match?.params?.id}`}
-								target="_blank"
-								rel="noopener noreferrer">
-								<Icon name="eye" size="large" />
-							</a> */}
 						</Col>
 					</Row>
 					<Row>

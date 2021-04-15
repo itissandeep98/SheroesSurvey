@@ -14,6 +14,8 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import MenuIcon from '@material-ui/icons/Menu';
 import GroupIcon from '@material-ui/icons/Group';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import EditIcon from '@material-ui/icons/Edit';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import { Button, Image } from 'semantic-ui-react';
 import { useHistory } from 'react-router';
 import { useDispatch } from 'react-redux';
@@ -33,6 +35,11 @@ function NavigationBar(props) {
 		});
 	};
 	const list = [
+		{
+			text: 'Edit Form',
+			icon: <EditIcon />,
+			onClick: () => history.push(`/admin/${form_id}`),
+		},
 		{
 			text: 'Preview Form',
 			icon: <VisibilityIcon />,
@@ -54,6 +61,11 @@ function NavigationBar(props) {
 			icon: <DeleteOutlineIcon />,
 			onClick: () => setModal(!modal),
 		},
+		{
+			text: 'Stop Accepting Responses',
+			icon: <HighlightOffIcon />,
+			onClick: () => console.log('here'),
+		},
 	];
 
 	const data = () => (
@@ -61,7 +73,9 @@ function NavigationBar(props) {
 			onClick={() => setOpen(!open)}
 			onKeyDown={() => setOpen(!open)}
 			className="pt-3 px-2 pr-4">
-			<div className="text-center mt-3 d-flex justify-content-center">
+			<div
+				className="text-center mt-3 d-flex justify-content-center btn"
+				onClick={() => history.push('/admin')}>
 				<Image
 					src={process.env.PUBLIC_URL + '/Icons/full-logo_red.svg'}
 					alt="sheroes"

@@ -44,11 +44,11 @@ function TopHeader() {
 	return (
 		<Container
 			fluid
-			className="navbar_top shadow sticky-top bg-danger py-3"
+			className="navbar_top shadow sticky-top bg-danger"
 			style={{ top: top }}>
-			<Container>
+			<Container >
 				<Row>
-					<Col className=" justify-content-center d-flex">
+					<Col className=" justify-content-center d-flex py-3">
 						<Image
 							src={process.env.PUBLIC_URL + '/Icons/full-logo_white.svg'}
 							alt="sheroes"
