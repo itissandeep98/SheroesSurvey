@@ -2,7 +2,7 @@ import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { Button, Image } from 'semantic-ui-react';
 import { useState } from 'react';
 import moment from 'moment';
-import { useHistory, withRouter } from 'react-router';
+import { useHistory } from 'react-router';
 import { CardActionArea, IconButton, Tooltip } from '@material-ui/core';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import VisibilityIcon from '@material-ui/icons/Visibility';
@@ -45,7 +45,7 @@ function FormCard(props) {
 				</ModalFooter>
 			</Modal>
 			<Card className="my-2 border-danger border rounded_lg card_hover">
-				<CardActionArea onClick={() => props.history.push(`/admin/${id}`)}>
+				<CardActionArea onClick={() => history.push(`/admin/${id}`)}>
 					<CardMedia
 						style={{
 							maxHeight: '8rem',
@@ -85,4 +85,4 @@ function FormCard(props) {
 	);
 }
 
-export default withRouter(FormCard);
+export default FormCard;
