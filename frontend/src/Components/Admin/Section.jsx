@@ -123,13 +123,12 @@ function Section(props) {
 				<Col>
 					{quesList &&
 						quesList.map((quesid, i) => (
-							<div key={Math.random()}>
-								<Question
-									id={quesid}
-									index={i + 1}
-									remove={() => removeQuestion(quesid, i)}
-								/>
-							</div>
+							<Question
+								key={quesid}
+								id={quesid}
+								index={i + 1}
+								remove={() => removeQuestion(quesid, i)}
+							/>
 						))}
 				</Col>
 				<Col xs={12}>

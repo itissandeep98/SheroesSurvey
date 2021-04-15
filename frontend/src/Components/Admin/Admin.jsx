@@ -17,7 +17,7 @@ function Admin(props) {
 	const [cards, setCards] = useState([]);
 	useEffect(() => {
 		dispatch(allformFetch()).then(res => {
-			const temp = res.sort((a, b) => (a.updated_on < b.updated_on ? 1 : -1));
+			const temp = res?.sort((a, b) => (a.updated_on < b.updated_on ? 1 : -1));
 			setCards(temp);
 			setLoading(false)
 		});

@@ -16,7 +16,7 @@ function Options(props) {
 	const dispatch = useDispatch();
 	useEffect(() => {
 		dispatch(optionFetch(quesId)).then(res => {
-			setOptions(res);
+			setOptions(res??[]);
 		});
 	}, [dispatch]);
 	const addOptions = () => {
