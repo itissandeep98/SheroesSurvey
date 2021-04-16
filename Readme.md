@@ -24,6 +24,11 @@
 <br> </br>
 ![sheroesfront](https://user-images.githubusercontent.com/43843585/111822534-e5ea9880-8909-11eb-967c-ab8ad958a3b8.gif)
 
+# Steps to deploy Frontend:
+- URL of the website needs to be updated in ```src/Store/URl.js``` file
+- Run ```npm build``` to create the build folder
+- This build folder can then be deployed on any static hosting website
+
 
 # Frontend: <https://sheroes-front.herokuapp.com/>
 
