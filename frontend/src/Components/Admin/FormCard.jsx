@@ -14,6 +14,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import './style.scss';
+
 function FormCard(props) {
 	const {
 		id,
@@ -26,6 +27,7 @@ function FormCard(props) {
 	} = props;
 	const [modal, setModal] = useState(false);
 	const history = useHistory();
+	const defaultImage = process.env.PUBLIC_URL + 'assets/Images/default.png';
 
 	const toggle = () => setModal(!modal);
 	return (
@@ -51,7 +53,7 @@ function FormCard(props) {
 							maxHeight: '8rem',
 						}}
 						className="overflow-hidden">
-						<Image src={banner_path} fluid />
+						<Image src={banner_path ?? defaultImage} fluid />
 					</CardMedia>
 					<CardHeader
 						title={heading}

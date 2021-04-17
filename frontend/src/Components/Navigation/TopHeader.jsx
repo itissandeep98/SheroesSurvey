@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logoutAction } from '../../Store/ActionCreators/auth';
 
 function TopHeader() {
-	const { key } = useSelector(state => state.auth);
+	const { key } = useSelector(state => state?.auth);
 	const dispatch = useDispatch();
 	const [prevScrollpos, setprevScrollpos] = useState(window.pageYOffset);
 	const [top, setTop] = useState(0);
@@ -46,11 +46,11 @@ function TopHeader() {
 			fluid
 			className="navbar_top shadow sticky-top bg-danger"
 			style={{ top: top }}>
-			<Container >
+			<Container>
 				<Row>
 					<Col className=" justify-content-center d-flex py-3">
 						<Image
-							src={process.env.PUBLIC_URL + '/Icons/full-logo_white.svg'}
+							src={process.env.PUBLIC_URL + '/assets/Icons/full-logo_white.svg'}
 							alt="sheroes"
 						/>
 					</Col>

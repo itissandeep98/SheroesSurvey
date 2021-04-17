@@ -77,7 +77,7 @@ function NavigationBar(props) {
 				className="text-center mt-3 d-flex justify-content-center btn"
 				onClick={() => history.push('/admin')}>
 				<Image
-					src={process.env.PUBLIC_URL + '/Icons/full-logo_red.svg'}
+					src={process.env.PUBLIC_URL + '/assets/Icons/full-logo_red.svg'}
 					alt="sheroes"
 					size="small"
 				/>
