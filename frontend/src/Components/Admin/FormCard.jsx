@@ -46,7 +46,7 @@ function FormCard(props) {
 					</Button>
 				</ModalFooter>
 			</Modal>
-			<Card className="my-2 border-danger border rounded_lg card_hover">
+			<Card className="my-2 border-danger h-100 border rounded_lg card_hover">
 				<CardActionArea onClick={() => history.push(`/admin/${id}`)}>
 					<CardMedia
 						style={{
@@ -61,7 +61,8 @@ function FormCard(props) {
 					/>
 					<CardContent>
 						<Typography variant="body2" color="textSecondary" component="p">
-							{description?.substring(0, 100)}
+							{description?.substring(0, 50)}
+							{description?.length > 50 && ' ......'}
 						</Typography>
 					</CardContent>
 				</CardActionArea>

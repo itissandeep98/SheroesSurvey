@@ -18,7 +18,7 @@ function Admin(props) {
 		dispatch(allformFetch()).then(res => {
 			const temp = res?.sort((a, b) => (a.updated_on < b.updated_on ? 1 : -1));
 			setCards(temp);
-			setLoading(false)
+			setLoading(false);
 		});
 	}, [dispatch]);
 
@@ -58,7 +58,7 @@ function Admin(props) {
 			) : (
 				<Row className=" mt-5 justify-content-center">
 					{cards?.map((card, index) => (
-						<Col sm={6} md={4} lg={3} key={Math.random()} className="h-100 ">
+						<Col sm={6} md={4} lg={3} key={Math.random()} className="h-100">
 							<FormCard {...card} delete={() => handleDelete(card.id, index)} />
 						</Col>
 					))}
