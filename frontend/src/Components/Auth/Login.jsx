@@ -1,10 +1,18 @@
 import { Col, Container, Row } from 'reactstrap';
 import { Button, Form, Input } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { loginAction } from '../../Store/ActionCreators/auth';
+import { useState } from 'react';
 
 function Login(props) {
+	const dispatch = useDispatch();
+	const [data, setData] = useState({});
 	const handleSubmit = () => {
-		props.history.push('/admin');
+		dispatch(loginAction()).then(() => props.history.push('/admin'));
+	};
+	const handleChange = e => {
+		setData({ ...data, [e.target.name]: e.target.value });
 	};
 	return (
 		<Container className="shadow p-4 mt-5 h-100 bg-white">

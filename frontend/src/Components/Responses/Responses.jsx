@@ -6,6 +6,7 @@ import { IconButton } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { formFetch } from '../../Store/ActionCreators/form';
 import Section from './Section';
+import NavigationBar from '../Navigation/NavigationBar';
 
 function Responses(props) {
 	const { id } = props?.match?.params;
@@ -23,14 +24,15 @@ function Responses(props) {
 
 	return (
 		<Container>
-			<Row className="bg-white p-3 mt-3 rounded_lg">
-				<Col>
-					<h1>{details.heading} </h1>
+			<Row>
+				<Col className="text-center mt-1">
+					<NavigationBar form_id={id} />
+					<h1 className="d-inline text-capitalize">{details.heading}</h1>
 				</Col>
 			</Row>
 			<Row className="bg-white p-3 mt-3 rounded_lg">
 				<Col>
-					<h3>Total 37 Responses</h3>
+					<h3>Total {total} Responses</h3>
 					<IconButton onClick={() => setCurr(Math.max(1, curr - 1))}>
 						<ArrowBackIosIcon />
 					</IconButton>
@@ -44,7 +46,7 @@ function Responses(props) {
 				<Col>
 					{structure.map((sectionId, index) => (
 						<Section
-							key={Math.random()}
+							key={sectionId}
 							index={index + 1}
 							id={sectionId}
 							formId={id}

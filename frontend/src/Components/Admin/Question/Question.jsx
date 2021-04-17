@@ -18,7 +18,9 @@ function Question(props) {
 	const [ques, setQues] = useState({});
 	const [modal, setModal] = useState(false);
 	useEffect(() => {
-		dispatch(questionFetch(id)).then(res => setQues(res));
+		dispatch(questionFetch(id)).then(res => {
+			setQues(res);
+		});
 	}, [dispatch]);
 
 	const updateQuestion = () => {
@@ -43,7 +45,7 @@ function Question(props) {
 				qtype={ques.qtype}
 			/>
 			<div className="mt-3 mb-5 d-flex align-items-center ">
-				<form className=" mr-2 w-100">
+				<form className="mr-2 w-100">
 					<Dropdown
 						className="float-right "
 						item
@@ -101,7 +103,7 @@ function Question(props) {
 						</Col>
 						{ques.qtype === 'MC' && (
 							<Col xs={12}>
-								<Options quesId={id}/>
+								<Options quesId={id} />
 							</Col>
 						)}
 					</Row>

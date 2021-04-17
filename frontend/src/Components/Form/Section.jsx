@@ -47,7 +47,7 @@ function Section(props) {
 						<List>
 							{quesList &&
 								quesList.map((ques, i) => (
-									<List.Item key={i}>
+									<List.Item key={ques}>
 										<Question
 											id={ques}
 											index={i + 1}
