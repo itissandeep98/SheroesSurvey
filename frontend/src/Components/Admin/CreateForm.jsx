@@ -33,8 +33,8 @@ function CreateForm(props) {
 		const data = {
 			question_sequence: [],
 			form_id: id,
-			created_by: 2,
-			updated_by: 2,
+			created_by: 1,
+			updated_by: 1,
 		};
 		dispatch(sectionCreate(data)).then(res => {
 			if (structure) {

@@ -24,8 +24,8 @@ function Admin(props) {
 
 	const handleCreate = () => {
 		const data = {
-			created_by: '2',
-			updated_by: '2',
+			created_by: '1',
+			updated_by: '1',
 			section_sequence: [],
 		};
 		dispatch(formCreate(data)).then(res => {

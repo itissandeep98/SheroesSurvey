@@ -38,8 +38,8 @@ function Section(props) {
 		setLoading(true);
 		const data = {
 			section_id: id,
-			created_by: 2,
-			updated_by: 2,
+			created_by: 1,
+			updated_by: 1,
 			statement: 'Question',
 			qtype: 'SP',
 		};
