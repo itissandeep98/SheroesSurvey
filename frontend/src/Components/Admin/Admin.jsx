@@ -1,8 +1,7 @@
 import { withRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Col, Container, Row, Spinner } from 'reactstrap';
-import { Icon, Placeholder } from 'semantic-ui-react';
-import './style.css';
+import { Icon } from 'semantic-ui-react';
 import {
 	allformFetch,
 	formCreate,
@@ -17,16 +16,16 @@ function Admin(props) {
 	const [cards, setCards] = useState([]);
 	useEffect(() => {
 		dispatch(allformFetch()).then(res => {
-			const temp = res.sort((a, b) => (a.updated_on < b.updated_on ? 1 : -1));
+			const temp = res?.sort((a, b) => (a.updated_on < b.updated_on ? 1 : -1));
 			setCards(temp);
-			setLoading(false)
+			setLoading(false);
 		});
 	}, [dispatch]);
 
 	const handleCreate = () => {
 		const data = {
-			created_by: '2',
-			updated_by: '2',
+			created_by: '1',
+			updated_by: '1',
 			section_sequence: [],
 		};
 		dispatch(formCreate(data)).then(res => {
@@ -59,7 +58,7 @@ function Admin(props) {
 			) : (
 				<Row className=" mt-5 justify-content-center">
 					{cards?.map((card, index) => (
-						<Col sm={6} md={4} lg={3} key={Math.random()} className="h-100 ">
+						<Col sm={6} md={4} lg={3} key={Math.random()} className="h-100">
 							<FormCard {...card} delete={() => handleDelete(card.id, index)} />
 						</Col>
 					))}

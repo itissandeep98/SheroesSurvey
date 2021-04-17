@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import './style.css';
 import { formFetch } from '../../Store/ActionCreators/form';
 import { useHistory } from 'react-router';
+import ConsentPage from './ConsentPage';
 
 function Form(props) {
 	const { id } = props?.match?.params;
@@ -25,6 +26,7 @@ function Form(props) {
 
 	return (
 		<Container className="mb-5">
+			<ConsentPage />
 			<Banner {...details} key={3} />
 			{structure.length > 0 && (
 				<>
@@ -38,7 +40,7 @@ function Form(props) {
 					</Row>
 
 					<Section
-						key={Math.random()}
+						key={structure[curr]}
 						index={curr + 1}
 						id={structure[curr]}
 						formId={props?.match?.params.id}

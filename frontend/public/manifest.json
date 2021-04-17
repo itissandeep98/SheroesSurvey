@@ -3,12 +3,12 @@
 	"name": "SHEROES | Survey Platform",
 	"icons": [
 		{
-			"src": "Icons/logo192.png",
+			"src": "assets/Icons/logo192.png",
 			"type": "image/png",
 			"sizes": "192x192"
 		},
 		{
-			"src": "Icons/logo512.png",
+			"src": "assets/Icons/logo512.png",
 			"type": "image/png",
 			"sizes": "512x512"
 		}
