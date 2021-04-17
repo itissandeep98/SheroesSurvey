@@ -42,7 +42,15 @@ INSTALLED_APPS = [
     'rest_framework',
     "rest_framework.authtoken",
     "corsheaders",
+    "knox"
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES':
+    ('knox.auth.TokenAuthentication')
+}
+
+AUTH_USER_MODEL = "main.OurUsers"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -82,9 +90,9 @@ WSGI_APPLICATION = 'sheroes_forms.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 't2ODZIpFcq',
-        'USER': 't2ODZIpFcq',
-        'PASSWORD' : 'omP9iiyKrE',
+        'NAME': 'LOXjHh5mKV',
+        'USER': 'LOXjHh5mKV',
+        'PASSWORD' : 'Y5zbmFHGMo',
         'HOST' : 'remotemysql.com',
         'PORT' : '3306',
     }
@@ -138,3 +146,15 @@ CORS_ORIGIN_WHITELIST = (
     'http://127.0.0.1:8000',
     'https://sheroes-front.herokuapp.com'
 )
+
+
+
+# Username: LOXjHh5mKV
+
+# Database name: LOXjHh5mKV
+
+# Password: Y5zbmFHGMo
+
+# Server: remotemysql.com
+
+# Port: 3306

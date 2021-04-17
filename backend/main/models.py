@@ -1,7 +1,41 @@
 from django.db import models
+from django.contrib.auth.models import AbstractBaseUser,PermissionsMixin
+from django.core import validators
+from sheroes_forms import settings
+User = settings.AUTH_USER_MODEL
+# class OurUsers(AbstractBaseUser, PermissionsMixin):
+#     email =                 models.EmailField(verbose_name='email', max_length=64, unique=True)
+#     username =              models.CharField(max_length=30, unique=True)
+#     date_joined =           models.DateField(verbose_name='date joined', auto_now_add=True)
+#     last_login =            models.DateTimeField(verbose_name='last login', auto_now=True)
+#     is_admin =              models.BooleanField(default=False)
+#     is_active =             models.BooleanField(default=True)
+#     is_staff =              models.BooleanField(default=False)
+#     is_superuser =          models.BooleanField(default=False)
+#     reviews_count =         models.IntegerField(default=0)
+#     first_name =            models.CharField(verbose_name='first_name', max_length=30)
+#     last_name =             models.CharField(verbose_name='last_name', max_length=30)
+#     age =                   models.IntegerField(default=18)
+#     profile_pic =           models.TextField(blank = True, null=True, default='')
+#     can_edit_tiers =        models.BooleanField(default=True)
+#     phone_regex =           validators.RegexValidator(regex=r'^\d{8,13}$', message="Phone number must be entered in the format: '+999999999'. Up to 10 digits allowed.")
+#     phone_number =          models.CharField(verbose_name = 'phone_number',validators=[phone_regex], max_length=13, unique=True, null=True,blank = True)
+#     is_creator =            models.BooleanField(default=None,null=True,blank = True)
+#     login_type =            models.CharField(default="manual",max_length = 20)
+#     razor_pay_customer_id = models.CharField(("razor_pay_customer_id"), max_length=50, null=True, blank=True)
+#     USERNAME_FIELD =    'username' 
+#     #this field means that when you try to sign in the username field will be the email 
+#     #change it to whatever you want django to see as the username when authenticating the user
+#     REQUIRED_FIELDS =   ['email', 'first_name', 'last_name',]
+#     # objects = OurUsersManager()
 
+#     def _str_(self):
+#         return self.username
 
-class Users(models.Model):
+#     def has_module_perms(self, app_label):
+#         return True
+
+class OurUsers(AbstractBaseUser, PermissionsMixin):
     class GenderType(models.TextChoices):
         MALE = 'M', 'Male'
         FEMALE = 'F','Short'
@@ -11,23 +45,31 @@ class Users(models.Model):
         ADMIN = 'AD', 'Admin'
         CREATOR = 'CR','Creator'
         ENDUSER = 'EU','End User'
-        
-    first_name = models.CharField(max_length=500, null = False)
-    last_name = models.CharField(max_length=500, null = False)
+
+    username =              models.CharField(max_length=30, unique=True)
+
+
+    first_name = models.CharField(max_length=500, null = True)
+    last_name = models.CharField(max_length=500, null = True)
+    USERNAME_FIELD =    'username' 
+    email =                 models.EmailField(verbose_name='email', max_length=64, unique=True)
+    
+    # id = models.BigIntegerField(primary_key=True)
     gender = models.CharField(
         max_length=2,
         choices = GenderType.choices,
         default = GenderType.FEMALE
     )
 
-    partner_id = models.BigIntegerField()
-    sheroes_id = models.BigIntegerField()
+    partner_id = models.BigIntegerField(null=True)
+    sheroes_id = models.BigIntegerField(null=True)
     
     user_type = models.CharField(
         max_length=2,
         choices = UserType.choices,
         default = UserType.ENDUSER
     )
+
     
 
 # Create your models here.
@@ -45,8 +87,8 @@ class Forms(models.Model):
     edit_response_toggle = models.BooleanField(null=False, default=False)
     created_on = models.DateTimeField(auto_now_add=True,null=False)
     updated_on = models.DateTimeField(auto_now=True, null=False) #update
-    created_by =  models.ForeignKey(Users,on_delete=models.CASCADE,related_name = "form_created_by") #edit
-    updated_by =  models.ForeignKey(Users,on_delete=models.CASCADE,related_name = "form_updated_by") #edit
+    created_by =  models.ForeignKey(OurUsers,on_delete=models.CASCADE,related_name = "form_created_by") #edit
+    updated_by =  models.ForeignKey(OurUsers,on_delete=models.CASCADE,related_name = "form_updated_by") #edit
     is_deleted = models.BooleanField(null=False,default=False)
 
     def delete(self, *args, **kwargs):
@@ -93,8 +135,8 @@ class Sections(models.Model):
     randomize_toggle = models.BooleanField(null=False, default=False)
     created_on = models.DateTimeField(auto_now_add=True,null=False)
     updated_on = models.DateTimeField(auto_now=True, null=False) #update
-    created_by =  models.ForeignKey(Users,on_delete=models.CASCADE,related_name = "section_created_by") #edit
-    updated_by =  models.ForeignKey(Users,on_delete=models.CASCADE,related_name = "section_updated_by") #edit
+    created_by =  models.ForeignKey(OurUsers,on_delete=models.CASCADE,related_name = "section_created_by") #edit
+    updated_by =  models.ForeignKey(OurUsers,on_delete=models.CASCADE,related_name = "section_updated_by") #edit
     
     def save(self,*args,**kwargs):
         new_section = super().save(*args, **kwargs)
@@ -152,8 +194,8 @@ class Questions(models.Model):
     # title = models.CharField(max_length=255, null=False)
     created_on = models.DateTimeField(auto_now_add=True,null=False)
     updated_on = models.DateTimeField(auto_now=True, null=False) #update
-    created_by =  models.ForeignKey(Users,on_delete=models.CASCADE,related_name = "question_created_by") #edit
-    updated_by =  models.ForeignKey(Users,on_delete=models.CASCADE,related_name = "question_updated_by") #edit
+    created_by =  models.ForeignKey(OurUsers,on_delete=models.CASCADE,related_name = "question_created_by") #edit
+    updated_by =  models.ForeignKey(OurUsers,on_delete=models.CASCADE,related_name = "question_updated_by") #edit
     
     def save(self,*args,**kwargs):
         new_question = super().save(*args, **kwargs)
@@ -204,7 +246,7 @@ class Responses(models.Model):
                 "response": "Hello"
             }   
     """
-    user_id = models.ForeignKey(Users,on_delete=models.CASCADE) #edit
+    user_id = models.ForeignKey(OurUsers,on_delete=models.CASCADE) #edit
     form_id = models.ForeignKey(Forms,on_delete=models.CASCADE) #edit
     created_on = models.DateTimeField(auto_now_add=True,null=False)
     updated_on = models.DateTimeField(auto_now=True, null=False) #update
