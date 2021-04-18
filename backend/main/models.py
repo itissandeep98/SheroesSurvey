@@ -1,39 +1,30 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser,PermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserManager
 from django.core import validators
 from sheroes_forms import settings
+from django.utils import timezone
 User = settings.AUTH_USER_MODEL
-# class OurUsers(AbstractBaseUser, PermissionsMixin):
-#     email =                 models.EmailField(verbose_name='email', max_length=64, unique=True)
-#     username =              models.CharField(max_length=30, unique=True)
-#     date_joined =           models.DateField(verbose_name='date joined', auto_now_add=True)
-#     last_login =            models.DateTimeField(verbose_name='last login', auto_now=True)
-#     is_admin =              models.BooleanField(default=False)
-#     is_active =             models.BooleanField(default=True)
-#     is_staff =              models.BooleanField(default=False)
-#     is_superuser =          models.BooleanField(default=False)
-#     reviews_count =         models.IntegerField(default=0)
-#     first_name =            models.CharField(verbose_name='first_name', max_length=30)
-#     last_name =             models.CharField(verbose_name='last_name', max_length=30)
-#     age =                   models.IntegerField(default=18)
-#     profile_pic =           models.TextField(blank = True, null=True, default='')
-#     can_edit_tiers =        models.BooleanField(default=True)
-#     phone_regex =           validators.RegexValidator(regex=r'^\d{8,13}$', message="Phone number must be entered in the format: '+999999999'. Up to 10 digits allowed.")
-#     phone_number =          models.CharField(verbose_name = 'phone_number',validators=[phone_regex], max_length=13, unique=True, null=True,blank = True)
-#     is_creator =            models.BooleanField(default=None,null=True,blank = True)
-#     login_type =            models.CharField(default="manual",max_length = 20)
-#     razor_pay_customer_id = models.CharField(("razor_pay_customer_id"), max_length=50, null=True, blank=True)
-#     USERNAME_FIELD =    'username' 
-#     #this field means that when you try to sign in the username field will be the email 
-#     #change it to whatever you want django to see as the username when authenticating the user
-#     REQUIRED_FIELDS =   ['email', 'first_name', 'last_name',]
-#     # objects = OurUsersManager()
 
-#     def _str_(self):
-#         return self.username
+# Manger for OurUser model
+class OurUserManager(UserManager):
+    def _create_user(self, username, user_type, email, password,
+                     is_staff, is_superuser, first_name, last_name, gender, partner_id, sheroes_id, **extra_fields):
+        """
+        Creates and saves a User with the given username, email and password.
+        """
+        now = timezone.now()
+        if not username:
+            raise ValueError('The given username must be set')
+        email = self.normalize_email(email)
+        user = self.model(username=username, email=email, first_name=first_name,
+                            last_name=last_name, gender=gender, partner_id=partner_id, sheroes_id=sheroes_id, user_type=user_type, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
 
-#     def has_module_perms(self, app_label):
-#         return True
+    def create_user(self, username, user_type,email=None, password=None, first_name=None, last_name=None, gender='F', partner_id=None, sheroes_id=None,**extra_fields):
+        return self._create_user(username, user_type, email, password, False, False, first_name, last_name, gender, partner_id, sheroes_id, **extra_fields)
+
 
 class OurUsers(AbstractBaseUser, PermissionsMixin):
     class GenderType(models.TextChoices):
@@ -46,8 +37,8 @@ class OurUsers(AbstractBaseUser, PermissionsMixin):
         CREATOR = 'CR','Creator'
         ENDUSER = 'EU','End User'
 
-    username =              models.CharField(max_length=30, unique=True)
-
+    username = models.CharField(max_length=30, unique=True)
+    objects = OurUserManager()
 
     first_name = models.CharField(max_length=500, null = True)
     last_name = models.CharField(max_length=500, null = True)

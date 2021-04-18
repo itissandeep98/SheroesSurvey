@@ -2,7 +2,7 @@ from main.models import Forms, OurUsers, Sections, Questions, Options, ShortPara
 from rest_framework import viewsets, permissions, status
 from rest_framework.decorators import action
 from rest_framework.decorators import api_view
-from .serializers import FormSerializers, OurUsersSerializers, SectionSerializers, QuestionSerializers, OptionsSerializers, ShortParaSerializers, ResponsesSerializers
+from .serializers import FormSerializers, SectionSerializers, QuestionSerializers, OptionsSerializers, ShortParaSerializers, ResponsesSerializers
 from rest_framework.response import Response
 
 
@@ -116,38 +116,38 @@ class FormsViewSet(viewsets.ModelViewSet):
         return Response(Forms.objects.all().filter(is_deleted = True).values(),status=status.HTTP_200_OK)
 
 
-class OurUsersViewSet(viewsets.ModelViewSet):
-    queryset = OurUsers.objects.all()
-    permission_classes = [
-        permissions.AllowAny
-    ]
-    serializer_class = OurUsersSerializers
+# class OurUsersViewSet(viewsets.ModelViewSet):
+#     queryset = OurUsers.objects.all()
+#     permission_classes = [
+#         permissions.AllowAny
+#     ]
+#     serializer_class = OurUsersSerializers
 
-    @action(methods=['patch','post'], detail=True)
-    def update_fields(self, request, pk=None):
-        """
-        Format:
-            url: https://sheroes-form.herokuapp.com/users/<user-id>/update_fields/
-            url: http://127.0.0.1:8000/users/<user-id>/update_fields/
-            {
-                "fields": ["first_name" , "partner_id" , "user_type"]
-                "first_name": "Bond",
-                "partner_id" : "007"
-                "user_type" : "CR"
-            }
-        """
-        try:
-            if(pk == None):
-                raise Exception()
-            user_id = pk
-            user_instance = OurUsers.objects.get(id=user_id)
-            for field in request.data:
-                setattr(user_instance,field,request.data[field])
-            user_instance.save()
-        except:
-            return Response("Invalid Request", status=status.HTTP_400_BAD_REQUEST)
+#     @action(methods=['patch','post'], detail=True)
+#     def update_fields(self, request, pk=None):
+#         """
+#         Format:
+#             url: https://sheroes-form.herokuapp.com/users/<user-id>/update_fields/
+#             url: http://127.0.0.1:8000/users/<user-id>/update_fields/
+#             {
+#                 "fields": ["first_name" , "partner_id" , "user_type"]
+#                 "first_name": "Bond",
+#                 "partner_id" : "007"
+#                 "user_type" : "CR"
+#             }
+#         """
+#         try:
+#             if(pk == None):
+#                 raise Exception()
+#             user_id = pk
+#             user_instance = OurUsers.objects.get(id=user_id)
+#             for field in request.data:
+#                 setattr(user_instance,field,request.data[field])
+#             user_instance.save()
+#         except:
+#             return Response("Invalid Request", status=status.HTTP_400_BAD_REQUEST)
 
-        return Response("Update Accepted", status=status.HTTP_200_OK)
+#         return Response("Update Accepted", status=status.HTTP_200_OK)
 
 
 class SectionsViewSet(viewsets.ModelViewSet):

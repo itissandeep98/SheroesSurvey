@@ -42,12 +42,13 @@ INSTALLED_APPS = [
     'rest_framework',
     "rest_framework.authtoken",
     "corsheaders",
-    "knox"
+    "knox",
+    "accounts"
 ]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES':
-    ('knox.auth.TokenAuthentication')
+    ('knox.auth.TokenAuthentication',)
 }
 
 AUTH_USER_MODEL = "main.OurUsers"
