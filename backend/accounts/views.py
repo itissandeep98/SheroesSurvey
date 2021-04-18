@@ -32,3 +32,13 @@ class LoginAPI(generics.GenericAPIView):
         })
 
 #Get User API
+class UserAPI(generics.RetrieveAPIView):
+    permissions=[
+        permissions.IsAuthenticated,
+    ]
+
+    serializer_class=OurUsersSerializers
+
+    def get_object(self):
+        #looks at the token in the request and returns the user associated with that token
+        return self.request.user
