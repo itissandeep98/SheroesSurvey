@@ -69,7 +69,11 @@ function CreateForm(props) {
 				<Col lg={8}>
 					<Row>
 						<Col className="text-center">
-							<NavigationBar form_id={id} />
+							<NavigationBar
+							
+								form_id={id}
+								response_toggle={details?.edit_response_toggle}
+							/>
 							<h1 className="d-inline text-capitalize">{details.heading}</h1>
 						</Col>
 					</Row>

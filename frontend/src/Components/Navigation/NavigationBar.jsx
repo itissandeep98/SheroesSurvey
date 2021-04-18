@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './style.css';
 import Drawer from '@material-ui/core/Drawer';
 import {
@@ -15,26 +15,30 @@ import MenuIcon from '@material-ui/icons/Menu';
 import GroupIcon from '@material-ui/icons/Group';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import EditIcon from '@material-ui/icons/Edit';
-import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import { Button, Image } from 'semantic-ui-react';
 import { useHistory } from 'react-router';
 import { useDispatch } from 'react-redux';
-import { formDelete } from '../../Store/ActionCreators/form';
+import { formDelete, formUpdate } from '../../Store/ActionCreators/form';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import { frontUrl } from '../../Store/Url';
+import { showAlert } from '../Alert';
 
 function NavigationBar(props) {
-	const { form_id } = props;
+	const { form_id, response_toggle } = props;
 	const history = useHistory();
+	const [response, setResponse] = useState(response_toggle);
 	const [open, setOpen] = useState(false);
 	const [modal, setModal] = useState(false);
 	const dispatch = useDispatch();
 	const handleDelete = () => {
 		dispatch(formDelete(form_id)).then(() => {
 			history.push(`/admin`);
+			showAlert('Form Deleted Successfully');
 		});
 	};
-	const list = [
+	let list = [
 		{
 			text: 'Edit Form',
 			icon: <EditIcon />,
@@ -48,7 +52,10 @@ function NavigationBar(props) {
 		{
 			text: 'Copy Preview Link',
 			icon: <FileCopyIcon />,
-			onClick: () => navigator.clipboard.writeText(`${frontUrl}/${form_id}`),
+			onClick: () => {
+				navigator.clipboard.writeText(`${frontUrl}/${form_id}`);
+				showAlert('URL Copied to Clipboard');
+			},
 		},
 		{
 			text: 'View Responses',
@@ -62,9 +69,21 @@ function NavigationBar(props) {
 			onClick: () => setModal(!modal),
 		},
 		{
-			text: 'Stop Accepting Responses',
-			icon: <HighlightOffIcon />,
-			onClick: () => console.log('here'),
+			text: 'Accept Responses',
+			icon:
+				response ?? props.response_toggle ? (
+					<CheckBoxOutlineBlankIcon />
+				) : (
+					<CheckBoxIcon />
+				),
+			onClick: () => {
+				const data = {
+					edit_response_toggle: !(response ?? props.response_toggle),
+				};
+				const id = form_id;
+				dispatch(formUpdate({ id, data }));
+				setResponse(!(response ?? props.response_toggle));
+			},
 		},
 	];
 

@@ -1,4 +1,4 @@
-import { TextField } from '@material-ui/core';
+import { TextField, Tooltip } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Col, Container, Label, Row } from 'reactstrap';
@@ -40,28 +40,37 @@ function Banner(props) {
 			fluid
 			className="form_banner px-3 overflow-hidden my-3 bg-white rounded_lg">
 			<Row>
-				<div
-					className="w-100"
-					style={{
-						overflow: 'hidden',
-						height: '20rem',
-						backgroundColor: '#bfbaba',
-					}}>
-					<Label
-						className="text-white w-100 h-100 text-center d-flex justify-content-center align-items-center"
+				<Tooltip title="Click to update Image">
+					<div
+						className="w-100"
 						style={{
-							cursor: 'pointer',
+							overflow: 'hidden',
+							height: '20rem',
+							backgroundColor: '#bfbaba',
 						}}>
-						{bannerimg ? (
-							<Image src={bannerimg} fluid />
-						) : (
-							<div className="display-4 p-5" style={{ borderStyle: 'dotted' }}>
-								<Icon name="add" /> Add Banner
-							</div>
-						)}
-						<Input type="file" accept="image/*" hidden onChange={handleImage} />
-					</Label>
-				</div>
+						<Label
+							className="text-white w-100 h-100 text-center d-flex justify-content-center align-items-center"
+							style={{
+								cursor: 'pointer',
+							}}>
+							{bannerimg ? (
+								<Image src={bannerimg} fluid />
+							) : (
+								<div
+									className="display-4 p-5"
+									style={{ borderStyle: 'dotted' }}>
+									<Icon name="add" /> Add Banner
+								</div>
+							)}
+							<Input
+								type="file"
+								accept="image/*"
+								hidden
+								onChange={handleImage}
+							/>
+						</Label>
+					</div>
+				</Tooltip>
 				<Col xs={12} className="my-3">
 					<form>
 						<TextField

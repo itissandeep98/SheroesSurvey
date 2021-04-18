@@ -43,6 +43,7 @@ function Question(props) {
 				modal={modal}
 				toggle={() => setModal(!modal)}
 				qtype={ques.qtype}
+				id={id}
 			/>
 			<div className="mt-3 mb-5 d-flex align-items-center ">
 				<form className="mr-2 w-100">

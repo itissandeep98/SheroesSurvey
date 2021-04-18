@@ -65,6 +65,27 @@ export const questionUpdate = ({ id, data }) => {
 	};
 };
 
+export const questionDetailsUpdate = ({ id, data }) => {
+	return async dispatch => {
+		dispatch({ type: ActionTypes.QUESTION_DETAILS_UPDATE_REQUEST });
+		return await axios
+			.post(`${apiUrl}/shortparas/${id}/update_fields/`, data)
+			.then(response => {
+				dispatch({
+					type: ActionTypes.QUESTION_DETAILS_UPDATE_SUCCESS,
+					data: response.data,
+				});
+				return response.data;
+			})
+			.catch(error => {
+				dispatch({
+					type: ActionTypes.QUESTION_DETAILS_UPDATE_FAILED,
+					errmess: 'Error in connection with Server',
+				});
+			});
+	};
+};
+
 export const questionDelete = id => {
 	return async dispatch => {
 		dispatch({ type: ActionTypes.QUESTION_DELETE_REQUEST });
@@ -84,4 +105,3 @@ export const questionDelete = id => {
 			});
 	};
 };
-
