@@ -23,4 +23,20 @@ class RegisterSerializer(serializers.ModelSerializer):
             validated_data['last_name'], validated_data['gender'], validated_data['partner_id'], validated_data['sheroes_id']
         )
         return user
+
 #Login Serializer
+class LoginSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField()
+
+    def validate(self, data):
+        user = authenticate(**data)
+        ##uncomment this if you add isdeleted field in OurUsers model
+        # if user and !user.is_deleted:
+        #     return user
+        # raise serializers.ValidationError("Incorrect Credentials")
+
+        #comment this when you uncomment above
+        if user:
+            return user
+        raise serializers.ValidationError("Incorrect Credentials")
