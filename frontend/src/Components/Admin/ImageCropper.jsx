@@ -1,14 +1,24 @@
-import { Button, Slider } from '@material-ui/core';
+import { Button, IconButton, Slider } from '@material-ui/core';
 import { useState } from 'react';
 import Cropper from 'react-easy-crop';
-import { Input, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import { useDropzone } from 'react-dropzone';
 import './style.scss';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { Image as Imag } from 'semantic-ui-react';
 
 const aspectX = 700;
 const aspectY = 200;
 
 function ImageCropper(props) {
-	const { modal, toggle, updateBanner, blob, setBlob } = props;
+	const {
+		modal,
+		toggle,
+		updateBanner,
+		removeBanner,
+		bannerimg,
+		setBlob,
+	} = props;
 	const [crop, setCrop] = useState({ x: 0, y: 0 });
 	const [zoom, setZoom] = useState(1);
 
@@ -18,19 +28,51 @@ function ImageCropper(props) {
 		const croppedImage = await getCroppedImg(inputImg, croppedAreaPixels);
 		setBlob(croppedImage);
 	};
-	const onInputChange = e => {
-		const file = e.target.files[0];
-		const reader = new FileReader();
-		reader.addEventListener('load', () => setInputImg(reader.result), false);
-		if (file) {
-			reader.readAsDataURL(file);
-		}
-	};
+
+	const { getRootProps, getInputProps } = useDropzone({
+		accept: 'image/*',
+		maxFiles: 1,
+		maxSize: 5242880,
+		onDrop: acceptedFile => {
+			if (acceptedFile.length > 0) {
+				const file = acceptedFile[0];
+				const reader = new FileReader();
+				reader.addEventListener(
+					'load',
+					() => setInputImg(reader.result),
+					false
+				);
+				if (file) {
+					reader.readAsDataURL(file);
+				}
+			}
+		},
+	});
 
 	return (
 		<Modal isOpen={modal} toggle={toggle} size="lg">
-			<ModalHeader toggle={toggle}>Image Crop</ModalHeader>
+			<ModalHeader toggle={toggle}>Update Banner</ModalHeader>
 			<ModalBody>
+				{bannerimg && (
+					<div className="mb-2 d-flex">
+						<Imag src={bannerimg} size="small" />
+						<IconButton onClick={removeBanner}>
+							<DeleteIcon fontSize="large" />
+						</IconButton>
+					</div>
+				)}
+				<div
+					{...getRootProps()}
+					className="border py-4 text-muted bg-light text-center"
+					style={{ cursor: 'copy' }}>
+					<input {...getInputProps()} />
+					<p>Drag & Drop Image here, or Click to Select</p>
+				</div>
+				<small className="text-muted text-center">
+					File Size should be less than 5MB
+				</small>
+			</ModalBody>
+			<ModalBody className="bg-light">
 				<div className="crop-container ">
 					<Cropper
 						image={inputImg}
@@ -55,7 +97,6 @@ function ImageCropper(props) {
 				/>
 			</ModalBody>
 			<ModalFooter>
-				<Input type="file" accept="image/*" onChange={onInputChange} />
 				<Button variant="outlined" onClick={updateBanner}>
 					Update Banner
 				</Button>
@@ -77,9 +118,6 @@ export const getCroppedImg = async (imageSrc, crop) => {
 	const image = await createImage(imageSrc);
 	const canvas = document.createElement('canvas');
 	const ctx = canvas.getContext('2d');
-
-	/* setting canvas width & height allows us to 
-    resize from the original image resolution */
 	canvas.width = aspectX;
 	canvas.height = aspectY;
 

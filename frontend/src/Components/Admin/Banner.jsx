@@ -2,13 +2,16 @@ import { TextField, Tooltip } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Col, Container, Label, Row } from 'reactstrap';
-import { Form, Icon, Image, Input, TextArea } from 'semantic-ui-react';
+import { Icon, Image } from 'semantic-ui-react';
 import { uploadContent } from '../../Store/ActionCreators/upload';
 import ImageCropper from './ImageCropper';
 
 function Banner(props) {
 	const { heading, description, banner_path } = props;
 	const [bannerimg, setBannerimg] = useState(banner_path);
+	useEffect(() => {
+		setBannerimg(banner_path);
+	}, [props.banner_path]);
 	const [head, setheading] = useState(heading);
 	const [desc, setdescription] = useState(description);
 	const [modal, setModal] = useState(false);
@@ -32,6 +35,11 @@ function Banner(props) {
 			});
 		}
 	};
+	const removeBanner = () => {
+		setBannerimg('');
+		props.update({ banner_path: '' });
+		setModal(false);
+	};
 	return (
 		<Container
 			fluid
@@ -40,18 +48,19 @@ function Banner(props) {
 				<ImageCropper
 					modal={modal}
 					toggle={() => setModal(!modal)}
-					blob={blob}
+					bannerimg={bannerimg}
 					setBlob={setBlob}
 					updateBanner={updateBanner}
+					removeBanner={removeBanner}
 				/>
 				<Tooltip title="Click to update Image">
 					<div
-						className="w-100 btn p-0"
+						className="w-100"
 						onClick={() => setModal(true)}
 						style={{
 							backgroundColor: '#bfbaba',
 						}}>
-						<Label className="text-white w-100 btn p-0 ">
+						<Label className="text-white text-center w-100 btn p-0  ">
 							{bannerimg ? (
 								<Image src={bannerimg ?? banner_path} fluid />
 							) : (
