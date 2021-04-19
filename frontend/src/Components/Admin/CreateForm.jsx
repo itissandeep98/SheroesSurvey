@@ -70,7 +70,6 @@ function CreateForm(props) {
 					<Row>
 						<Col className="text-center">
 							<NavigationBar
-							
 								form_id={id}
 								response_toggle={details?.edit_response_toggle}
 							/>
