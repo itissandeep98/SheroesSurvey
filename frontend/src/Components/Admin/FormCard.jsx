@@ -48,11 +48,7 @@ function FormCard(props) {
 			</Modal>
 			<Card className="my-2 border-danger h-100 border rounded_lg card_hover">
 				<CardActionArea onClick={() => history.push(`/admin/${id}`)}>
-					<CardMedia
-						style={{
-							maxHeight: '8rem',
-						}}
-						className="overflow-hidden">
+					<CardMedia>
 						<Image src={banner_path ?? defaultImage} fluid />
 					</CardMedia>
 					<CardHeader
