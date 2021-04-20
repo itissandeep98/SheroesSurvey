@@ -22,7 +22,7 @@ import {
 import Question from './Question/Question';
 
 function Section(props) {
-	const { id, index } = props;
+	const { id, index, userid } = props;
 	const [quesList, setQuesList] = useState([]);
 	const [details, setDetails] = useState({});
 	const [loading, setLoading] = useState(false);
@@ -38,8 +38,8 @@ function Section(props) {
 		setLoading(true);
 		const data = {
 			section_id: id,
-			created_by: 1,
-			updated_by: 1,
+			created_by: userid,
+			updated_by: userid,
 			statement: 'Question',
 			qtype: 'SP',
 		};

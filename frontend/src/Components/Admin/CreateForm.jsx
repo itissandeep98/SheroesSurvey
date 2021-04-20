@@ -4,7 +4,7 @@ import { Button, Icon, List } from 'semantic-ui-react';
 import Section from './Section';
 import classNames from 'classnames';
 import Banner from './Banner';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { formFetch, formUpdate } from '../../Store/ActionCreators/form';
 import {
 	sectionCreate,
@@ -15,6 +15,7 @@ import NavigationBar from '../Navigation/NavigationBar';
 import ConsentPage from './ConsentPage';
 
 function CreateForm(props) {
+	const userid = useSelector(state => state?.auth?.userId);
 	const { id } = props?.match?.params;
 	const [details, setDetails] = useState('');
 	const [structure, setStructure] = useState([]);
@@ -34,8 +35,8 @@ function CreateForm(props) {
 		const data = {
 			question_sequence: [],
 			form_id: id,
-			created_by: 1,
-			updated_by: 1,
+			created_by: userid,
+			updated_by: userid,
 		};
 		dispatch(sectionCreate(data)).then(res => {
 			if (structure) {
@@ -121,6 +122,7 @@ function CreateForm(props) {
 										key={structure[curr]}
 										id={structure[curr]}
 										index={curr + 1}
+										userid={userid}
 										remove={() => removeSection(structure[curr], curr)}
 									/>
 								}
