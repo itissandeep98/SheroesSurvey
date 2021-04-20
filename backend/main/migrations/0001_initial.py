@@ -117,6 +117,11 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='questions',
+            name='created_by',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='question_created_by', to='main.users'),
+        ),
+        migrations.AddField(
+            model_name='questions',
             name='section_id',
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='main.sections'),
         ),
@@ -135,6 +140,16 @@ class Migration(migrations.Migration):
                 ('correct_answer', models.BooleanField(default=False)),
                 ('question_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='main.questions')),
             ],
+        ),
+        migrations.AddField(
+            model_name='forms',
+            name='created_by',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='form_created_by', to='main.users'),
+        ),
+        migrations.AddField(
+            model_name='forms',
+            name='updated_by',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='form_updated_by', to='main.users'),
         ),
         migrations.CreateModel(
             name='FileUpload',

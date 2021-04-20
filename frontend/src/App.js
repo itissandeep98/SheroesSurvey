@@ -1,4 +1,4 @@
-import Routing from './Components/Routing';
+import Routing from './Components/Routing/Routing';
 import { BrowserRouter } from 'react-router-dom';
 import './App.css';
 

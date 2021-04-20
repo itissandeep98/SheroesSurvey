@@ -38,8 +38,8 @@ function Section(props) {
 		setLoading(true);
 		const data = {
 			section_id: id,
-			created_by: 2,
-			updated_by: 2,
+			created_by: 1,
+			updated_by: 1,
 			statement: 'Question',
 			qtype: 'SP',
 		};
@@ -123,13 +123,12 @@ function Section(props) {
 				<Col>
 					{quesList &&
 						quesList.map((quesid, i) => (
-							<div key={Math.random()}>
-								<Question
-									id={quesid}
-									index={i + 1}
-									remove={() => removeQuestion(quesid, i)}
-								/>
-							</div>
+							<Question
+								key={quesid}
+								id={quesid}
+								index={i + 1}
+								remove={() => removeQuestion(quesid, i)}
+							/>
 						))}
 				</Col>
 				<Col xs={12}>

@@ -3,7 +3,6 @@ import { Col, Container, Row, Spinner } from 'reactstrap';
 import { Button, Icon, List } from 'semantic-ui-react';
 import Section from './Section';
 import classNames from 'classnames';
-import './style.css';
 import Banner from './Banner';
 import { useDispatch } from 'react-redux';
 import { formFetch, formUpdate } from '../../Store/ActionCreators/form';
@@ -34,8 +33,8 @@ function CreateForm(props) {
 		const data = {
 			question_sequence: [],
 			form_id: id,
-			created_by: 2,
-			updated_by: 2,
+			created_by: 1,
+			updated_by: 1,
 		};
 		dispatch(sectionCreate(data)).then(res => {
 			if (structure) {
@@ -70,16 +69,11 @@ function CreateForm(props) {
 				<Col lg={8}>
 					<Row>
 						<Col className="text-center">
-							<NavigationBar form_id={id} />
+							<NavigationBar
+								form_id={id}
+								response_toggle={details?.edit_response_toggle}
+							/>
 							<h1 className="d-inline text-capitalize">{details.heading}</h1>
-							{/* <a
-								className="zoom_on_hover float-right d-inline"
-								style={{ cursor: 'pointer' }}
-								href={`/${props?.match?.params?.id}`}
-								target="_blank"
-								rel="noopener noreferrer">
-								<Icon name="eye" size="large" />
-							</a> */}
 						</Col>
 					</Row>
 					<Row>
