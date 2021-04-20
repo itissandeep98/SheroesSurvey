@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { Col, Container, Row } from 'reactstrap';
-import { Placeholder } from 'semantic-ui-react';
+import { Icon, Placeholder } from 'semantic-ui-react';
 import { questionFetch } from '../../Store/ActionCreators/question';
 import MultipleChoiceInput from './Inputs/MultipleChoiceInput';
 import ParagraphInput from './Inputs/ParagraphInput';
 import TextInput from './Inputs/TextInput';
 import * as ActionTypes from '../../Store/ActionTypes';
 import { responseCreate } from '../../Store/ActionCreators/response';
+import { Tooltip } from '@material-ui/core';
 
 function Question(props) {
 	const { id, index, sectionId, formId } = props;
@@ -40,8 +41,8 @@ function Question(props) {
 	return (
 		<Container className="my-4">
 			<Row>
-				{loading ? (
-					<Col>
+				<Col>
+					{loading ? (
 						<Placeholder fluid>
 							<Placeholder.Paragraph>
 								<Placeholder.Line />
@@ -50,14 +51,21 @@ function Question(props) {
 								<Placeholder.Line />
 							</Placeholder.Paragraph>
 						</Placeholder>
-					</Col>
-				) : (
-					<Col>
+					) : (
 						<h4 className="text-justify">
 							Q{index}: {ques?.statement}
+							{ques.mandatory_toggle && (
+								<Tooltip title="Mandatory Question">
+									<Icon
+										name="asterisk"
+										size="small"
+										className="text-danger ml-2"
+									/>
+								</Tooltip>
+							)}
 						</h4>
-					</Col>
-				)}
+					)}
+				</Col>
 			</Row>
 			<Row>
 				<Col>
@@ -65,12 +73,14 @@ function Question(props) {
 						<TextInput
 							modifyResponse={modifyResponse}
 							value={props.response?.[sectionId]?.[id]}
+							required={ques.mandatory_toggle}
 						/>
 					)}
 					{ques.qtype === 'LP' && (
 						<ParagraphInput
 							modifyResponse={modifyResponse}
 							value={props.response?.[sectionId]?.[id]}
+							required={ques.mandatory_toggle}
 						/>
 					)}
 					{ques.qtype === 'MC' && (
@@ -78,6 +88,7 @@ function Question(props) {
 							modifyResponse={modifyResponse}
 							quesId={id}
 							value={props.response?.[sectionId]?.[id]}
+							required={ques.mandatory_toggle}
 						/>
 					)}
 					{/* {ques.qtype == 'number' && <NumberInput />} */}
