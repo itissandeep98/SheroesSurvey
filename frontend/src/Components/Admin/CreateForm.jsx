@@ -12,6 +12,7 @@ import {
 } from '../../Store/ActionCreators/section';
 import { withRouter } from 'react-router';
 import NavigationBar from '../Navigation/NavigationBar';
+import ConsentPage from './ConsentPage';
 
 function CreateForm(props) {
 	const { id } = props?.match?.params;
@@ -78,6 +79,9 @@ function CreateForm(props) {
 					</Row>
 					<Row>
 						<Banner {...details} update={updateForm} key={3} />
+					</Row>
+					<Row>
+						<ConsentPage />
 					</Row>
 
 					<Row className="mt-4">
