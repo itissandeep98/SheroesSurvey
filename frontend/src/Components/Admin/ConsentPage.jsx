@@ -5,18 +5,26 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { TextField } from '@material-ui/core';
+import { useState } from 'react';
 
-function ConsentPage() {
+function ConsentPage(props) {
+	const { consent_toggle, consent_text, update } = props;
+	const [toggle, setToggle] = useState(consent_toggle);
+	const [text, setText] = useState(consent_text);
+	const toggleConsent = e => {
+		update({ consent_toggle: e.target.checked });
+		setToggle(!toggle);
+	};
+	const updateConsent = e => {
+		setText(e.target.value);
+		update({ consent_text: e.target.value });
+	};
 	return (
 		<Accordion className="w-100 rounded-lg">
-			<AccordionSummary
-				expandIcon={<ExpandMoreIcon />}
-				aria-label="Expand"
-				aria-controls="additional-actions1-content"
-				id="additional-actions1-header">
+			<AccordionSummary expandIcon={<ExpandMoreIcon />}>
 				<FormControlLabel
-					aria-label="Acknowledge"
-					onClick={event => event.stopPropagation()}
+					onClick={toggleConsent}
+					checked={toggle}
 					onFocus={event => event.stopPropagation()}
 					control={<Checkbox />}
 					label="Include Consent Form"
@@ -24,10 +32,12 @@ function ConsentPage() {
 			</AccordionSummary>
 			<AccordionDetails>
 				<TextField
+					value={text}
 					fullWidth
 					multiline
 					label="Consent Form"
 					variant="outlined"
+					onChange={updateConsent}
 				/>
 			</AccordionDetails>
 		</Accordion>

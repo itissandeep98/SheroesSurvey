@@ -67,70 +67,76 @@ function CreateForm(props) {
 
 	return (
 		<Container className="mt-3" fluid>
-			<Row className="d-flex justify-content-center">
-				<Col lg={8}>
-					<Row>
-						<Col className="text-center">
-							<NavigationBar
-								form_id={id}
-								response_toggle={details?.edit_response_toggle}
-							/>
-							<h1 className="d-inline text-capitalize">{details.heading}</h1>
-						</Col>
-					</Row>
-					<Row>
-						<Banner {...details} update={updateForm} key={3} />
-					</Row>
-					<Row>
-						<ConsentPage />
-					</Row>
-
-					<Row className="mt-4">
-						<Col xs={2}>
-							<div className="sticky-top text-center" style={{ zIndex: 0 }}>
-								<br />
-								<Button onClick={addSection} size="mini" disabled={loading}>
-									{loading ? (
-										<Spinner />
-									) : (
-										<>
-											<Icon name="plus" />
-											Add Section
-										</>
-									)}
-								</Button>
-								<List>
-									{structure?.map((section, i) => (
-										<List.Item
-											as="a"
-											key={i}
-											onClick={() => setCurr(i)}
-											className={classNames('text-center mb-2', {
-												'text-danger': curr === i,
-												'text-dark ': curr !== i,
-											})}>
-											Section {i + 1}
-										</List.Item>
-									))}
-								</List>
-							</div>
-						</Col>
-						{structure?.length > 0 && curr > -1 && (
-							<Col>
-								{
-									<Section
-										key={structure[curr]}
-										id={structure[curr]}
-										index={curr + 1}
-										userid={userid}
-										remove={() => removeSection(structure[curr], curr)}
-									/>
-								}
+			{details && (
+				<Row className="d-flex justify-content-center">
+					<Col lg={8}>
+						<Row>
+							<Col className="text-center">
+								<NavigationBar
+									form_id={id}
+									response_toggle={details?.edit_response_toggle}
+								/>
+								<h1 className="d-inline text-capitalize">{details.heading}</h1>
 							</Col>
-						)}
-					</Row>
-				</Col>
-			</Row>
+						</Row>
+						<Row>
+							<Banner {...details} update={updateForm} key={3} />
+						</Row>
+						<Row>
+							<ConsentPage
+								update={updateForm}
+								consent_toggle={details?.consent_toggle}
+								consent_text={details?.consent_text}
+							/>
+						</Row>
+
+						<Row className="mt-4">
+							<Col xs={2}>
+								<div className="sticky-top text-center" style={{ zIndex: 0 }}>
+									<br />
+									<Button onClick={addSection} size="mini" disabled={loading}>
+										{loading ? (
+											<Spinner />
+										) : (
+											<>
+												<Icon name="plus" />
+												Add Section
+											</>
+										)}
+									</Button>
+									<List>
+										{structure?.map((section, i) => (
+											<List.Item
+												as="a"
+												key={i}
+												onClick={() => setCurr(i)}
+												className={classNames('text-center mb-2', {
+													'text-danger': curr === i,
+													'text-dark ': curr !== i,
+												})}>
+												Section {i + 1}
+											</List.Item>
+										))}
+									</List>
+								</div>
+							</Col>
+							{structure?.length > 0 && curr > -1 && (
+								<Col>
+									{
+										<Section
+											key={structure[curr]}
+											id={structure[curr]}
+											index={curr + 1}
+											userid={userid}
+											remove={() => removeSection(structure[curr], curr)}
+										/>
+									}
+								</Col>
+							)}
+						</Row>
+					</Col>
+				</Row>
+			)}
 		</Container>
 	);
 }

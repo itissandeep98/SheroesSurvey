@@ -25,7 +25,7 @@ function Banner(props) {
 					</p>
 				</Col>
 			</Row>
-			{description && (
+			{description?.length > 200 && (
 				<Row>
 					<Col className="text-center mt-n3">
 						<Button
