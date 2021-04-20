@@ -6,7 +6,7 @@ import Section from './Section';
 import { useDispatch } from 'react-redux';
 import './style.css';
 import { formFetch } from '../../Store/ActionCreators/form';
-import { useHistory } from 'react-router';
+import { Redirect, useHistory } from 'react-router';
 import ConsentPage from './ConsentPage';
 
 function Form(props) {
@@ -23,14 +23,17 @@ function Form(props) {
 	}, [dispatch]);
 
 	const history = useHistory();
-
+	console.log(details);
+	if (details && !details?.edit_response_toggle) {
+		return <Redirect to={`/${id}/restrict`} />;
+	}
 	return (
 		<Container className="mb-5" fluid>
 			<Row className="d-flex justify-content-center">
 				<Col lg={8}>
 					<Banner {...details} key={3} />
 					{curr === -1 && <ConsentPage setCurr={setCurr} />}
-					{structure.length > 0 && curr > -1 && (
+					{structure?.length > 0 && curr > -1 && (
 						<>
 							<Row>
 								<Col>
@@ -60,7 +63,7 @@ function Form(props) {
 							Back
 						</Button>
 					)}
-					{curr > -1 && curr < structure.length - 1 && (
+					{curr > -1 && curr < structure?.length - 1 && (
 						<Button
 							className="float-right rounded-pill"
 							onClick={() => setCurr(curr + 1)}>
@@ -68,7 +71,7 @@ function Form(props) {
 							<Icon name="arrow right" />
 						</Button>
 					)}
-					{curr === structure.length - 1  && (
+					{curr === structure?.length - 1 && (
 						<>
 							<Button
 								className="float-right"

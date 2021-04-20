@@ -72,9 +72,9 @@ function NavigationBar(props) {
 			text: 'Accept Responses',
 			icon:
 				response ?? props.response_toggle ? (
-					<CheckBoxOutlineBlankIcon />
-				) : (
 					<CheckBoxIcon />
+				) : (
+					<CheckBoxOutlineBlankIcon />
 				),
 			onClick: () => {
 				const data = {
