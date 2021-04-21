@@ -1,9 +1,8 @@
 import { TextField } from '@material-ui/core';
-import moment from 'moment';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Col, Row, Spinner } from 'reactstrap';
-import { Dropdown, Icon } from 'semantic-ui-react';
+import { Col, Row } from 'reactstrap';
+import { Dropdown } from 'semantic-ui-react';
 import {
 	questionFetch,
 	questionUpdate,
@@ -15,8 +14,8 @@ import QuestionSettings from './QuestionSettings';
 function Question(props) {
 	const { id, index } = props;
 	const dispatch = useDispatch();
-	const [ques, setQues] = useState({});
-	const [modal, setModal] = useState(false);
+	const [ques, setQues] = useState(null);
+
 	useEffect(() => {
 		dispatch(questionFetch(id)).then(res => {
 			setQues(res);
@@ -38,45 +37,14 @@ function Question(props) {
 	};
 
 	return (
-		<>
-			<QuestionSettings
-				modal={modal}
-				toggle={() => setModal(!modal)}
-				qtype={ques.qtype}
-				id={id}
-			/>
-			<div className="mt-3 mb-5 d-flex align-items-center ">
+		<div className="mt-3 mb-5 d-flex align-items-center ">
+			{ques && (
 				<form className="mr-2 w-100">
-					<Dropdown
-						className="float-right "
-						item
-						direction="left"
-						icon={<Icon name="ellipsis vertical" />}
-						simple>
-						<Dropdown.Menu>
-							<Dropdown.Item onClick={props.remove}>
-								<Icon name="trash" />
-								Delete
-							</Dropdown.Item>
-							<Dropdown.Item disabled>
-								<Icon name="asterisk" />
-								Mark Important
-							</Dropdown.Item>
-							{ques.qtype === 'SP' && (
-								<Dropdown.Item onClick={() => setModal(!modal)}>
-									<Icon name="cogs" />
-									More Options
-								</Dropdown.Item>
-							)}
-						</Dropdown.Menu>
-					</Dropdown>
-					<small className="float-right text-muted ">
-						{ques?.created_on ? (
-							<>Created {moment(ques?.created_on).fromNow()}</>
-						) : (
-							<Spinner size="sm" />
-						)}
-					</small>
+					<QuestionSettings
+						{...props}
+						ques={ques}
+						mandatory={ques.mandatory_toggle}
+					/>
 
 					<TextField
 						label={`Question ${index}`}
@@ -109,8 +77,8 @@ function Question(props) {
 						)}
 					</Row>
 				</form>
-			</div>
-		</>
+			)}
+		</div>
 	);
 }
 

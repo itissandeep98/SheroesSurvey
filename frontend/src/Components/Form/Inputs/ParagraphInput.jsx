@@ -1,7 +1,7 @@
 import TextField from '@material-ui/core/TextField';
 
 function ParagraphInput(props) {
-	const { value } = props;
+	const { value, required } = props;
 	const handleChange = e => {
 		props.modifyResponse(e.target.value);
 	};
@@ -14,8 +14,8 @@ function ParagraphInput(props) {
 				fullWidth
 				multiline
 				defaultValue={value}
-				rows={10}
 				onChange={handleChange}
+				required={required}
 			/>
 		</form>
 	);
