@@ -10,13 +10,16 @@ import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutAction } from '../../Store/ActionCreators/auth';
+import { useHistory } from 'react-router';
 
 function TopHeader() {
-	const { key } = useSelector(state => state.auth);
+	const { key } = useSelector(state => state?.auth);
 	const dispatch = useDispatch();
 	const [prevScrollpos, setprevScrollpos] = useState(window.pageYOffset);
 	const [top, setTop] = useState(0);
 	const [menu, setMenu] = useState(null);
+	const history = useHistory();
+
 	const handleClose = () => {
 		setMenu(null);
 	};
@@ -44,15 +47,19 @@ function TopHeader() {
 	return (
 		<Container
 			fluid
-			className="navbar_top shadow sticky-top bg-danger py-3"
+			className="navbar_top shadow sticky-top bg-danger"
 			style={{ top: top }}>
 			<Container>
 				<Row>
-					<Col className=" justify-content-center d-flex">
-						<Image
-							src={process.env.PUBLIC_URL + '/Icons/full-logo_white.svg'}
-							alt="sheroes"
-						/>
+					<Col className=" justify-content-center d-flex py-2 ">
+						<div className="btn" onClick={() => history.push('/')}>
+							<Image
+								src={
+									process.env.PUBLIC_URL + '/assets/Icons/full-logo_white.svg'
+								}
+								alt="sheroes"
+							/>
+						</div>
 					</Col>
 					{key && (
 						<>

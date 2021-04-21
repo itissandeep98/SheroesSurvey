@@ -1,7 +1,32 @@
 from django.db import models
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserManager
+from django.core import validators
+from sheroes_forms import settings
+from django.utils import timezone
+User = settings.AUTH_USER_MODEL
+
+# Manger for OurUser model
+class OurUserManager(UserManager):
+    def _create_user(self, username, user_type, email, password,
+                     is_staff, is_superuser, first_name, last_name, gender, partner_id, sheroes_id, **extra_fields):
+        """
+        Creates and saves a User with the given username, email and password.
+        """
+        now = timezone.now()
+        if not username:
+            raise ValueError('The given username must be set')
+        email = self.normalize_email(email)
+        user = self.model(username=username, email=email, first_name=first_name,
+                            last_name=last_name, gender=gender, partner_id=partner_id, sheroes_id=sheroes_id, user_type=user_type, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_user(self, username, user_type,email=None, password=None, first_name=None, last_name=None, gender='F', partner_id=None, sheroes_id=None,**extra_fields):
+        return self._create_user(username, user_type, email, password, False, False, first_name, last_name, gender, partner_id, sheroes_id, **extra_fields)
 
 
-class Users(models.Model):
+class OurUsers(AbstractBaseUser, PermissionsMixin):
     class GenderType(models.TextChoices):
         MALE = 'M', 'Male'
         FEMALE = 'F','Short'
@@ -11,23 +36,31 @@ class Users(models.Model):
         ADMIN = 'AD', 'Admin'
         CREATOR = 'CR','Creator'
         ENDUSER = 'EU','End User'
-        
-    first_name = models.CharField(max_length=500, null = False)
-    last_name = models.CharField(max_length=500, null = False)
+
+    username = models.CharField(max_length=30, unique=True)
+    objects = OurUserManager()
+
+    first_name = models.CharField(max_length=500, null = True)
+    last_name = models.CharField(max_length=500, null = True)
+    USERNAME_FIELD =    'username' 
+    email =                 models.EmailField(verbose_name='email', max_length=64, unique=True)
+    
+    # id = models.BigIntegerField(primary_key=True)
     gender = models.CharField(
         max_length=2,
         choices = GenderType.choices,
         default = GenderType.FEMALE
     )
 
-    partner_id = models.BigIntegerField()
-    sheroes_id = models.BigIntegerField()
+    partner_id = models.BigIntegerField(null=True)
+    sheroes_id = models.BigIntegerField(null=True)
     
     user_type = models.CharField(
         max_length=2,
         choices = UserType.choices,
         default = UserType.ENDUSER
     )
+
     
 
 # Create your models here.
@@ -45,8 +78,8 @@ class Forms(models.Model):
     edit_response_toggle = models.BooleanField(null=False, default=False)
     created_on = models.DateTimeField(auto_now_add=True,null=False)
     updated_on = models.DateTimeField(auto_now=True, null=False) #update
-    created_by =  models.ForeignKey(Users,on_delete=models.CASCADE,related_name = "form_created_by") #edit
-    updated_by =  models.ForeignKey(Users,on_delete=models.CASCADE,related_name = "form_updated_by") #edit
+    created_by =  models.ForeignKey(OurUsers,on_delete=models.CASCADE,related_name = "form_created_by") #edit
+    updated_by =  models.ForeignKey(OurUsers,on_delete=models.CASCADE,related_name = "form_updated_by") #edit
     is_deleted = models.BooleanField(null=False,default=False)
 
     def delete(self, *args, **kwargs):
@@ -93,8 +126,8 @@ class Sections(models.Model):
     randomize_toggle = models.BooleanField(null=False, default=False)
     created_on = models.DateTimeField(auto_now_add=True,null=False)
     updated_on = models.DateTimeField(auto_now=True, null=False) #update
-    created_by =  models.ForeignKey(Users,on_delete=models.CASCADE,related_name = "section_created_by") #edit
-    updated_by =  models.ForeignKey(Users,on_delete=models.CASCADE,related_name = "section_updated_by") #edit
+    created_by =  models.ForeignKey(OurUsers,on_delete=models.CASCADE,related_name = "section_created_by") #edit
+    updated_by =  models.ForeignKey(OurUsers,on_delete=models.CASCADE,related_name = "section_updated_by") #edit
     
     def save(self,*args,**kwargs):
         new_section = super().save(*args, **kwargs)
@@ -152,8 +185,8 @@ class Questions(models.Model):
     # title = models.CharField(max_length=255, null=False)
     created_on = models.DateTimeField(auto_now_add=True,null=False)
     updated_on = models.DateTimeField(auto_now=True, null=False) #update
-    created_by =  models.ForeignKey(Users,on_delete=models.CASCADE,related_name = "question_created_by") #edit
-    updated_by =  models.ForeignKey(Users,on_delete=models.CASCADE,related_name = "question_updated_by") #edit
+    created_by =  models.ForeignKey(OurUsers,on_delete=models.CASCADE,related_name = "question_created_by") #edit
+    updated_by =  models.ForeignKey(OurUsers,on_delete=models.CASCADE,related_name = "question_updated_by") #edit
     
     def save(self,*args,**kwargs):
         new_question = super().save(*args, **kwargs)
@@ -204,7 +237,7 @@ class Responses(models.Model):
                 "response": "Hello"
             }   
     """
-    user_id = models.ForeignKey(Users,on_delete=models.CASCADE) #edit
+    user_id = models.ForeignKey(OurUsers,on_delete=models.CASCADE) #edit
     form_id = models.ForeignKey(Forms,on_delete=models.CASCADE) #edit
     created_on = models.DateTimeField(auto_now_add=True,null=False)
     updated_on = models.DateTimeField(auto_now=True, null=False) #update

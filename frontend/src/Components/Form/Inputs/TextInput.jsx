@@ -1,7 +1,7 @@
 import { TextField } from '@material-ui/core';
 
 function TextInput(props) {
-	const { value } = props;
+	const { value, required } = props;
 	const handleChange = e => {
 		props.modifyResponse(e.target.value);
 	};
@@ -14,6 +14,7 @@ function TextInput(props) {
 				fullWidth
 				defaultValue={value}
 				onChange={handleChange}
+				required={required}
 			/>
 		</form>
 	);
