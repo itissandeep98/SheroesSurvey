@@ -10,7 +10,9 @@ function Login(props) {
 	const dispatch = useDispatch();
 	const [data, setData] = useState({});
 	const handleSubmit = () => {
-		dispatch(loginAction(data)).then(() => props.history.push('/admin'));
+		dispatch(loginAction(data)).then(() => {
+			window.location.reload();
+		});
 	};
 	const handleChange = e => {
 		setData({ ...data, [e.target.name]: e.target.value });
