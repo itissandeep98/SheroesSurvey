@@ -36,7 +36,6 @@ export const formCreate = data => {
 				return response.data;
 			})
 			.catch(error => {
-				console.log(error.response);
 				dispatch({
 					type: ActionTypes.FORM_CREATE_FAILED,
 					errmess: 'Error in connection with Server',
@@ -58,11 +57,19 @@ export const formFetch = id => {
 				return response.data;
 			})
 			.catch(error => {
-				console.log(error.response);
-				dispatch({
-					type: ActionTypes.FORM_FETCH_FAILED,
-					errmess: 'Error in connection with Server',
-				});
+				if (error?.response?.data) {
+					dispatch({
+						type: ActionTypes.FORM_FETCH_FAILED,
+						errmess: error.response.data,
+					});
+					return { ...error.response.data, error: true };
+				} else {
+					dispatch({
+						type: ActionTypes.FORM_FETCH_FAILED,
+						errmess: 'Error in connection with Server',
+					});
+					return error.response;
+				}
 			});
 	};
 };
@@ -80,7 +87,6 @@ export const formUpdate = ({ id, data }) => {
 				return response.data;
 			})
 			.catch(error => {
-				console.log(error.response);
 				dispatch({
 					type: ActionTypes.FORM_UPDATE_FAILED,
 					errmess: 'Error in connection with Server',
@@ -102,7 +108,6 @@ export const formDelete = id => {
 				return response.data;
 			})
 			.catch(error => {
-				console.log(error.response);
 				dispatch({
 					type: ActionTypes.FORM_DELETE_FAILED,
 					errmess: 'Error in connection with Server',

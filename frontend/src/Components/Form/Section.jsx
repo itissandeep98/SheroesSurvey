@@ -13,7 +13,7 @@ function Section(props) {
 	const dispatch = useDispatch();
 	useEffect(() => {
 		dispatch(sectionFetch(props.id)).then(res => {
-			setQuesList(res.question_sequence);
+			setQuesList(res?.question_sequence);
 			setDetails(res);
 			setLoading(false);
 		});
@@ -41,8 +41,8 @@ function Section(props) {
 						<h2 className="section_name d-inline-block pr-4">
 							Section {index}
 						</h2>
-						<h3 className="text-capitalize">{details.heading}</h3>
-						<p className="text-justify text-muted">{details.description}</p>
+						<h3 className="text-capitalize">{details?.heading}</h3>
+						<p className="text-justify text-muted">{details?.description}</p>
 						<hr />
 						<List>
 							{quesList &&

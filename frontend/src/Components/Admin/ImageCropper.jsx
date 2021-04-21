@@ -7,8 +7,8 @@ import './style.scss';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Image as Imag } from 'semantic-ui-react';
 
-const aspectX = 700;
-const aspectY = 200;
+const aspectX = 3500;
+const aspectY = 1000;
 
 function ImageCropper(props) {
 	const {
@@ -136,7 +136,7 @@ export const getCroppedImg = async (imageSrc, crop) => {
 	return new Promise(resolve => {
 		canvas.toBlob(blob => {
 			resolve(blob);
-		}, 'image/jpeg');
+		}, 'image/png',1);
 	});
 };
 

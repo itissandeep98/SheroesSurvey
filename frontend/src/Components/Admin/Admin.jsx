@@ -1,5 +1,5 @@
-import { withRouter } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { Col, Container, Row, Spinner } from 'reactstrap';
 import { Icon } from 'semantic-ui-react';
 import {
@@ -11,9 +11,11 @@ import { useEffect, useState } from 'react';
 import FormCard from './FormCard';
 
 function Admin(props) {
+	const userid = useSelector(state => state?.auth?.userId);
 	const dispatch = useDispatch();
 	const [loading, setLoading] = useState(true);
 	const [cards, setCards] = useState([]);
+	const history = useHistory();
 	useEffect(() => {
 		dispatch(allformFetch()).then(res => {
 			const temp = res?.sort((a, b) => (a.updated_on < b.updated_on ? 1 : -1));
@@ -24,12 +26,12 @@ function Admin(props) {
 
 	const handleCreate = () => {
 		const data = {
-			created_by: '1',
-			updated_by: '1',
+			created_by: userid,
+			updated_by: userid,
 			section_sequence: [],
 		};
 		dispatch(formCreate(data)).then(res => {
-			props.history.push(`/admin/${res.id}`);
+			history.push(`/admin/${res.id}`);
 		});
 	};
 	const handleDelete = (id, index) => {
@@ -68,4 +70,4 @@ function Admin(props) {
 	);
 }
 
-export default withRouter(Admin);
+export default Admin;

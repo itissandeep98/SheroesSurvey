@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './style.css';
 import Drawer from '@material-ui/core/Drawer';
 import {
@@ -72,9 +72,9 @@ function NavigationBar(props) {
 			text: 'Accept Responses',
 			icon:
 				response ?? props.response_toggle ? (
-					<CheckBoxOutlineBlankIcon />
-				) : (
 					<CheckBoxIcon />
+				) : (
+					<CheckBoxOutlineBlankIcon />
 				),
 			onClick: () => {
 				const data = {

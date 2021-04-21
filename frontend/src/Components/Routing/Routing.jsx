@@ -11,6 +11,7 @@ const CreateForm = lazy(() => import('../Admin/CreateForm'));
 const Responses = lazy(() => import('../Responses/Responses'));
 const TopHeader = lazy(() => import('../Navigation/TopHeader'));
 const ThankYou = lazy(() => import('../Form/ThankYou'));
+const FormRestrict = lazy(() => import('../Form/FormRestrict'));
 
 export default function Routing() {
 	const routes = [
@@ -38,6 +39,12 @@ export default function Routing() {
 			private: true,
 			layout: true,
 			render: props => <Responses key={props.match.params.id} {...props} />,
+		},
+		{
+			path: '/:id/restrict',
+			private: true,
+			layout: true,
+			render: props => <FormRestrict key={props.match.params.id} {...props} />,
 		},
 		{
 			path: '/:id/thank',
