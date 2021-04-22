@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { loginAction } from '../../Store/ActionCreators/auth';
 import { useState } from 'react';
 import { Button, TextField } from '@material-ui/core';
-import { Image } from 'semantic-ui-react';
+import { Icon, Image } from 'semantic-ui-react';
 
 function Login(props) {
 	const dispatch = useDispatch();
@@ -20,12 +20,17 @@ function Login(props) {
 	return (
 		<Container className="shadow p-4 mt-5 h-100 bg-white">
 			<Row>
-				<Col xs={12}>
-					<h1>Login to Continue</h1>
+				<Col>
+					<h1>Login</h1>
 				</Col>
+				{/* <Col className="d-flex justify-content-end">
+					<Icon name="instagram" size="large" />
+					<Icon name="twitter" size="large" />
+					<Icon name="linkedin" size="large" />
+				</Col> */}
 			</Row>
 			<Row className="h-100 align-items-center">
-				<Col xs={4}>
+				<Col md={4}>
 					<Image
 						src={process.env.PUBLIC_URL + '/assets/Icons/full-logo_red.svg'}
 						alt="sheroes"
@@ -35,6 +40,7 @@ function Login(props) {
 				<Col>
 					<br />
 					<TextField
+						required
 						variant="outlined"
 						name="username"
 						onChange={handleChange}
@@ -42,6 +48,7 @@ function Login(props) {
 						label="Username"
 					/>
 					<TextField
+						required
 						variant="outlined"
 						fullWidth
 						name="password"
@@ -53,10 +60,10 @@ function Login(props) {
 
 					<Button
 						variant="outlined"
-						className="mt-2 float-right"
+						className="mt-2  rounded-pill float-right"
 						color="secondary"
 						onClick={handleSubmit}>
-						Submit
+						Login
 					</Button>
 				</Col>
 			</Row>
