@@ -1,5 +1,5 @@
 import { Col, Container, Row } from 'reactstrap';
-import { withRouter } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { loginAction } from '../../Store/ActionCreators/auth';
 import { useState } from 'react';
@@ -60,8 +60,13 @@ function Login(props) {
 					</Button>
 				</Col>
 			</Row>
+			<Row>
+				<Col className="text-center">
+					<NavLink to="/register">Not Registered? Register Here</NavLink>
+				</Col>
+			</Row>
 		</Container>
 	);
 }
 
-export default withRouter(Login);
+export default Login;

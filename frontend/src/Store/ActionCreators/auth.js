@@ -29,6 +29,27 @@ export const loginAction = data => {
 	};
 };
 
+export const registerAction = data => {
+	return async dispatch => {
+		dispatch({ type: ActionTypes.REGISTER_REQUEST });
+		return await axios
+			.post(`${apiUrl}/auth/register`, data)
+			.then(res => {
+				dispatch({
+					type: ActionTypes.REGISTER_SUCCESS,
+					key: res.data.token,
+					userId: res.data.user.id,
+				});
+			})
+			.catch(error => {
+				dispatch({
+					type: ActionTypes.REGISTER_SUCCESS,
+					errmess: 'Error in connection with Server',
+				});
+			});
+	};
+};
+
 export const logoutAction = () => {
 	console.log(headers);
 	return async dispatch => {

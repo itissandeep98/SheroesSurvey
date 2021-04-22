@@ -5,6 +5,7 @@ import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
 const Login = lazy(() => import('../Auth/Login'));
+const Register = lazy(() => import('../Auth/Register'));
 const Form = lazy(() => import('../Form/Form'));
 const Admin = lazy(() => import('../Admin/Admin'));
 const CreateForm = lazy(() => import('../Admin/CreateForm'));
@@ -27,6 +28,13 @@ export default function Routing() {
 			layout: true,
 			restricted: true,
 			render: () => <Login />,
+		},
+		{
+			path: '/register',
+			private: false,
+			layout: true,
+			restricted: true,
+			render: () => <Register />,
 		},
 		{
 			path: '/admin/:id',
