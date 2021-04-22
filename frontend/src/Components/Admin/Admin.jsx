@@ -9,12 +9,13 @@ import {
 } from '../../Store/ActionCreators/form';
 import { useEffect, useState } from 'react';
 import FormCard from './FormCard';
+import ProfileSummary from '../Profile/ProfileSummary';
 
 function Admin(props) {
-	const userid = useSelector(state => state?.auth?.userId);
+	const user = useSelector(state => state.user);
 	const dispatch = useDispatch();
 	const [loading, setLoading] = useState(true);
-	const [cards, setCards] = useState([]);
+	const [cards, setCards] = useState(user?.forms );
 	const history = useHistory();
 	useEffect(() => {
 		dispatch(allformFetch()).then(res => {
@@ -26,8 +27,8 @@ function Admin(props) {
 
 	const handleCreate = () => {
 		const data = {
-			created_by: userid,
-			updated_by: userid,
+			created_by: user.id,
+			updated_by: user.id,
 			section_sequence: [],
 		};
 		dispatch(formCreate(data)).then(res => {
@@ -40,6 +41,7 @@ function Admin(props) {
 	};
 	return (
 		<Container className="mt-3" fluid>
+			<ProfileSummary />
 			<Row className="d-flex justify-content-center">
 				<Col lg={8}>
 					<div

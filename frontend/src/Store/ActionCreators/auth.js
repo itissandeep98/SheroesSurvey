@@ -13,11 +13,14 @@ export const loginAction = data => {
 		return await axios
 			.post(`${apiUrl}/auth/login`, data)
 			.then(res => {
-				console.log(res);
 				dispatch({
 					type: ActionTypes.LOGIN_SUCCESS,
 					key: res.data.token,
 					userId: res.data.user.id,
+				});
+				dispatch({
+					type: ActionTypes.USER_FETCH_SUCCESS,
+					data: res.data.user,
 				});
 			})
 			.catch(error => {
@@ -39,6 +42,10 @@ export const registerAction = data => {
 					type: ActionTypes.REGISTER_SUCCESS,
 					key: res.data.token,
 					userId: res.data.user.id,
+				});
+				dispatch({
+					type: ActionTypes.USER_FETCH_SUCCESS,
+					data: res.data.user,
 				});
 			})
 			.catch(error => {

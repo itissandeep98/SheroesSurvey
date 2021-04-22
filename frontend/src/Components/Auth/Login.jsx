@@ -9,7 +9,8 @@ import { Icon, Image } from 'semantic-ui-react';
 function Login(props) {
 	const dispatch = useDispatch();
 	const [data, setData] = useState({});
-	const handleSubmit = () => {
+	const handleSubmit = e => {
+		e.preventDefault();
 		dispatch(loginAction(data)).then(() => {
 			window.location.reload();
 		});
@@ -38,33 +39,35 @@ function Login(props) {
 					/>
 				</Col>
 				<Col>
-					<br />
-					<TextField
-						required
-						variant="outlined"
-						name="username"
-						onChange={handleChange}
-						fullWidth
-						label="Username"
-					/>
-					<TextField
-						required
-						variant="outlined"
-						fullWidth
-						name="password"
-						onChange={handleChange}
-						label="Password"
-						type="password"
-						className="mt-2"
-					/>
+					<form>
+						<br />
+						<TextField
+							required
+							variant="outlined"
+							name="username"
+							onChange={handleChange}
+							fullWidth
+							label="Username"
+						/>
+						<TextField
+							required
+							variant="outlined"
+							fullWidth
+							name="password"
+							onChange={handleChange}
+							label="Password"
+							type="password"
+							className="mt-2"
+						/>
 
-					<Button
-						variant="outlined"
-						className="mt-2  rounded-pill float-right"
-						color="secondary"
-						onClick={handleSubmit}>
-						Login
-					</Button>
+						<Button
+							variant="outlined"
+							className="mt-2  rounded-pill float-right"
+							color="secondary"
+							onClick={handleSubmit}>
+							Login
+						</Button>
+					</form>
 				</Col>
 			</Row>
 			<Row>

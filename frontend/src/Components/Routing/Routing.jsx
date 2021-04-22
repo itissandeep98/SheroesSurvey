@@ -13,6 +13,7 @@ const Responses = lazy(() => import('../Responses/Responses'));
 const TopHeader = lazy(() => import('../Navigation/TopHeader'));
 const ThankYou = lazy(() => import('../Form/ThankYou'));
 const FormRestrict = lazy(() => import('../Form/FormRestrict'));
+// const Profile = lazy(() => import('../Profile/Profile'));
 
 export default function Routing() {
 	const routes = [
@@ -36,6 +37,12 @@ export default function Routing() {
 			restricted: true,
 			render: () => <Register />,
 		},
+		// {
+		// 	path: '/profile',
+		// 	private: true,
+		// 	layout: true,
+		// 	render: () => <Profile />,
+		// },
 		{
 			path: '/admin/:id',
 			private: true,
