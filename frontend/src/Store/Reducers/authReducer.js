@@ -14,6 +14,14 @@ const authReducer = (state = initState, action) => {
 				errmess: null,
 				isLoading: false,
 			};
+		case ActionTypes.REGISTER_SUCCESS:
+			return {
+				...state,
+				key: action.key,
+				userId: action.userId,
+				errmess: null,
+				isLoading: false,
+			};
 		case ActionTypes.LOGOUT_SUCCESS:
 			return {
 				...state,

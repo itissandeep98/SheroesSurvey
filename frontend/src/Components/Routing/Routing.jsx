@@ -5,6 +5,7 @@ import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
 const Login = lazy(() => import('../Auth/Login'));
+const Register = lazy(() => import('../Auth/Register'));
 const Form = lazy(() => import('../Form/Form'));
 const Admin = lazy(() => import('../Admin/Admin'));
 const CreateForm = lazy(() => import('../Admin/CreateForm'));
@@ -12,6 +13,7 @@ const Responses = lazy(() => import('../Responses/Responses'));
 const TopHeader = lazy(() => import('../Navigation/TopHeader'));
 const ThankYou = lazy(() => import('../Form/ThankYou'));
 const FormRestrict = lazy(() => import('../Form/FormRestrict'));
+// const Profile = lazy(() => import('../Profile/Profile'));
 
 export default function Routing() {
 	const routes = [
@@ -28,6 +30,19 @@ export default function Routing() {
 			restricted: true,
 			render: () => <Login />,
 		},
+		{
+			path: '/register',
+			private: false,
+			layout: true,
+			restricted: true,
+			render: () => <Register />,
+		},
+		// {
+		// 	path: '/profile',
+		// 	private: true,
+		// 	layout: true,
+		// 	render: () => <Profile />,
+		// },
 		{
 			path: '/admin/:id',
 			private: true,

@@ -13,7 +13,7 @@ import { logoutAction } from '../../Store/ActionCreators/auth';
 import { useHistory } from 'react-router';
 
 function TopHeader() {
-	const { key } = useSelector(state => state?.auth);
+	const key = useSelector(state => state?.auth?.key);
 	const dispatch = useDispatch();
 	const [prevScrollpos, setprevScrollpos] = useState(window.pageYOffset);
 	const [top, setTop] = useState(0);
@@ -67,7 +67,7 @@ function TopHeader() {
 								<AccountCircleIcon fontSize="large" />
 							</IconButton>
 							<Menu anchorEl={menu} open={Boolean(menu)} onClose={handleClose}>
-								<MenuItem onClick={handleClose}>
+								<MenuItem onClick={() => history.push('/profile')}>
 									<AssignmentIndIcon />
 									Profile
 								</MenuItem>

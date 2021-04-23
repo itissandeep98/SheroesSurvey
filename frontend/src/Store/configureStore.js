@@ -8,11 +8,9 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const configureStore = createStore(
 	rootReducer,
-	composeEnhancers(
-		process.env.NODE_ENV === 'production'
-			? applyMiddleware(thunk)
-			: applyMiddleware(thunk, logger)
-	)
+	process.env.NODE_ENV === 'production'
+		? applyMiddleware(thunk)
+		: composeEnhancers(applyMiddleware(thunk, logger))
 );
 
 const persistor = persistStore(configureStore);

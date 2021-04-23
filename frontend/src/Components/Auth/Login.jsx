@@ -1,16 +1,19 @@
 import { Col, Container, Row } from 'reactstrap';
-import { withRouter } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { loginAction } from '../../Store/ActionCreators/auth';
 import { useState } from 'react';
 import { Button, TextField } from '@material-ui/core';
-import { Image } from 'semantic-ui-react';
+import { Icon, Image } from 'semantic-ui-react';
 
 function Login(props) {
 	const dispatch = useDispatch();
 	const [data, setData] = useState({});
-	const handleSubmit = () => {
-		dispatch(loginAction(data)).then(() => props.history.push('/admin'));
+	const handleSubmit = e => {
+		e.preventDefault();
+		dispatch(loginAction(data)).then(() => {
+			window.location.reload();
+		});
 	};
 	const handleChange = e => {
 		setData({ ...data, [e.target.name]: e.target.value });
@@ -18,12 +21,17 @@ function Login(props) {
 	return (
 		<Container className="shadow p-4 mt-5 h-100 bg-white">
 			<Row>
-				<Col xs={12}>
-					<h1>Login to Continue</h1>
+				<Col>
+					<h1>Login</h1>
 				</Col>
+				{/* <Col className="d-flex justify-content-end">
+					<Icon name="instagram" size="large" />
+					<Icon name="twitter" size="large" />
+					<Icon name="linkedin" size="large" />
+				</Col> */}
 			</Row>
 			<Row className="h-100 align-items-center">
-				<Col xs={4}>
+				<Col md={4}>
 					<Image
 						src={process.env.PUBLIC_URL + '/assets/Icons/full-logo_red.svg'}
 						alt="sheroes"
@@ -31,35 +39,44 @@ function Login(props) {
 					/>
 				</Col>
 				<Col>
-					<br />
-					<TextField
-						variant="outlined"
-						name="username"
-						onChange={handleChange}
-						fullWidth
-						label="Username"
-					/>
-					<TextField
-						variant="outlined"
-						fullWidth
-						name="password"
-						onChange={handleChange}
-						label="Password"
-						type="password"
-						className="mt-2"
-					/>
+					<form>
+						<br />
+						<TextField
+							required
+							variant="outlined"
+							name="username"
+							onChange={handleChange}
+							fullWidth
+							label="Username"
+						/>
+						<TextField
+							required
+							variant="outlined"
+							fullWidth
+							name="password"
+							onChange={handleChange}
+							label="Password"
+							type="password"
+							className="mt-2"
+						/>
 
-					<Button
-						variant="outlined"
-						className="mt-2 float-right"
-						color="secondary"
-						onClick={handleSubmit}>
-						Submit
-					</Button>
+						<Button
+							variant="outlined"
+							className="mt-2  rounded-pill float-right"
+							color="secondary"
+							onClick={handleSubmit}>
+							Login
+						</Button>
+					</form>
+				</Col>
+			</Row>
+			<Row>
+				<Col className="text-center">
+					<NavLink to="/register">Not Registered? Register Here</NavLink>
 				</Col>
 			</Row>
 		</Container>
 	);
 }
 
-export default withRouter(Login);
+export default Login;
