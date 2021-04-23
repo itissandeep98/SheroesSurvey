@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: Admin/Question/Option.jsx</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,63 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: Admin/Question/Option.jsx</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @module Admin/Option
+ */
+import { IconButton, TextField } from '@material-ui/core';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { optionUpdate } from '../../../Store/ActionCreators/option';
+import DeleteIcon from '@material-ui/icons/Delete';
+/**
+ * Represents a Single Option in Multiple Choice Question On Admin Panel.
+ * @param {Integer} id - Unique ID of the option.
+ * @param {Integer} index - Position of Option in List.
+ * @param {String} content - Text of the option.
+ *
+ * @property {Function} updateOption -Updates the content in option
+ */
 
+function Option(props) {
+	const { id, index, content, deleteOption } = props;
+	const [value, setValue] = useState(content);
+	const dispatch = useDispatch();
+	const updateOption = () => {
+		const data = {
+			content: value,
+		};
+		dispatch(optionUpdate({ id, data }));
+	};
 
-    <h3> </h3>
+	return (
+		&lt;>
+			&lt;TextField
+				variant="outlined"
+				label={`Option ${index}`}
+				defaultValue={props.content}
+				onChange={e => setValue(e.target.value)}
+				onKeyUp={updateOption}
+			/>
+			&lt;IconButton onClick={deleteOption}>
+				&lt;DeleteIcon />
+			&lt;/IconButton>
+		&lt;/>
+	);
+}
 
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+export default Option;
+</code></pre>
+        </article>
+    </section>
 
 
 

@@ -1,3 +1,6 @@
+/**
+ * @module Register
+ */ 
 import { Col, Container, Row } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -13,6 +16,19 @@ import {
 } from '@material-ui/core';
 import { Image } from 'semantic-ui-react';
 
+/**
+ * Provide Registering Capabilities 
+ * @property {String} Username - Username of the user.
+ * @property {String} Email - Email of the user.
+ * @property {String} Password - Password of the user.
+ * @property {String} FirstName - FirstName of the user.
+ * @property {String} LastName - LastName of the user.
+ * @property {String} LastName - LastName of the user.
+ * @property {String} Gender - Gender of the user.
+ * @property {Integer} SheroesID - SheroesID of the user.
+ * @property {Integer} PartnerID - PartnerID of the user.
+ * 
+ */
 function Register(props) {
 	const dispatch = useDispatch();
 	const [data, setData] = useState({});

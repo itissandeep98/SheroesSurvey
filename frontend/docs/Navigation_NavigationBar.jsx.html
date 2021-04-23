@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Navigation/NavigationBar.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Navigation/NavigationBar.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @module SideNavigation
+ */
+import { useState } from 'react';
+import './style.css';
+import Drawer from '@material-ui/core/Drawer';
+import {
+	ListItem,
+	ListItemIcon,
+	List,
+	IconButton,
+	Divider,
+} from '@material-ui/core';
+import ListItemText from '@material-ui/core/ListItemText';
+import FileCopyIcon from '@material-ui/icons/FileCopy';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import MenuIcon from '@material-ui/icons/Menu';
+import GroupIcon from '@material-ui/icons/Group';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import EditIcon from '@material-ui/icons/Edit';
+import { Button, Image } from 'semantic-ui-react';
+import { useHistory } from 'react-router';
+import { useDispatch } from 'react-redux';
+import { formDelete, formUpdate } from '../../Store/ActionCreators/form';
+import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import { frontUrl } from '../../Store/Url';
+import { showAlert } from '../Alert';
+/**
+ * Represents a Side Navigation bar with options.
+ * @param {Integer} form_id - Unique ID of the Form.
+ * @param {Boolean} response_toggle -Whether Response are alowed or not.
+ *
+ * @property {Function} handleDelete -Deletes the form
+ */
+function NavigationBar(props) {
+	const { form_id, response_toggle } = props;
+	const history = useHistory();
+	const [response, setResponse] = useState(response_toggle);
+	const [open, setOpen] = useState(false);
+	const [modal, setModal] = useState(false);
+	const dispatch = useDispatch();
+	const handleDelete = () => {
+		dispatch(formDelete(form_id)).then(() => {
+			history.push(`/admin`);
+			showAlert('Form Deleted Successfully');
+		});
+	};
+	let list = [
+		{
+			text: 'Edit Form',
+			icon: &lt;EditIcon />,
+			onClick: () => history.push(`/admin/${form_id}`),
+		},
+		{
+			text: 'Preview Form',
+			icon: &lt;VisibilityIcon />,
+			onClick: () => window.open(`/${form_id}`, '_blank').focus(),
+		},
+		{
+			text: 'Copy Preview Link',
+			icon: &lt;FileCopyIcon />,
+			onClick: () => {
+				navigator.clipboard.writeText(`${frontUrl}/${form_id}`);
+				showAlert('URL Copied to Clipboard');
+			},
+		},
+		{
+			text: 'View Responses',
+			icon: &lt;GroupIcon />,
+			onClick: () =>
+				window.open(`/admin/${form_id}/responses`, '_blank').focus(),
+		},
+		{
+			text: 'Delete Form',
+			icon: &lt;DeleteOutlineIcon />,
+			onClick: () => setModal(!modal),
+		},
+		{
+			text: 'Accept Responses',
+			icon:
+				response ?? props.response_toggle ? (
+					&lt;CheckBoxIcon />
+				) : (
+					&lt;CheckBoxOutlineBlankIcon />
+				),
+			onClick: () => {
+				const data = {
+					edit_response_toggle: !(response ?? props.response_toggle),
+				};
+				const id = form_id;
+				dispatch(formUpdate({ id, data }));
+				setResponse(!(response ?? props.response_toggle));
+			},
+		},
+	];
+
+	const data = () => (
+		&lt;div
+			onClick={() => setOpen(!open)}
+			onKeyDown={() => setOpen(!open)}
+			className="pt-3 px-2 pr-4">
+			&lt;div
+				className="text-center mt-3 d-flex justify-content-center btn"
+				onClick={() => history.push('/admin')}>
+				&lt;Image
+					src={process.env.PUBLIC_URL + '/assets/Icons/full-logo_red.svg'}
+					alt="sheroes"
+					size="small"
+				/>
+			&lt;/div>
+			&lt;br />
+			&lt;Divider />
+			&lt;List>
+				{list.map((item, index) => (
+					&lt;ListItem button key={index} onClick={item.onClick}>
+						&lt;ListItemIcon>{item.icon}&lt;/ListItemIcon>
+						&lt;ListItemText primary={item.text} />
+					&lt;/ListItem>
+				))}
+			&lt;/List>
+		&lt;/div>
+	);
+	return (
+		&lt;>
+			&lt;IconButton onClick={() => setOpen(!open)} className="float-left">
+				&lt;MenuIcon fontSize="large" />
+			&lt;/IconButton>
+			&lt;Drawer anchor={'left'} open={open} onClose={() => setOpen(!open)}>
+				{data()}
+			&lt;/Drawer>
+			&lt;DeleteModal
+				modal={modal}
+				toggle={() => setModal(!modal)}
+				delete={handleDelete}
+			/>
+		&lt;/>
+	);
+}
+
+function DeleteModal(props) {
+	const { modal, toggle } = props;
+	return (
+		&lt;Modal isOpen={modal} toggle={toggle}>
+			&lt;ModalHeader toggle={toggle}>Delete Form&lt;/ModalHeader>
+			&lt;ModalBody>Are you sure you want to delete this form ?&lt;/ModalBody>
+			&lt;ModalFooter>
+				&lt;Button primary onClick={props.delete}>
+					Yes
+				&lt;/Button>
+				&lt;Button secondary onClick={toggle}>
+					Cancel
+				&lt;/Button>
+			&lt;/ModalFooter>
+		&lt;/Modal>
+	);
+}
+
+export default NavigationBar;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Admin_Banner.html">Admin/Banner</a></li><li><a href="module-Admin_ConsentForm.html">Admin/ConsentForm</a></li><li><a href="module-Admin_DeleteModal.html">Admin/DeleteModal</a></li><li><a href="module-Admin_FormCard.html">Admin/FormCard</a></li><li><a href="module-Admin_FormEdit.html">Admin/FormEdit</a></li><li><a href="module-Admin_ImageCropper.html">Admin/ImageCropper</a></li><li><a href="module-Admin_Option.html">Admin/Option</a></li><li><a href="module-Admin_Options.html">Admin/Options</a></li><li><a href="module-Admin_Question.html">Admin/Question</a></li><li><a href="module-Admin_QuestionMore.html">Admin/QuestionMore</a></li><li><a href="module-Admin_QuestionSettings.html">Admin/QuestionSettings</a></li><li><a href="module-Admin_Section.html">Admin/Section</a></li><li><a href="module-AdminView.html">AdminView</a></li><li><a href="module-Login.html">Login</a></li><li><a href="module-Register.html">Register</a></li><li><a href="module-Responses.html">Responses</a></li><li><a href="module-Responses_Question.html">Responses/Question</a></li><li><a href="module-Responses_Section.html">Responses/Section</a></li><li><a href="module-SideNavigation.html">SideNavigation</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sat Apr 24 2021 01:29:50 GMT+0530 (India Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

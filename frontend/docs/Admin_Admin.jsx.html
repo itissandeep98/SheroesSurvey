@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Admin/Admin.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Admin/Admin.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @module AdminView
+ */
+import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Col, Container, Row, Spinner } from 'reactstrap';
+import { Icon } from 'semantic-ui-react';
+import {
+	allformFetch,
+	formCreate,
+	formDelete,
+} from '../../Store/ActionCreators/form';
+import { useEffect, useState } from 'react';
+import FormCard from './FormCard';
+import ProfileSummary from '../Profile/ProfileSummary';
+
+/**
+ * Represents the Admin Panel where the form creator can Manage forms and thier profiles.
+ * @param {Object} user - Details of currently logged-in user from redux store.
+ * @param {Integer} user.id - Unique ID of user.
+ * @param {List} user.forms - List of Forms created by the User.
+ *
+ * @property {Function} handleCreate - Creates a New form for the current logged in User
+ * @property {Function} handleDelete - Delete an Existing form for the current logged in User
+ * @property {Object} Redux - Global Redux State
+ * @property {Function} Redux.useState - To manage state of this component
+ * @property {Function} Redux.useDispatch - Used in calling Redux function to call in order to change redux state
+ * @property {Function} Redux.useSelector - To fetch the Redux state
+ * @property {Function} Redux.useFFect - Function Called on component mount, unmount and state change
+ */
+
+function Admin(props) {
+	const user = useSelector(state => state.user);
+	const dispatch = useDispatch();
+	const [loading, setLoading] = useState(true);
+	const [cards, setCards] = useState(user?.forms);
+	const history = useHistory();
+	useEffect(() => {
+		dispatch(allformFetch()).then(res => {
+			const temp = res?.sort((a, b) => (a.updated_on &lt; b.updated_on ? 1 : -1));
+			setCards(temp);
+			setLoading(false);
+		});
+	}, [dispatch]);
+
+	const handleCreate = () => {
+		const data = {
+			created_by: user.id,
+			updated_by: user.id,
+			section_sequence: [],
+		};
+		dispatch(formCreate(data)).then(res => {
+			history.push(`/admin/${res.id}`);
+		});
+	};
+	const handleDelete = (id, index) => {
+		setCards([...cards.slice(0, index), ...cards.slice(index + 1)]);
+		dispatch(formDelete(id));
+	};
+	return (
+		&lt;Container className="mt-3" fluid>
+			&lt;ProfileSummary />
+			&lt;Row className="d-flex justify-content-center">
+				&lt;Col lg={8}>
+					&lt;div
+						onClick={handleCreate}
+						className="border p-3 bg-white text-dark"
+						style={{ cursor: 'pointer' }}>
+						&lt;Icon name="plus circle" size="big" />
+						Create New Form
+					&lt;/div>
+				&lt;/Col>
+			&lt;/Row>
+			{loading ? (
+				&lt;Row className=" mt-5 justify-content-center">
+					&lt;h2 className="text-muted">
+						&lt;Spinner /> Fetching Latest Forms
+					&lt;/h2>
+				&lt;/Row>
+			) : (
+				&lt;Row className=" mt-5 justify-content-center">
+					{cards?.map((card, index) => (
+						&lt;Col sm={6} md={4} lg={3} key={Math.random()} className="h-100">
+							&lt;FormCard {...card} delete={() => handleDelete(card.id, index)} />
+						&lt;/Col>
+					))}
+				&lt;/Row>
+			)}
+		&lt;/Container>
+	);
+}
+
+export default Admin;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Admin_Banner.html">Admin/Banner</a></li><li><a href="module-Admin_ConsentForm.html">Admin/ConsentForm</a></li><li><a href="module-Admin_DeleteModal.html">Admin/DeleteModal</a></li><li><a href="module-Admin_FormCard.html">Admin/FormCard</a></li><li><a href="module-Admin_FormEdit.html">Admin/FormEdit</a></li><li><a href="module-Admin_ImageCropper.html">Admin/ImageCropper</a></li><li><a href="module-Admin_Option.html">Admin/Option</a></li><li><a href="module-Admin_Options.html">Admin/Options</a></li><li><a href="module-Admin_Question.html">Admin/Question</a></li><li><a href="module-Admin_QuestionMore.html">Admin/QuestionMore</a></li><li><a href="module-Admin_QuestionSettings.html">Admin/QuestionSettings</a></li><li><a href="module-Admin_Section.html">Admin/Section</a></li><li><a href="module-AdminView.html">AdminView</a></li><li><a href="module-Login.html">Login</a></li><li><a href="module-Register.html">Register</a></li><li><a href="module-Responses.html">Responses</a></li><li><a href="module-Responses_Question.html">Responses/Question</a></li><li><a href="module-Responses_Section.html">Responses/Section</a></li><li><a href="module-SideNavigation.html">SideNavigation</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sat Apr 24 2021 01:29:50 GMT+0530 (India Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

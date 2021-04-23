@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: Admin/DeleteModal.jsx</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,49 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: Admin/DeleteModal.jsx</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @module Admin/DeleteModal
+ */
+import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import { Button } from 'semantic-ui-react';
 
+/**
+ * Provides a popup for deleting something.
+ * @param {Boolean} modal -Whether Popup is open or not.
+ * @param {Function} toggle - Toggles the popup.
+ * @param {Function} delete - function to call after user confirms deletion.
+ */
+function DeleteModal(props) {
+	const { modal, toggle } = props;
+	return (
+		&lt;Modal isOpen={modal} toggle={toggle}>
+			&lt;ModalHeader toggle={toggle}>Delete&lt;/ModalHeader>
+			&lt;ModalBody>Are you sure you want to delete this ?&lt;/ModalBody>
+			&lt;ModalFooter>
+				&lt;Button primary onClick={props.delete}>
+					Yes
+				&lt;/Button>
+				&lt;Button secondary onClick={toggle}>
+					Cancel
+				&lt;/Button>
+			&lt;/ModalFooter>
+		&lt;/Modal>
+	);
+}
 
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+export default DeleteModal;
+</code></pre>
+        </article>
+    </section>
 
 
 

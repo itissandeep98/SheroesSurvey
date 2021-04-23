@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Admin/FormCard.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Admin/FormCard.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @module Admin/FormCard
+ */
+import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import { Button, Image } from 'semantic-ui-react';
+import { useState } from 'react';
+import moment from 'moment';
+import { useHistory } from 'react-router';
+import { CardActionArea, IconButton, Tooltip } from '@material-ui/core';
+import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import DeleteIcon from '@material-ui/icons/Delete';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardMedia from '@material-ui/core/CardMedia';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Typography from '@material-ui/core/Typography';
+import './style.scss';
+
+/**
+ * Provides a Card view for each form.
+ * @param {Integer} id - Unique ID of the Form.
+ * @param {String} heading - Heading of Form.
+ * @param {String} description - Description of Form.
+ * @param {List} section_sequence - List of section IDs.
+ * @param {String} created_by -Owner of form.
+ * @param {DateTime} updated_on - Date of Last update.
+ * @param {URL} banner_path - location of Banner Image.
+ *
+ */
+
+function FormCard(props) {
+	const {
+		id,
+		heading,
+		description,
+		section_sequence,
+		created_by,
+		updated_on,
+		banner_path,
+	} = props;
+	const [modal, setModal] = useState(false);
+	const history = useHistory();
+	const defaultImage = process.env.PUBLIC_URL + 'assets/Images/default.png';
+
+	const toggle = () => setModal(!modal);
+	return (
+		&lt;>
+			&lt;Modal isOpen={modal} toggle={toggle}>
+				&lt;ModalHeader toggle={toggle}>Delete Form&lt;/ModalHeader>
+				&lt;ModalBody>
+					Are you sure you want to delete form titled &lt;em>"{heading}"&lt;/em>?
+				&lt;/ModalBody>
+				&lt;ModalFooter>
+					&lt;Button primary onClick={props.delete}>
+						Yes
+					&lt;/Button>
+					&lt;Button secondary onClick={toggle}>
+						Cancel
+					&lt;/Button>
+				&lt;/ModalFooter>
+			&lt;/Modal>
+			&lt;Card className="my-2 border-danger h-100 border rounded_lg card_hover">
+				&lt;CardActionArea onClick={() => history.push(`/admin/${id}`)}>
+					&lt;CardMedia>
+						&lt;Image src={banner_path ?? defaultImage} fluid />
+					&lt;/CardMedia>
+					&lt;CardHeader
+						title={heading}
+						subheader={`Updated ${moment(updated_on).fromNow()}`}
+					/>
+					&lt;CardContent>
+						&lt;Typography variant="body2" color="textSecondary" component="p">
+							{description?.substring(0, 50)}
+							{description?.length > 50 &amp;&amp; ' ......'}
+						&lt;/Typography>
+					&lt;/CardContent>
+				&lt;/CardActionArea>
+				&lt;CardActions disableSpacing>
+					&lt;Tooltip title="Preview Form" placement="top">
+						&lt;IconButton onClick={() => window.open(`/${id}`, '_blank').focus()}>
+							&lt;VisibilityIcon />
+						&lt;/IconButton>
+					&lt;/Tooltip>
+					&lt;Tooltip title="View Responses" placement="top">
+						&lt;IconButton onClick={() => history.push(`/admin/${id}/responses`)}>
+							&lt;SupervisorAccountIcon />
+						&lt;/IconButton>
+					&lt;/Tooltip>
+					&lt;Tooltip title="Delete Form" placement="top">
+						&lt;IconButton onClick={toggle}>
+							&lt;DeleteIcon />
+						&lt;/IconButton>
+					&lt;/Tooltip>
+				&lt;/CardActions>
+			&lt;/Card>
+		&lt;/>
+	);
+}
+
+export default FormCard;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Admin_Banner.html">Admin/Banner</a></li><li><a href="module-Admin_ConsentForm.html">Admin/ConsentForm</a></li><li><a href="module-Admin_DeleteModal.html">Admin/DeleteModal</a></li><li><a href="module-Admin_FormCard.html">Admin/FormCard</a></li><li><a href="module-Admin_FormEdit.html">Admin/FormEdit</a></li><li><a href="module-Admin_ImageCropper.html">Admin/ImageCropper</a></li><li><a href="module-Admin_Option.html">Admin/Option</a></li><li><a href="module-Admin_Options.html">Admin/Options</a></li><li><a href="module-Admin_Question.html">Admin/Question</a></li><li><a href="module-Admin_QuestionMore.html">Admin/QuestionMore</a></li><li><a href="module-Admin_QuestionSettings.html">Admin/QuestionSettings</a></li><li><a href="module-Admin_Section.html">Admin/Section</a></li><li><a href="module-AdminView.html">AdminView</a></li><li><a href="module-Login.html">Login</a></li><li><a href="module-Register.html">Register</a></li><li><a href="module-Responses.html">Responses</a></li><li><a href="module-Responses_Question.html">Responses/Question</a></li><li><a href="module-Responses_Section.html">Responses/Section</a></li><li><a href="module-SideNavigation.html">SideNavigation</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sat Apr 24 2021 01:29:50 GMT+0530 (India Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
