@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: CreateForm.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: CreateForm.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * @module Admin/FormEdit
  */
 import { useEffect, useState } from 'react';
@@ -80,47 +108,47 @@ function CreateForm(props) {
 	};
 
 	return (
-		<Container className="mt-3" fluid>
-			{details && (
-				<Row className="d-flex justify-content-center">
-					<Col lg={8}>
-						<Row>
-							<Col className="text-center">
-								<NavigationBar
+		&lt;Container className="mt-3" fluid>
+			{details &amp;&amp; (
+				&lt;Row className="d-flex justify-content-center">
+					&lt;Col lg={8}>
+						&lt;Row>
+							&lt;Col className="text-center">
+								&lt;NavigationBar
 									form_id={id}
 									response_toggle={details?.edit_response_toggle}
 								/>
-								<h1 className="d-inline text-capitalize">{details.heading}</h1>
-							</Col>
-						</Row>
-						<Row>
-							<Banner {...details} update={updateForm} key={3} />
-						</Row>
-						<Row>
-							<ConsentPage
+								&lt;h1 className="d-inline text-capitalize">{details.heading}&lt;/h1>
+							&lt;/Col>
+						&lt;/Row>
+						&lt;Row>
+							&lt;Banner {...details} update={updateForm} key={3} />
+						&lt;/Row>
+						&lt;Row>
+							&lt;ConsentPage
 								update={updateForm}
 								consent_toggle={details?.consent_toggle}
 								consent_text={details?.consent_text}
 							/>
-						</Row>
+						&lt;/Row>
 
-						<Row className="mt-4">
-							<Col xs={2}>
-								<div className="sticky-top text-center" style={{ zIndex: 0 }}>
-									<br />
-									<Button onClick={addSection} size="mini" disabled={loading}>
+						&lt;Row className="mt-4">
+							&lt;Col xs={2}>
+								&lt;div className="sticky-top text-center" style={{ zIndex: 0 }}>
+									&lt;br />
+									&lt;Button onClick={addSection} size="mini" disabled={loading}>
 										{loading ? (
-											<Spinner />
+											&lt;Spinner />
 										) : (
-											<>
-												<Icon name="plus" />
+											&lt;>
+												&lt;Icon name="plus" />
 												Add Section
-											</>
+											&lt;/>
 										)}
-									</Button>
-									<List>
+									&lt;/Button>
+									&lt;List>
 										{structure?.map((section, i) => (
-											<List.Item
+											&lt;List.Item
 												as="a"
 												key={i}
 												onClick={() => setCurr(i)}
@@ -129,15 +157,15 @@ function CreateForm(props) {
 													'text-dark ': curr !== i,
 												})}>
 												Section {i + 1}
-											</List.Item>
+											&lt;/List.Item>
 										))}
-									</List>
-								</div>
-							</Col>
-							{structure?.length > 0 && curr > -1 && (
-								<Col>
+									&lt;/List>
+								&lt;/div>
+							&lt;/Col>
+							{structure?.length > 0 &amp;&amp; curr > -1 &amp;&amp; (
+								&lt;Col>
 									{
-										<Section
+										&lt;Section
 											key={structure[curr]}
 											id={structure[curr]}
 											index={curr + 1}
@@ -145,14 +173,37 @@ function CreateForm(props) {
 											remove={() => removeSection(structure[curr], curr)}
 										/>
 									}
-								</Col>
+								&lt;/Col>
 							)}
-						</Row>
-					</Col>
-				</Row>
+						&lt;/Row>
+					&lt;/Col>
+				&lt;/Row>
 			)}
-		</Container>
+		&lt;/Container>
 	);
 }
 
 export default withRouter(CreateForm);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Admin_Banner.html">Admin/Banner</a></li><li><a href="module-Admin_ConsentForm.html">Admin/ConsentForm</a></li><li><a href="module-Admin_DeleteModal.html">Admin/DeleteModal</a></li><li><a href="module-Admin_FormCard.html">Admin/FormCard</a></li><li><a href="module-Admin_FormEdit.html">Admin/FormEdit</a></li><li><a href="module-Admin_ImageCropper.html">Admin/ImageCropper</a></li><li><a href="module-Admin_Option.html">Admin/Option</a></li><li><a href="module-Admin_Options.html">Admin/Options</a></li><li><a href="module-Admin_Question.html">Admin/Question</a></li><li><a href="module-Admin_QuestionMore.html">Admin/QuestionMore</a></li><li><a href="module-Admin_QuestionSettings.html">Admin/QuestionSettings</a></li><li><a href="module-Admin_Section.html">Admin/Section</a></li><li><a href="module-AdminView.html">AdminView</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sat Apr 24 2021 00:41:12 GMT+0530 (India Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

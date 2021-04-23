@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: Question/Option.jsx</title>
+    <title>JSDoc: Source: ConsentPage.jsx</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: Question/Option.jsx</h1>
+    <h1 class="page-title">Source: ConsentPage.jsx</h1>
 
     
 
@@ -27,50 +27,66 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * @module Admin/Option
+ * @module Admin/ConsentForm
  */
-import { IconButton, TextField } from '@material-ui/core';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { TextField } from '@material-ui/core';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { optionUpdate } from '../../../Store/ActionCreators/option';
-import DeleteIcon from '@material-ui/icons/Delete';
+
 /**
- * Represents a Single Option in Multiple Choice Question On Admin Panel.
- * @param {Integer} id - Unique ID of the option.
- * @param {Integer} index - Position of Option in List.
- * @param {String} content - Text of the option.
+ * Provides a Consent Toggle and editing options.
+ * @param {Boolean} consent_toggle - Whether consent is enabled or not.
+ * @param {String} consent_text - Text in Consent form.
+ * @param {Function} update - function to update form details.
  *
- * @property {Function} updateOption -Updates the content in option
+ * @property {Function} toggleConsent -Toggles the consent
+ * @property {Function} updateConsent -Updates the constent text in form
+ *
  */
 
-function Option(props) {
-	const { id, index, content, deleteOption } = props;
-	const [value, setValue] = useState(content);
-	const dispatch = useDispatch();
-	const updateOption = () => {
-		const data = {
-			content: value,
-		};
-		dispatch(optionUpdate({ id, data }));
+function ConsentPage(props) {
+	const { consent_toggle, consent_text, update } = props;
+	const [toggle, setToggle] = useState(consent_toggle);
+	const [text, setText] = useState(consent_text);
+	const toggleConsent = e => {
+		update({ consent_toggle: e.target.checked });
+		setToggle(!toggle);
 	};
-
+	const updateConsent = e => {
+		setText(e.target.value);
+		update({ consent_text: e.target.value });
+	};
 	return (
-		&lt;>
-			&lt;TextField
-				variant="outlined"
-				label={`Option ${index}`}
-				defaultValue={props.content}
-				onChange={e => setValue(e.target.value)}
-				onKeyUp={updateOption}
-			/>
-			&lt;IconButton onClick={deleteOption}>
-				&lt;DeleteIcon />
-			&lt;/IconButton>
-		&lt;/>
+		&lt;Accordion className="w-100 rounded-lg">
+			&lt;AccordionSummary expandIcon={&lt;ExpandMoreIcon />}>
+				&lt;FormControlLabel
+					onClick={toggleConsent}
+					checked={toggle}
+					onFocus={event => event.stopPropagation()}
+					control={&lt;Checkbox />}
+					label="Include Consent Form"
+				/>
+			&lt;/AccordionSummary>
+			&lt;AccordionDetails>
+				&lt;TextField
+					value={text}
+					fullWidth
+					multiline
+					label="Consent Form"
+					variant="outlined"
+					onChange={updateConsent}
+				/>
+			&lt;/AccordionDetails>
+		&lt;/Accordion>
 	);
 }
 
-export default Option;
+export default ConsentPage;
 </code></pre>
         </article>
     </section>

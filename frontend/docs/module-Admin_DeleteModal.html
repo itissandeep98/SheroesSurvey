@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Module: Admin/QuestionMore</title>
+    <title>JSDoc: Module: Admin/DeleteModal</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Module: Admin/QuestionMore</h1>
+    <h1 class="page-title">Module: Admin/DeleteModal</h1>
 
     
 
@@ -64,7 +64,7 @@
     
 
     
-    <h4 class="name" id="~QuestionMore"><span class="type-signature">(inner) </span>QuestionMore<span class="signature">(id, index, content)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="~DeleteModal"><span class="type-signature">(inner) </span>DeleteModal<span class="signature">(modal, toggle, delete)</span><span class="type-signature"></span></h4>
     
 
     
@@ -72,7 +72,7 @@
 
 
 <div class="description">
-    <p>Represents a popup to change other options in a Question.</p>
+    <p>Provides a popup for deleting something.</p>
 </div>
 
 
@@ -108,13 +108,13 @@
 
         <tr>
             
-                <td class="name"><code>id</code></td>
+                <td class="name"><code>modal</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Integer</span>
+<span class="param-type">Boolean</span>
 
 
             
@@ -124,91 +124,14 @@
 
             
 
-            <td class="description last"><p>Unique ID of the option.</p></td>
+            <td class="description last"><p>Whether Popup is open or not.</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>index</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Integer</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Position of Option in List.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>content</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Text of the option.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-    <h5 class="subsection-title">Properties:</h5>
-
-    
-
-<table class="props">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>updateOption</code></td>
+                <td class="name"><code>toggle</code></td>
             
 
             <td class="type">
@@ -224,12 +147,37 @@
 
             
 
-            <td class="description last"><p>Updates the content in option</p></td>
+            <td class="description last"><p>Toggles the popup.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>delete</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>function to call after user confirms deletion.</p></td>
         </tr>
 
     
     </tbody>
 </table>
+
+
 
 
 
@@ -263,7 +211,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Question_QuestionMore.jsx.html">Question/QuestionMore.jsx</a>, <a href="Question_QuestionMore.jsx.html#line28">line 28</a>
+        <a href="DeleteModal.jsx.html">DeleteModal.jsx</a>, <a href="DeleteModal.jsx.html#line13">line 13</a>
     </li></ul></dd>
     
 

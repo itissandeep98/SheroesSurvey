@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Module: Admin/Question</title>
+    <title>JSDoc: Module: Admin/Banner</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Module: Admin/Question</h1>
+    <h1 class="page-title">Module: Admin/Banner</h1>
 
     
 
@@ -64,7 +64,7 @@
     
 
     
-    <h4 class="name" id="~Question"><span class="type-signature">(inner) </span>Question<span class="signature">(id, index, QuestionTypes)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="~Banner"><span class="type-signature">(inner) </span>Banner<span class="signature">(heading, description, banner_path)</span><span class="type-signature"></span></h4>
     
 
     
@@ -72,7 +72,7 @@
 
 
 <div class="description">
-    <p>Represents a Single Question On Admin Panel.</p>
+    <p>Provides editing ability for form Title, description and for Banner image Displaying, Uploading and Editing abilities.</p>
 </div>
 
 
@@ -108,13 +108,13 @@
 
         <tr>
             
-                <td class="name"><code>id</code></td>
+                <td class="name"><code>heading</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Integer</span>
+<span class="param-type">String</span>
 
 
             
@@ -124,20 +124,20 @@
 
             
 
-            <td class="description last"><p>Unique ID of the Question.</p></td>
+            <td class="description last"><p>Title of form.</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>index</code></td>
+                <td class="name"><code>description</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Integer</span>
+<span class="param-type">String</span>
 
 
             
@@ -147,20 +147,20 @@
 
             
 
-            <td class="description last"><p>Position of Question in Section.</p></td>
+            <td class="description last"><p>Description of form.</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>QuestionTypes</code></td>
+                <td class="name"><code>banner_path</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">List</span>
+<span class="param-type">URL</span>
 
 
             
@@ -170,7 +170,7 @@
 
             
 
-            <td class="description last"><p>List of all available Types of Questions</p></td>
+            <td class="description last"><p>URL for the banner Image.</p></td>
         </tr>
 
     
@@ -208,124 +208,7 @@
 
         <tr>
             
-                <td class="name"><code>ques</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Contains all details of the Question</p>
-                <h6>Properties</h6>
-
-<table class="props">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>qtype</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Type of Question('LP','SP','MC','FU' etc)</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>statement</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Question Statement</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>mandatory_toggle</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Boolean</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Whether the Question is mandatory</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>updateQuestion</code></td>
+                <td class="name"><code>handleUpdate</code></td>
             
 
             <td class="type">
@@ -341,7 +224,53 @@
 
             
 
-            <td class="description last"><p>Updates the content in Question</p></td>
+            <td class="description last"><p>Updates the Title and Description of form</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>updateBanner</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Updates the Banner Image</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>removeBanner</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Removes the Banner Image</p></td>
         </tr>
 
     
@@ -380,7 +309,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Question_Question.jsx.html">Question/Question.jsx</a>, <a href="Question_Question.jsx.html#line32">line 32</a>
+        <a href="Banner.jsx.html">Banner.jsx</a>, <a href="Banner.jsx.html#line22">line 22</a>
     </li></ul></dd>
     
 

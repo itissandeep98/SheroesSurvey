@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Module: AdminView</title>
+    <title>JSDoc: Module: Admin/ImageCropper</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Module: AdminView</h1>
+    <h1 class="page-title">Module: Admin/ImageCropper</h1>
 
     
 
@@ -64,7 +64,7 @@
     
 
     
-    <h4 class="name" id="~Admin"><span class="type-signature">(inner) </span>Admin<span class="signature">(user)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="~createImage"><span class="type-signature">(inner) </span>createImage<span class="signature">(url)</span><span class="type-signature"> &rarr; {HTML}</span></h4>
     
 
     
@@ -72,7 +72,7 @@
 
 
 <div class="description">
-    <p>Represents the Admin Panel where the form creator can Manage forms and thier profiles.</p>
+    <p>Creates an Image HTML Object with given url of image.</p>
 </div>
 
 
@@ -108,13 +108,13 @@
 
         <tr>
             
-                <td class="name"><code>user</code></td>
+                <td class="name"><code>url</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Object</span>
+<span class="param-type">URL</span>
 
 
             
@@ -124,9 +124,126 @@
 
             
 
-            <td class="description last"><p>Details of currently logged-in user from redux store.</p>
-                <h6>Properties</h6>
-                
+            <td class="description last"><p>URL of Image.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ImageCropper.jsx.html">ImageCropper.jsx</a>, <a href="ImageCropper.jsx.html#line129">line 129</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>Image object</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">HTML</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~getCroppedImg"><span class="type-signature">(async, inner) </span>getCroppedImg<span class="signature">(imageSrc, crop)</span><span class="type-signature"> &rarr; {BLOB}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Crops the Image with given Crop parameters.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
 
 <table class="params">
     <thead>
@@ -150,13 +267,13 @@
 
         <tr>
             
-                <td class="name"><code>id</code></td>
+                <td class="name"><code>imageSrc</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Integer</span>
+<span class="param-type">URL</span>
 
 
             
@@ -166,20 +283,20 @@
 
             
 
-            <td class="description last"><p>Unique ID of user.</p></td>
+            <td class="description last"><p>URL of Image.</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>forms</code></td>
+                <td class="name"><code>crop</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">List</span>
+<span class="param-type">Object</span>
 
 
             
@@ -189,14 +306,281 @@
 
             
 
-            <td class="description last"><p>List of Forms created by the User.</p></td>
+            <td class="description last"><p>Crop parameters of image.</p></td>
         </tr>
 
     
     </tbody>
 </table>
 
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ImageCropper.jsx.html">ImageCropper.jsx</a>, <a href="ImageCropper.jsx.html#line146">line 146</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>Image File after getting cropped</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">BLOB</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~ImageCropper"><span class="type-signature">(inner) </span>ImageCropper<span class="signature">(modal, bannerimg, toggle, updateBanner, removeBanner, setBlob)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Provides a popup with image cropping options.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>modal</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
             </td>
+
+            
+
+            
+
+            <td class="description last"><p>Whether Popup is open or not.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>bannerimg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Current Banner image.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>toggle</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Closes the popup.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>updateBanner</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Updates the new Banner image .</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>removeBanner</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Removes the existing banner image.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>setBlob</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>sets the current Banner Image which is being edited.</p></td>
         </tr>
 
     
@@ -234,7 +618,7 @@
 
         <tr>
             
-                <td class="name"><code>handleCreate</code></td>
+                <td class="name"><code>onCropComplete</code></td>
             
 
             <td class="type">
@@ -250,170 +634,7 @@
 
             
 
-            <td class="description last"><p>Creates a New form for the current logged in User</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>handleDelete</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Delete an Existing form for the current logged in User</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>Redux</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Global Redux State</p>
-                <h6>Properties</h6>
-
-<table class="props">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>useState</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>To manage state of this component</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>useDispatch</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Used in calling Redux function to call in order to change redux state</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>useSelector</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>To fetch the Redux state</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>useFFect</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Function Called on component mount, unmount and state change</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
+            <td class="description last"><p>Updates Banner Image after crop is complete</p></td>
         </tr>
 
     
@@ -452,7 +673,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Admin.jsx.html">Admin.jsx</a>, <a href="Admin.jsx.html#line32">line 32</a>
+        <a href="ImageCropper.jsx.html">ImageCropper.jsx</a>, <a href="ImageCropper.jsx.html#line28">line 28</a>
     </li></ul></dd>
     
 
