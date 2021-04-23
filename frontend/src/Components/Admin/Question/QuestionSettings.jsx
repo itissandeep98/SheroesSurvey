@@ -1,63 +1,60 @@
-import React, { useState } from 'react';
-import { Col, Input, Modal, ModalBody, ModalHeader, Row } from 'reactstrap';
-import { Dropdown } from 'semantic-ui-react';
-import { ShortQuestions } from '../../../Utils/QuestionTypes';
+import moment from 'moment';
+import { useState } from 'react';
+import { Dropdown, Icon } from 'semantic-ui-react';
+import QuestionMore from './QuestionMore';
+import { useDispatch } from 'react-redux';
+import { questionUpdate } from '../../../Store/ActionCreators/question';
 
 function QuestionSettings(props) {
-	const { modal, toggle, qtype } = props;
-	const [type, setType] = useState('TXT');
+	const { ques, id, remove, mandatory } = props;
+	const [modal, setModal] = useState(false);
+	const [selected, setSelected] = useState(mandatory);
+	const dispatch = useDispatch();
 
+	const markImportant = () => {
+		const data = {
+			mandatory_toggle: !selected,
+		};
+		setSelected(!selected);
+		dispatch(questionUpdate({ id, data }));
+	};
 	return (
-		<Modal isOpen={modal} toggle={toggle}>
-			<ModalHeader toggle={toggle}>More Options</ModalHeader>
-			<ModalBody>
-				{qtype === 'SP' && (
-					<>
-						<Col>
-							<Dropdown
-								placeholder="Select Type"
-								search
-								selection
-								options={ShortQuestions}
-								value={type}
-								onChange={(e, { value }) => setType(value)}
-								fluid
-							/>
-						</Col>
-						{type === 'TXT' && (
-							<Col className="mt-3">
-								<Input
-									fluid
-									type="number"
-									placeholder="Limit number of characters"
-									fluid
-								/>
-							</Col>
+		<>
+			<QuestionMore
+				modal={modal}
+				toggle={() => setModal(!modal)}
+				qtype={ques.qtype}
+				id={id}
+			/>
+
+			<div className="d-flex justify-content-end">
+				<small className=" text-muted ">
+					Created {moment(ques?.created_on).fromNow()}
+				</small>
+				<Dropdown
+					item
+					direction="left"
+					icon={<Icon name="ellipsis vertical" />}
+					simple>
+					<Dropdown.Menu>
+						<Dropdown.Item onClick={remove}>
+							<Icon name="trash" />
+							Delete
+						</Dropdown.Item>
+						<Dropdown.Item onClick={markImportant}>
+							<Icon name="asterisk" />
+							{selected ? 'Mark  as Not Important' : 'Mark Important'}
+						</Dropdown.Item>
+						{ques.qtype === 'SP' && (
+							<Dropdown.Item onClick={() => setModal(!modal)}>
+								<Icon name="cogs" />
+								More Options
+							</Dropdown.Item>
 						)}
-						{(type === 'INT' || type === 'FLT') && (
-							<Col xs={12} className="mt-3">
-								<Row>
-									<Col>
-										<Input
-											type="number"
-											placeholder="Minimum Accepted value"
-											fluid
-										/>
-									</Col>
-									<Col>
-										<Input
-											type="number"
-											placeholder="Maximum Accepted value"
-											fluid
-										/>
-									</Col>
-								</Row>
-							</Col>
-						)}
-					</>
-				)}
-			</ModalBody>
-		</Modal>
+					</Dropdown.Menu>
+				</Dropdown>
+			</div>
+		</>
 	);
 }
 

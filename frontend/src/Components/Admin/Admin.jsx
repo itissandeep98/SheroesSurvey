@@ -1,5 +1,5 @@
-import { withRouter } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { Col, Container, Row, Spinner } from 'reactstrap';
 import { Icon } from 'semantic-ui-react';
 import {
@@ -9,11 +9,14 @@ import {
 } from '../../Store/ActionCreators/form';
 import { useEffect, useState } from 'react';
 import FormCard from './FormCard';
+import ProfileSummary from '../Profile/ProfileSummary';
 
 function Admin(props) {
+	const user = useSelector(state => state.user);
 	const dispatch = useDispatch();
 	const [loading, setLoading] = useState(true);
-	const [cards, setCards] = useState([]);
+	const [cards, setCards] = useState(user?.forms );
+	const history = useHistory();
 	useEffect(() => {
 		dispatch(allformFetch()).then(res => {
 			const temp = res?.sort((a, b) => (a.updated_on < b.updated_on ? 1 : -1));
@@ -24,12 +27,12 @@ function Admin(props) {
 
 	const handleCreate = () => {
 		const data = {
-			created_by: '1',
-			updated_by: '1',
+			created_by: user.id,
+			updated_by: user.id,
 			section_sequence: [],
 		};
 		dispatch(formCreate(data)).then(res => {
-			props.history.push(`/admin/${res.id}`);
+			history.push(`/admin/${res.id}`);
 		});
 	};
 	const handleDelete = (id, index) => {
@@ -38,6 +41,7 @@ function Admin(props) {
 	};
 	return (
 		<Container className="mt-3" fluid>
+			<ProfileSummary />
 			<Row className="d-flex justify-content-center">
 				<Col lg={8}>
 					<div
@@ -68,4 +72,4 @@ function Admin(props) {
 	);
 }
 
-export default withRouter(Admin);
+export default Admin;
