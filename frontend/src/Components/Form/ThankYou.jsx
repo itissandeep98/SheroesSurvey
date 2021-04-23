@@ -1,9 +1,13 @@
+/**
+ * @module User/ThankYou
+ */
 import { Col, Container, Row } from 'reactstrap';
 import { Button } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
-import CancelPresentationIcon from '@material-ui/icons/CancelPresentation';
 import { useHistory } from 'react-router';
-
+/**
+ * Thank you page user views after filling the form
+ */
 function ThankYou() {
 	const history = useHistory();
 

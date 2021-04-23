@@ -64,7 +64,7 @@
     
 
     
-    <h4 class="name" id="~Question"><span class="type-signature">(inner) </span>Question<span class="signature">(id, index, content)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="~Question"><span class="type-signature">(inner) </span>Question<span class="signature">(id, index, sectionId, formId)</span><span class="type-signature"></span></h4>
     
 
     
@@ -72,7 +72,7 @@
 
 
 <div class="description">
-    <p>Represents a Single Option in Multiple Choice Question On Admin Panel.</p>
+    <p>Represents a Question in Response View.</p>
 </div>
 
 
@@ -124,7 +124,7 @@
 
             
 
-            <td class="description last"><p>Unique ID of the option.</p></td>
+            <td class="description last"><p>Unique ID of the Question.</p></td>
         </tr>
 
     
@@ -147,20 +147,20 @@
 
             
 
-            <td class="description last"><p>Position of Option in List.</p></td>
+            <td class="description last"><p>Position of Question in Section.</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>content</code></td>
+                <td class="name"><code>sectionId</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">String</span>
+<span class="param-type">Integer</span>
 
 
             
@@ -170,7 +170,30 @@
 
             
 
-            <td class="description last"><p>Text of the option.</p></td>
+            <td class="description last"><p>Unique ID of the Section.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>formId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Integer</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Unique ID of the Form.</p></td>
         </tr>
 
     
@@ -208,13 +231,13 @@
 
         <tr>
             
-                <td class="name"><code>updateOption</code></td>
+                <td class="name"><code>ques</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">function</span>
+<span class="param-type">Object</span>
 
 
             
@@ -224,7 +247,101 @@
 
             
 
-            <td class="description last"><p>Updates the content in option</p></td>
+            <td class="description last"><p>Details of Question</p>
+                <h6>Properties</h6>
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>qtype</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Type of Question('LP','SP','MC','FU' etc)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>statement</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Question Statement</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>mandatory_toggle</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Whether the Question is mandatory</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
         </tr>
 
     
@@ -263,7 +380,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Responses_Question.jsx.html">Responses/Question.jsx</a>, <a href="Responses_Question.jsx.html#line17">line 17</a>
+        <a href="Responses_Question.jsx.html">Responses/Question.jsx</a>, <a href="Responses_Question.jsx.html#line21">line 21</a>
     </li></ul></dd>
     
 
@@ -309,13 +426,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Admin_Banner.html">Admin/Banner</a></li><li><a href="module-Admin_ConsentForm.html">Admin/ConsentForm</a></li><li><a href="module-Admin_DeleteModal.html">Admin/DeleteModal</a></li><li><a href="module-Admin_FormCard.html">Admin/FormCard</a></li><li><a href="module-Admin_FormEdit.html">Admin/FormEdit</a></li><li><a href="module-Admin_ImageCropper.html">Admin/ImageCropper</a></li><li><a href="module-Admin_Option.html">Admin/Option</a></li><li><a href="module-Admin_Options.html">Admin/Options</a></li><li><a href="module-Admin_Question.html">Admin/Question</a></li><li><a href="module-Admin_QuestionMore.html">Admin/QuestionMore</a></li><li><a href="module-Admin_QuestionSettings.html">Admin/QuestionSettings</a></li><li><a href="module-Admin_Section.html">Admin/Section</a></li><li><a href="module-AdminView.html">AdminView</a></li><li><a href="module-Login.html">Login</a></li><li><a href="module-Register.html">Register</a></li><li><a href="module-Responses.html">Responses</a></li><li><a href="module-Responses_Question.html">Responses/Question</a></li><li><a href="module-Responses_Section.html">Responses/Section</a></li><li><a href="module-SideNavigation.html">SideNavigation</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Admin_Banner.html">Admin/Banner</a></li><li><a href="module-Admin_ConsentForm.html">Admin/ConsentForm</a></li><li><a href="module-Admin_DeleteModal.html">Admin/DeleteModal</a></li><li><a href="module-Admin_FormCard.html">Admin/FormCard</a></li><li><a href="module-Admin_FormEdit.html">Admin/FormEdit</a></li><li><a href="module-Admin_ImageCropper.html">Admin/ImageCropper</a></li><li><a href="module-Admin_Option.html">Admin/Option</a></li><li><a href="module-Admin_Options.html">Admin/Options</a></li><li><a href="module-Admin_Question.html">Admin/Question</a></li><li><a href="module-Admin_QuestionMore.html">Admin/QuestionMore</a></li><li><a href="module-Admin_QuestionSettings.html">Admin/QuestionSettings</a></li><li><a href="module-Admin_Section.html">Admin/Section</a></li><li><a href="module-AdminView.html">AdminView</a></li><li><a href="module-Login.html">Login</a></li><li><a href="module-ProfileSummary.html">ProfileSummary</a></li><li><a href="module-Register.html">Register</a></li><li><a href="module-Responses.html">Responses</a></li><li><a href="module-Responses_Question.html">Responses/Question</a></li><li><a href="module-Responses_Section.html">Responses/Section</a></li><li><a href="module-SideNavigation.html">SideNavigation</a></li><li><a href="module-User_Banner.html">User/Banner</a></li><li><a href="module-User_Consent.html">User/Consent</a></li><li><a href="module-User_FormRestrict.html">User/FormRestrict</a></li><li><a href="module-User_FormView.html">User/FormView</a></li><li><a href="module-User_MultipleChoice.html">User/MultipleChoice</a></li><li><a href="module-User_ParagraphInput.html">User/ParagraphInput</a></li><li><a href="module-User_Question.html">User/Question</a></li><li><a href="module-User_Section.html">User/Section</a></li><li><a href="module-User_TextInput.html">User/TextInput</a></li><li><a href="module-User_ThankYou.html">User/ThankYou</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sat Apr 24 2021 01:29:50 GMT+0530 (India Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sat Apr 24 2021 02:46:40 GMT+0530 (India Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
