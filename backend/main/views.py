@@ -15,14 +15,13 @@ class FormsViewSet(viewsets.ModelViewSet):
 
 
     def get_queryset(self, username=None):
-        # return self.request.user.form_created_by.all()
-        if username!=None:
-            user = OurUsers.objects.get(username=username)
-            queryset = Forms.filter(author=user)
+        if self.request.user.user_type=='AD':
+            return Forms.objects.all()
+        elif self.request.user.user_type=='CR':
+            return self.request.user.form_created_by.all()
         else:
-            queryset=None
-    
-        return queryset
+            return None
+ 
         
 
     def perform_create(self, serializer):
