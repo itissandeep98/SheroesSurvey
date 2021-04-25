@@ -15,13 +15,19 @@ import { Image } from 'semantic-ui-react';
 
 function Register(props) {
 	const dispatch = useDispatch();
-	const [data, setData] = useState({});
+	const [data, setData] = useState({
+		user_type: 'AD',
+		sheroes_id: Math.random(),
+		gender:'F'
+	});
+	const [cnfpassword, setcnfpassword] = useState(false);
 	const [disabled, setDisabled] = useState(false);
-	const handleSubmit = () => {
+	const handleSubmit = e => {
+		e.preventDefault();
 		setDisabled(true);
 		dispatch(registerAction(data)).then(() => {
 			setDisabled(false);
-			window.location.reload();
+			// window.location.reload();
 		});
 	};
 	const handleChange = e => {
@@ -87,14 +93,14 @@ function Register(props) {
 							/>
 							<FormControl variant="outlined" fullWidth>
 								<InputLabel>Gender</InputLabel>
-								<Select label="Gender" onChange={handleChange} name="gender">
+								<Select label="Gender" value={data.gender} onChange={handleChange} name="gender">
 									<MenuItem value={'M'}>Male</MenuItem>
 									<MenuItem value={'F'}>Female</MenuItem>
 									<MenuItem value={'O'}>Other</MenuItem>
 								</Select>
 							</FormControl>
 						</div>
-						<div className="mt-2 d-flex justify-content-between">
+						{/* <div className="mt-2 d-flex justify-content-between">
 							<TextField
 								required
 								variant="outlined"
@@ -114,7 +120,7 @@ function Register(props) {
 								label="Partner ID"
 								type="number"
 							/>
-						</div>
+						</div> */}
 						<TextField
 							required
 							variant="outlined"
@@ -130,7 +136,7 @@ function Register(props) {
 							variant="outlined"
 							fullWidth
 							name="cnfpassword"
-							onChange={handleChange}
+							onChange={e => setcnfpassword(e.target.value)}
 							label="Confirm Password"
 							type="password"
 							className="mt-2"
@@ -140,7 +146,7 @@ function Register(props) {
 							variant="outlined"
 							className="mt-2 rounded-pill float-right"
 							color="secondary"
-							disabled={disabled || data.password !== data.cnfpassword}
+							disabled={disabled || data.password !== cnfpassword}
 							onClick={handleSubmit}>
 							Register
 						</Button>
