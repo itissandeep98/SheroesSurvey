@@ -152,7 +152,7 @@ class FormsViewSet(viewsets.ModelViewSet):
 class SectionsViewSet(viewsets.ModelViewSet):
     queryset = Sections.objects.all()
     permission_classes = [
-        permissions.AllowAny
+        permissions.IsAuthenticated
     ]
     serializer_class = SectionSerializers
 
@@ -194,7 +194,8 @@ class SectionsViewSet(viewsets.ModelViewSet):
 class QuestionsViewSet(viewsets.ModelViewSet):
     queryset = Questions.objects.all()
     permission_classes = [
-        permissions.AllowAny
+        permissions.IsAuthenticated
+        # permissions.AllowAny
     ]
     serializer_class = QuestionSerializers
 
@@ -257,7 +258,8 @@ class QuestionsViewSet(viewsets.ModelViewSet):
 class ShortParaViewSet(viewsets.ModelViewSet):
     queryset = ShortPara.objects.all()
     permission_classes = [
-        permissions.AllowAny
+        permissions.IsAuthenticated
+        # permissions.AllowAny
     ]
     serializer_class = ShortParaSerializers
 
@@ -305,7 +307,8 @@ class OptionsViewSet(viewsets.ModelViewSet):
     """
     queryset = Options.objects.all()
     permission_classes = [
-        permissions.AllowAny
+        permissions.IsAuthenticated
+        # permissions.AllowAny
     ]
     serializer_class = OptionsSerializers
 
@@ -342,7 +345,8 @@ class OptionsViewSet(viewsets.ModelViewSet):
 class ResponsesViewSet(viewsets.ModelViewSet):
     queryset = Responses.objects.all()
     permission_classes = [
-        permissions.AllowAny
+        permissions.IsAuthenticated
+        # permissions.AllowAny
     ]
     serializer_class = ResponsesSerializers
 
