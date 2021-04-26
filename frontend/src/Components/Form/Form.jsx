@@ -22,7 +22,7 @@ import ConsentPage from './ConsentPage';
  * @property {String} details.description - Description of form
  * @property {String} details.heading - Heading of form
  * @property {URL} details.banner_path - Path of banner image
- * 
+ *
  */
 function Form(props) {
 	const { id } = props?.match?.params;
@@ -50,7 +50,7 @@ function Form(props) {
 				<Row className="d-flex justify-content-center">
 					<Col lg={8}>
 						<Banner {...details} key={3} />
-						{details?.consent_toggle && (
+						{details?.consent_toggle && curr == -1 && (
 							<ConsentPage
 								setCurr={setCurr}
 								consent_text={details.consent_text}

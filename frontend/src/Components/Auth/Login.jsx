@@ -10,21 +10,22 @@ import { Button, TextField } from '@material-ui/core';
 import { Icon, Image } from 'semantic-ui-react';
 
 /**
- * Provide Login Capabilities 
+ * Provide Login Capabilities
  * @property {String} Username - Username of the user.
  * @property {String} Password - Password of the user.
- * 
+ *
  */
 
 function Login(props) {
 	const dispatch = useDispatch();
 	const [data, setData] = useState({});
-	const [loading, setLoading] = useState(true)
+	const [loading, setLoading] = useState(true);
+
 	const handleSubmit = e => {
 		e.preventDefault();
+		setLoading(false);
 		dispatch(loginAction(data)).then(() => {
-			setLoading(false)
-			window.location.reload();
+			setLoading(true);
 		});
 	};
 	const handleChange = e => {
