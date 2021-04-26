@@ -1,3 +1,7 @@
+/**
+ * @module Admin/Question
+ */
+
 import { TextField } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -10,6 +14,20 @@ import {
 import { QuestionTypes } from '../../../Utils/QuestionTypes';
 import Options from './Options';
 import QuestionSettings from './QuestionSettings';
+
+/**
+ * Represents a Single Question On Admin Panel.
+ * @param {Integer} id - Unique ID of the Question.
+ * @param {Integer} index - Position of Question in Section.
+ * @param {List} QuestionTypes - List of all available Types of Questions
+ *
+ * @property {Object} ques - Contains all details of the Question
+ * @property {String} ques.qtype - Type of Question('LP','SP','MC','FU' etc)
+ * @property {String} ques.statement - Question Statement
+ * @property {Boolean} ques.mandatory_toggle - Whether the Question is mandatory
+ * @property {Function} updateQuestion -Updates the content in Question
+ *
+ */
 
 function Question(props) {
 	const { id, index } = props;

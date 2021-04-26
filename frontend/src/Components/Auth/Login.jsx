@@ -1,3 +1,6 @@
+/**
+ * @module Login
+ */
 import { Col, Container, Row } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -5,6 +8,13 @@ import { loginAction } from '../../Store/ActionCreators/auth';
 import { useState } from 'react';
 import { Button, TextField } from '@material-ui/core';
 import { Icon, Image } from 'semantic-ui-react';
+
+/**
+ * Provide Login Capabilities 
+ * @property {String} Username - Username of the user.
+ * @property {String} Password - Password of the user.
+ * 
+ */
 
 function Login(props) {
 	const dispatch = useDispatch();

@@ -1,3 +1,6 @@
+/**
+ * @module SideNavigation
+ */
 import { useState } from 'react';
 import './style.css';
 import Drawer from '@material-ui/core/Drawer';
@@ -24,7 +27,13 @@ import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import { frontUrl } from '../../Store/Url';
 import { showAlert } from '../Alert';
-
+/**
+ * Represents a Side Navigation bar with options.
+ * @param {Integer} form_id - Unique ID of the Form.
+ * @param {Boolean} response_toggle -Whether Response are alowed or not.
+ *
+ * @property {Function} handleDelete -Deletes the form
+ */
 function NavigationBar(props) {
 	const { form_id, response_toggle } = props;
 	const history = useHistory();

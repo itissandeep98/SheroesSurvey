@@ -1,3 +1,6 @@
+/**
+ * @module Admin/QuestionMore
+ */
 import { Button, TextField } from '@material-ui/core';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -12,6 +15,15 @@ import {
 import { Dropdown } from 'semantic-ui-react';
 import { questionDetailsUpdate } from '../../../Store/ActionCreators/question';
 import { ShortQuestions } from '../../../Utils/QuestionTypes';
+
+/**
+ * Represents a popup to change other options in a Question.
+ * @param {Integer} id - Unique ID of the option.
+ * @param {Integer} index - Position of Option in List.
+ * @param {String} content - Text of the option.
+ *
+ * @property {Function} updateOption -Updates the content in option
+ */
 
 function QuestionMore(props) {
 	const { modal, toggle, qtype, id } = props;

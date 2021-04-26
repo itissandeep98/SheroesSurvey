@@ -1,8 +1,14 @@
+/**
+ * @module User/Consent
+ */
 import { Col, Container, Row } from 'reactstrap';
-import { useState } from 'react';
 import { Button } from '@material-ui/core';
 import { useHistory } from 'react-router';
-
+/**
+ * Consent Page for users.
+ * @param {String} consent_text - Consent form details
+ * @param {Function} setCurr - sets the view for users
+ */
 function ConsentPage(props) {
 	const { setCurr, consent_text } = props;
 	const history = useHistory();

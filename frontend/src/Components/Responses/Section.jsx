@@ -1,10 +1,22 @@
+/**
+ * @module Responses/Section
+ */ 
 import { Col, Container, Row, Spinner } from 'reactstrap';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { sectionFetch } from '../../Store/ActionCreators/section';
 import Question from './Question';
 import { List, Placeholder } from 'semantic-ui-react';
-
+/**
+ * Represents a section of form in response viewing.
+ * @param {Integer} id - Unique ID of the Section.
+ *
+ * @property {Object} details -Details of section
+ * @property {String} details.heading -heading of section
+ * @property {String} details.description -Description of section
+ * @property {String} quesList List of question IDs in section
+ * 
+ */
 function Section(props) {
 	const { id } = props;
 	const [quesList, setQuesList] = useState([]);

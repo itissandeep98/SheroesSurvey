@@ -1,3 +1,7 @@
+/**
+ * @module Admin/Question
+ */
+
 import { useEffect, useState } from 'react';
 import { Col, Container, Row } from 'reactstrap';
 import { Image } from 'semantic-ui-react';
@@ -11,6 +15,10 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutAction } from '../../Store/ActionCreators/auth';
 import { useHistory } from 'react-router';
+/**
+ * Represents Top bar on every page.
+ * @param {Integer} key - Unique Auth token received from backend after login.
+ */
 
 function TopHeader() {
 	const key = useSelector(state => state?.auth?.key);

@@ -1,3 +1,6 @@
+/**
+ * @module Responses/Question
+ */ 
 import { FormControl, FormControlLabel, Radio, RadioGroup } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
@@ -5,6 +8,18 @@ import { Col, Container, Row } from 'reactstrap';
 import { List, Placeholder } from 'semantic-ui-react';
 import { questionFetch } from '../../Store/ActionCreators/question';
 
+/**
+ * Represents a Question in Response View.
+ * @param {Integer} id - Unique ID of the Question.
+ * @param {Integer} index - Position of Question in Section.
+ * @param {Integer} sectionId - Unique ID of the Section.
+ * @param {Integer} formId - Unique ID of the Form.
+ *
+ * @property {Object} ques - Details of Question
+ * @property {String} ques.qtype - Type of Question('LP','SP','MC','FU' etc)
+ * @property {String} ques.statement - Question Statement
+ * @property {Boolean} ques.mandatory_toggle - Whether the Question is mandatory
+ */
 function Question(props) {
 	const { id, index, sectionId, formId } = props;
 	const dispatch = useDispatch();

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Section.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Section.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @module Admin/Section
+ */
+import { TextField } from '@material-ui/core';
+import moment from 'moment';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { Col, Container, Row, Spinner } from 'reactstrap';
+import { Button, Dropdown, Icon } from 'semantic-ui-react';
+import {
+	questionCreate,
+	questionDelete,
+} from '../../Store/ActionCreators/question';
+import {
+	sectionFetch,
+	sectionUpdate,
+} from '../../Store/ActionCreators/section';
+import Question from './Question/Question';
+
+/**
+ * Represents a Single Option in Multiple Choice Question On Admin Panel.
+ * @param {Integer} id - Unique ID of the Section.
+ * @param {Integer} index - Position of Section in Form.
+ * @param {String} userid -  Unique ID of the logged in user.
+ *
+ * @property {Function} addQuestion - Adds a Question in this section
+ * @property {Function} removeQuestion -Removes a Question from this section
+ * @property {Function} updateSection -Updates the Section details
+ */
+
+function Section(props) {
+	const { id, index, userid } = props;
+	const [quesList, setQuesList] = useState([]);
+	const [details, setDetails] = useState({});
+	const [loading, setLoading] = useState(false);
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(sectionFetch(id)).then(res => {
+			setQuesList(res.question_sequence);
+			setDetails(res);
+		});
+	}, [dispatch]);
+
+	const addQuestion = () => {
+		setLoading(true);
+		const data = {
+			section_id: id,
+			created_by: userid,
+			updated_by: userid,
+			statement: 'Question',
+			qtype: 'SP',
+		};
+		dispatch(questionCreate(data)).then(res => {
+			setQuesList([...quesList, res?.id]);
+			setLoading(false);
+		});
+	};
+	const removeQuestion = (id, index) => {
+		dispatch(questionDelete(id));
+		setQuesList([...quesList.slice(0, index), ...quesList.slice(index + 1)]);
+	};
+
+	const updateSection = () => {
+		const data = {
+			heading: details.heading,
+			description: details.description,
+		};
+		dispatch(sectionUpdate({ id, data }));
+	};
+
+	return (
+		&lt;Container>
+			&lt;Row className="p-4 mb-4 rounded_lg  bg-white">
+				&lt;Col>
+					&lt;h1 className="section_name d-inline-block pr-4">Section {index}&lt;/h1>
+
+					&lt;Dropdown
+						className="float-right"
+						item
+						direction="left"
+						icon={&lt;Icon name="ellipsis vertical" size="large" />}
+						simple>
+						&lt;Dropdown.Menu>
+							&lt;Dropdown.Item onClick={props.remove}>
+								&lt;Icon name="trash" />
+								Delete
+							&lt;/Dropdown.Item>
+						&lt;/Dropdown.Menu>
+					&lt;/Dropdown>
+					&lt;small className="float-right text-muted">
+						{details.created_on ? (
+							&lt;>Created {moment(details.created_on).fromNow()}&lt;/>
+						) : (
+							&lt;Spinner size="sm" />
+						)}
+					&lt;/small>
+				&lt;/Col>
+				&lt;Col xs={12}>
+					&lt;form>
+						&lt;TextField
+							label="Heading"
+							variant="outlined"
+							multiline
+							fullWidth
+							defaultValue={details.heading}
+							onChange={e =>
+								setDetails({ ...details, heading: e.target.value })
+							}
+							onKeyUp={updateSection}
+							InputLabelProps={{ shrink: true }}
+						/>
+						&lt;br /> &lt;br />
+						&lt;TextField
+							label="Description"
+							variant="outlined"
+							fullWidth
+							multiline
+							defaultValue={details.description}
+							onChange={e =>
+								setDetails({ ...details, description: e.target.value })
+							}
+							onKeyUp={updateSection}
+							InputLabelProps={{ shrink: true }}
+						/>
+					&lt;/form>
+				&lt;/Col>
+			&lt;/Row>
+
+			&lt;Row className="p-4 mb-4 rounded_lg  bg-white">
+				&lt;Col>
+					{quesList &amp;&amp;
+						quesList.map((quesid, i) => (
+							&lt;Question
+								key={quesid}
+								id={quesid}
+								index={i + 1}
+								remove={() => removeQuestion(quesid, i)}
+							/>
+						))}
+				&lt;/Col>
+				&lt;Col xs={12}>
+					&lt;Button
+						floated="right"
+						onClick={addQuestion}
+						disabled={loading}
+						className="rounded-pill">
+						{loading ? (
+							&lt;Spinner />
+						) : (
+							&lt;>
+								&lt;Icon name="plus" />
+								Add Question
+							&lt;/>
+						)}
+					&lt;/Button>
+				&lt;/Col>
+			&lt;/Row>
+		&lt;/Container>
+	);
+}
+
+export default Section;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Admin_Banner.html">Admin/Banner</a></li><li><a href="module-Admin_ConsentForm.html">Admin/ConsentForm</a></li><li><a href="module-Admin_DeleteModal.html">Admin/DeleteModal</a></li><li><a href="module-Admin_FormCard.html">Admin/FormCard</a></li><li><a href="module-Admin_FormEdit.html">Admin/FormEdit</a></li><li><a href="module-Admin_ImageCropper.html">Admin/ImageCropper</a></li><li><a href="module-Admin_Option.html">Admin/Option</a></li><li><a href="module-Admin_Options.html">Admin/Options</a></li><li><a href="module-Admin_Question.html">Admin/Question</a></li><li><a href="module-Admin_QuestionMore.html">Admin/QuestionMore</a></li><li><a href="module-Admin_QuestionSettings.html">Admin/QuestionSettings</a></li><li><a href="module-Admin_Section.html">Admin/Section</a></li><li><a href="module-AdminView.html">AdminView</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sat Apr 24 2021 00:41:12 GMT+0530 (India Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

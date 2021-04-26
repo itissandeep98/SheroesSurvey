@@ -10,22 +10,37 @@
   <a href="https://github.com/sarthak144">Sarthak Arora</a>
 </p>
 
-## Steps to browse the website
+# Usage
 
-- Visit the website [here](https://sheroes-front.herokuapp.com/). The current version only has one user with editor rights so you can view all the forms created till now.
-- Click on login without entering any credentials.
+- Visit the website [here](https://sheroes.pages.dev/).
+- Login/Register into the portal.
 - Now, you can view all the previous forms and have the option to create new form.
 - Clicking on any of the old forms or clicking on the option to create a new form lands the user on the form editing page.
 - On the form editing page, you have the following options:
-	- Add banner to the form. 
-	- Change form name and description.
-	- Add sections.
-	- Add and delete questions to different sections.
-<br> </br>
-![sheroesfront](https://user-images.githubusercontent.com/43843585/111822534-e5ea9880-8909-11eb-967c-ab8ad958a3b8.gif)
+  - Add/update banner to the form.
+  - Change form name and description.
+  - Add/modify/delete sections.
+  - Add/modify/delete questions to different sections.
+  - Change or Toggle Consent form.
+  - Toggle accepting response.
+  - Delete Form
+  - Preview Form
+  - Copy Preview Link
+  - View Responses
 
+# Deployment
 
-# Frontend: <https://sheroes-front.herokuapp.com/>
+## Frontend <https://sheroes.pages.dev/>
+
+- URL of the website needs to be updated in ```src/Store/URl.js``` file as well as in ```package.json```
+- Run ```npm run build``` to create the build folder
+- This build folder can then be deployed on any static hosting website
+
+## Backend: <https://sheroes-form.herokuapp.com/>
+
+# Development
+
+## Frontend
 
 ```
 - cd frontend/
@@ -33,7 +48,7 @@
 - npm run start
 ```
 
-# Backend: <https://sheroes-form.herokuapp.com/>
+## Backend
 
 ```
 - cd backend/
@@ -44,6 +59,15 @@
 - python manage.py runserver
 ```
 
-# API's workspace on Postman 
+# Documentation
 
-<https://app.getpostman.com/join-team?invite_code=9e4cd864749b9f9dec30f01425d3066b&ws=883ef5e5-878f-4249-8a3b-0a5ef3c4b5a3>
+- Frontend: <https://sheroes-docs.netlify.app/>
+
+# Glimpses
+![image](https://user-images.githubusercontent.com/44255731/115881844-ca733000-a469-11eb-88c3-d0e65b41416b.png)
+
+![image](https://user-images.githubusercontent.com/44255731/115882057-027a7300-a46a-11eb-8801-13523cda87b8.png)
+
+![image](https://user-images.githubusercontent.com/44255731/115882200-2a69d680-a46a-11eb-90e7-3746fe00f201.png)
+
+![image](https://user-images.githubusercontent.com/44255731/115882479-69982780-a46a-11eb-8f66-7a62f662bfac.png)

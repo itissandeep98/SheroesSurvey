@@ -1,8 +1,20 @@
+/**
+ * @module User/Banner
+ */
 import { useState } from 'react';
 import { Col, Container, Row } from 'reactstrap';
 import { Button, Icon, Image } from 'semantic-ui-react';
 import classNames from 'classnames';
 import './style.css';
+
+/**
+ * Provides Form details and banner
+ * @param {Object} details - Details of the form
+ * @param {String} details.description - Description of form
+ * @param {String} details.heading - Heading of form
+ * @param {URL} details.banner_path - Path of banner image
+ * 
+ */
 function Banner(props) {
 	const { heading, description, banner_path } = props;
 	const [hidden, setHidden] = useState(true);
