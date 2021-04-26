@@ -34,7 +34,7 @@ export const loginAction = data => {
 
 export const registerAction = data => {
 	return async dispatch => {
-		dispatch({ type: ActionTypes.REGISTER_REQUEST });
+		dispatch({ type: ActionTypes.REGISTER_REQUEST, data: data });
 		return await axios
 			.post(`${apiUrl}/auth/register`, data)
 			.then(res => {
@@ -50,7 +50,7 @@ export const registerAction = data => {
 			})
 			.catch(error => {
 				dispatch({
-					type: ActionTypes.REGISTER_SUCCESS,
+					type: ActionTypes.REGISTER_FAILED,
 					errmess: 'Error in connection with Server',
 				});
 			});

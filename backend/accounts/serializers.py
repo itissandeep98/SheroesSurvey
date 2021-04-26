@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from main.models import OurUsers
 from django.contrib.auth import authenticate
+from rest_framework.response import Response
 
 #User Serializer
 
@@ -17,6 +18,10 @@ class RegisterSerializer(serializers.ModelSerializer):
         extra_kwargs = {'password': {'write_only':True}}
 
     def create(self, validated_data):
+        if 'partner_id' not in validated_data.keys():
+            validated_data['partner_id']=None
+        
+        
         user=OurUsers.objects.create_user (
             validated_data['username'], validated_data['user_type'], validated_data['email'], validated_data['password'], 
             validated_data['first_name'],

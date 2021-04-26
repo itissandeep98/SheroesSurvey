@@ -19,9 +19,11 @@ import { Icon, Image } from 'semantic-ui-react';
 function Login(props) {
 	const dispatch = useDispatch();
 	const [data, setData] = useState({});
+	const [loading, setLoading] = useState(true)
 	const handleSubmit = e => {
 		e.preventDefault();
 		dispatch(loginAction(data)).then(() => {
+			setLoading(false)
 			window.location.reload();
 		});
 	};
@@ -74,6 +76,7 @@ function Login(props) {
 							variant="outlined"
 							className="mt-2  rounded-pill float-right"
 							color="secondary"
+							disabled={!loading}
 							onClick={handleSubmit}>
 							Login
 						</Button>

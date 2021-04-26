@@ -71,21 +71,20 @@ function Admin(props) {
 					</div>
 				</Col>
 			</Row>
-			{loading ? (
+			{loading && (
 				<Row className=" mt-5 justify-content-center">
 					<h2 className="text-muted">
 						<Spinner /> Fetching Latest Forms
 					</h2>
 				</Row>
-			) : (
-				<Row className=" mt-5 justify-content-center">
-					{cards?.map((card, index) => (
-						<Col sm={6} md={4} lg={3} key={Math.random()} className="h-100">
-							<FormCard {...card} delete={() => handleDelete(card.id, index)} />
-						</Col>
-					))}
-				</Row>
 			)}
+			<Row className=" mt-5 justify-content-center">
+				{cards?.map((card, index) => (
+					<Col sm={6} md={4} lg={3} key={Math.random()} className="h-100">
+						<FormCard {...card} delete={() => handleDelete(card.id, index)} />
+					</Col>
+				))}
+			</Row>
 		</Container>
 	);
 }

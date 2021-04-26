@@ -1,11 +1,19 @@
 /**
  * @module Responses/Question
- */ 
+ */
+import {
+	FormControl,
+	FormControlLabel,
+	Radio,
+	RadioGroup,
+} from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { Col, Container, Row } from 'reactstrap';
-import { Placeholder } from 'semantic-ui-react';
+import { List, Placeholder } from 'semantic-ui-react';
 import { questionFetch } from '../../Store/ActionCreators/question';
+import Options from './Options';
+
 /**
  * Represents a Question in Response View.
  * @param {Integer} id - Unique ID of the Question.
@@ -23,6 +31,7 @@ function Question(props) {
 	const dispatch = useDispatch();
 	const [ques, setQues] = useState({});
 	const [loading, setLoading] = useState(true);
+	const options = ['option 1', 'option 2', 'option 3'];
 	useEffect(() => {
 		dispatch(questionFetch(id)).then(res => {
 			setQues(res);
@@ -66,7 +75,7 @@ function Question(props) {
 						</p>
 					)}
 
-					{ques.qtype === 'MC' && <p className="text-muted text-justify"></p>}
+					{ques.qtype === 'MC' && <Options quesId={id} />}
 				</Col>
 			</Row>
 		</Container>

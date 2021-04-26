@@ -6,7 +6,7 @@ import { TextField } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Col, Row } from 'reactstrap';
-import { Dropdown } from 'semantic-ui-react';
+import { Dropdown, Placeholder } from 'semantic-ui-react';
 import {
 	questionFetch,
 	questionUpdate,
@@ -33,10 +33,12 @@ function Question(props) {
 	const { id, index } = props;
 	const dispatch = useDispatch();
 	const [ques, setQues] = useState(null);
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		dispatch(questionFetch(id)).then(res => {
 			setQues(res);
+			setLoading(false);
 		});
 	}, [dispatch]);
 
@@ -55,48 +57,58 @@ function Question(props) {
 	};
 
 	return (
-		<div className="mt-3 mb-5 d-flex align-items-center ">
-			{ques && (
-				<form className="mr-2 w-100">
-					<QuestionSettings
-						{...props}
-						ques={ques}
-						mandatory={ques.mandatory_toggle}
-					/>
+		<>
+			{loading ? (
+				<Placeholder>
+					<Placeholder.Paragraph>
+						<Placeholder.Header />
+						<Placeholder.Line />
+						<Placeholder.Line />
+					</Placeholder.Paragraph>
+				</Placeholder>
+			) : (
+				<div className="mt-3 mb-5 d-flex align-items-center ">
+					<form className="mr-2 w-100">
+						<QuestionSettings
+							{...props}
+							ques={ques}
+							mandatory={ques.mandatory_toggle}
+						/>
 
-					<TextField
-						label={`Question ${index}`}
-						variant="outlined"
-						fullWidth
-						multiline
-						defaultValue={ques?.statement}
-						onChange={e => setQues({ ...ques, statement: e.target.value })}
-						onKeyUp={updateQuestion}
-						InputLabelProps={{ shrink: true }}
-					/>
-					<br />
-					<br />
-					<Row>
-						<Col>
-							<Dropdown
-								placeholder="Select Question Type"
-								search
-								selection
-								options={QuestionTypes}
-								value={ques.qtype}
-								onChange={handleType}
-								fluid
-							/>
-						</Col>
-						{ques.qtype === 'MC' && (
-							<Col xs={12}>
-								<Options quesId={id} />
+						<TextField
+							label={`Question ${index}`}
+							variant="outlined"
+							fullWidth
+							multiline
+							defaultValue={ques?.statement}
+							onChange={e => setQues({ ...ques, statement: e.target.value })}
+							onKeyUp={updateQuestion}
+							InputLabelProps={{ shrink: true }}
+						/>
+						<br />
+						<br />
+						<Row>
+							<Col>
+								<Dropdown
+									placeholder="Select Question Type"
+									search
+									selection
+									options={QuestionTypes}
+									value={ques.qtype}
+									onChange={handleType}
+									fluid
+								/>
 							</Col>
-						)}
-					</Row>
-				</form>
+							{ques.qtype === 'MC' && (
+								<Col xs={12}>
+									<Options quesId={id} />
+								</Col>
+							)}
+						</Row>
+					</form>
+				</div>
 			)}
-		</div>
+		</>
 	);
 }
 

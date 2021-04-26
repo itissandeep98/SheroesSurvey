@@ -31,7 +31,7 @@ function Option(props) {
 			<TextField
 				variant="outlined"
 				label={`Option ${index}`}
-				defaultValue={props.content}
+				value={value}
 				onChange={e => setValue(e.target.value)}
 				onKeyUp={updateOption}
 			/>
