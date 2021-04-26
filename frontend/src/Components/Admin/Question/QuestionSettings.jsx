@@ -1,9 +1,26 @@
+/**
+ * @module Admin/QuestionSettings
+ */
 import moment from 'moment';
 import { useState } from 'react';
 import { Dropdown, Icon } from 'semantic-ui-react';
 import QuestionMore from './QuestionMore';
 import { useDispatch } from 'react-redux';
 import { questionUpdate } from '../../../Store/ActionCreators/question';
+
+/**
+ * Sets Question Settings such as mandatory Toggle and much more.
+ * @param {Integer} id - Unique ID of the Question.
+ * @param {Object} ques - Contains all details of the Question
+ * @param {String} ques.qtype - Type of Question('LP','SP','MC','FU' etc)
+ * @param {String} ques.statement - Question Statement
+ * @param {Boolean} mandatory - Whether this question is mandatory or not.
+ * @param {Function} remove - Deletes this Question.
+ *
+ *
+ * @property {Function} markImportant - Toogles the mandatory status of Question
+ *
+ */
 
 function QuestionSettings(props) {
 	const { ques, id, remove, mandatory } = props;

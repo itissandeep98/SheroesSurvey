@@ -1,10 +1,16 @@
+/**
+ * @module User/FormRestrict
+ */
 import { Col, Container, Row } from 'reactstrap';
 import { Button } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
-import CancelPresentationIcon from '@material-ui/icons/CancelPresentation';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import { useHistory } from 'react-router';
 
+/**
+ * Page user views when a form is unavailable or is restricted by admin
+ * 
+ */
 function FormRestrict() {
 	const history = useHistory();
 

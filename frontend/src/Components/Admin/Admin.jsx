@@ -1,3 +1,6 @@
+/**
+ * @module AdminView
+ */
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Col, Container, Row, Spinner } from 'reactstrap';
@@ -11,11 +14,26 @@ import { useEffect, useState } from 'react';
 import FormCard from './FormCard';
 import ProfileSummary from '../Profile/ProfileSummary';
 
+/**
+ * Represents the Admin Panel where the form creator can Manage forms and thier profiles.
+ * @param {Object} user - Details of currently logged-in user from redux store.
+ * @param {Integer} user.id - Unique ID of user.
+ * @param {List} user.forms - List of Forms created by the User.
+ *
+ * @property {Function} handleCreate - Creates a New form for the current logged in User
+ * @property {Function} handleDelete - Delete an Existing form for the current logged in User
+ * @property {Object} Redux - Global Redux State
+ * @property {Function} Redux.useState - To manage state of this component
+ * @property {Function} Redux.useDispatch - Used in calling Redux function to call in order to change redux state
+ * @property {Function} Redux.useSelector - To fetch the Redux state
+ * @property {Function} Redux.useFFect - Function Called on component mount, unmount and state change
+ */
+
 function Admin(props) {
 	const user = useSelector(state => state.user);
 	const dispatch = useDispatch();
 	const [loading, setLoading] = useState(true);
-	const [cards, setCards] = useState(user?.forms );
+	const [cards, setCards] = useState(user?.forms);
 	const history = useHistory();
 	useEffect(() => {
 		dispatch(allformFetch()).then(res => {

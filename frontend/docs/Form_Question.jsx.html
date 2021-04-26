@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Form/Question.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Form/Question.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @module User/Question
+ */
+import { useEffect, useState } from 'react';
+import { connect, useDispatch, useSelector } from 'react-redux';
+import { Col, Container, Row } from 'reactstrap';
+import { Icon, Placeholder } from 'semantic-ui-react';
+import { questionFetch } from '../../Store/ActionCreators/question';
+import MultipleChoiceInput from './Inputs/MultipleChoiceInput';
+import ParagraphInput from './Inputs/ParagraphInput';
+import TextInput from './Inputs/TextInput';
+import * as ActionTypes from '../../Store/ActionTypes';
+import { responseCreate } from '../../Store/ActionCreators/response';
+import { Tooltip } from '@material-ui/core';
+
+/**
+ * Provides the Question view
+ * @param {Integer} id - Unique ID of the Question.
+ * @param {Integer} formId - Unique ID of the Form.
+ * @param {Integer} sectionId - Unique ID of the section.
+ * @param {Integer} index - Position of question in section.
+ *
+ * @property {Function} modifyResponse - modifies the response of user
+ *
+ */
+function Question(props) {
+	const { id, index, sectionId, formId } = props;
+	const user = useSelector(state => state.user);
+	const dispatch = useDispatch();
+	const [ques, setQues] = useState({});
+	const [loading, setLoading] = useState(true);
+	useEffect(() => {
+		dispatch(questionFetch(id)).then(res => {
+			setQues(res);
+			setLoading(false);
+		});
+	}, [dispatch]);
+
+	const modifyResponse = value => {
+		const data = {
+			user_id: user.id,
+			form_id: formId,
+			question_id: id,
+			response: value,
+		};
+		dispatch(responseCreate(data));
+		dispatch({
+			type: ActionTypes.RESPONSE_UPDATE_REQUEST,
+			section: sectionId,
+			question: id,
+			value: value,
+		});
+	};
+
+	return (
+		&lt;Container className="my-4">
+			&lt;Row>
+				&lt;Col>
+					{loading ? (
+						&lt;Placeholder fluid>
+							&lt;Placeholder.Paragraph>
+								&lt;Placeholder.Line />
+								&lt;Placeholder.Line />
+								&lt;Placeholder.Line />
+								&lt;Placeholder.Line />
+							&lt;/Placeholder.Paragraph>
+						&lt;/Placeholder>
+					) : (
+						&lt;h4 className="text-justify">
+							Q{index}: {ques?.statement}
+							{ques.mandatory_toggle &amp;&amp; (
+								&lt;Tooltip title="Mandatory Question">
+									&lt;Icon
+										name="asterisk"
+										size="small"
+										className="text-danger ml-2"
+									/>
+								&lt;/Tooltip>
+							)}
+						&lt;/h4>
+					)}
+				&lt;/Col>
+			&lt;/Row>
+			&lt;Row>
+				&lt;Col>
+					{ques.qtype === 'SP' &amp;&amp; (
+						&lt;TextInput
+							modifyResponse={modifyResponse}
+							value={props.response?.[sectionId]?.[id]}
+							required={ques.mandatory_toggle}
+						/>
+					)}
+					{ques.qtype === 'LP' &amp;&amp; (
+						&lt;ParagraphInput
+							modifyResponse={modifyResponse}
+							value={props.response?.[sectionId]?.[id]}
+							required={ques.mandatory_toggle}
+						/>
+					)}
+					{ques.qtype === 'MC' &amp;&amp; (
+						&lt;MultipleChoiceInput
+							modifyResponse={modifyResponse}
+							quesId={id}
+							value={props.response?.[sectionId]?.[id]}
+							required={ques.mandatory_toggle}
+						/>
+					)}
+					{/* {ques.qtype == 'number' &amp;&amp; &lt;NumberInput />} */}
+				&lt;/Col>
+			&lt;/Row>
+		&lt;/Container>
+	);
+}
+
+const mapStateToProps = state => ({
+	response: state.response,
+});
+export default connect(mapStateToProps)(Question);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Admin_Banner.html">Admin/Banner</a></li><li><a href="module-Admin_ConsentForm.html">Admin/ConsentForm</a></li><li><a href="module-Admin_DeleteModal.html">Admin/DeleteModal</a></li><li><a href="module-Admin_FormCard.html">Admin/FormCard</a></li><li><a href="module-Admin_FormEdit.html">Admin/FormEdit</a></li><li><a href="module-Admin_ImageCropper.html">Admin/ImageCropper</a></li><li><a href="module-Admin_Option.html">Admin/Option</a></li><li><a href="module-Admin_Options.html">Admin/Options</a></li><li><a href="module-Admin_Question.html">Admin/Question</a></li><li><a href="module-Admin_QuestionMore.html">Admin/QuestionMore</a></li><li><a href="module-Admin_QuestionSettings.html">Admin/QuestionSettings</a></li><li><a href="module-Admin_Section.html">Admin/Section</a></li><li><a href="module-AdminView.html">AdminView</a></li><li><a href="module-Login.html">Login</a></li><li><a href="module-ProfileSummary.html">ProfileSummary</a></li><li><a href="module-Register.html">Register</a></li><li><a href="module-Responses.html">Responses</a></li><li><a href="module-Responses_Question.html">Responses/Question</a></li><li><a href="module-Responses_Section.html">Responses/Section</a></li><li><a href="module-SideNavigation.html">SideNavigation</a></li><li><a href="module-User_Banner.html">User/Banner</a></li><li><a href="module-User_Consent.html">User/Consent</a></li><li><a href="module-User_FormRestrict.html">User/FormRestrict</a></li><li><a href="module-User_FormView.html">User/FormView</a></li><li><a href="module-User_MultipleChoice.html">User/MultipleChoice</a></li><li><a href="module-User_ParagraphInput.html">User/ParagraphInput</a></li><li><a href="module-User_Question.html">User/Question</a></li><li><a href="module-User_Section.html">User/Section</a></li><li><a href="module-User_TextInput.html">User/TextInput</a></li><li><a href="module-User_ThankYou.html">User/ThankYou</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sat Apr 24 2021 02:46:40 GMT+0530 (India Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

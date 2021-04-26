@@ -1,3 +1,6 @@
+/**
+ * @module Admin/Options
+ */
 import { Form, List, Placeholder } from 'semantic-ui-react';
 import Button from '@material-ui/core/Button';
 import { Icon } from '@material-ui/core';
@@ -9,6 +12,15 @@ import {
 	optionFetch,
 } from '../../../Store/ActionCreators/option';
 import Option from './Option';
+
+/**
+ * Represents All options in Multiple Choice Question On Admin Panel.
+ * @param {Integer} quesId - Unique ID of the Question.
+ *
+ * @property {Function} addOptions -Adds an option in the question
+ * @property {Function} deleteOption -Deletes an option in the question
+ *
+ */
 
 function Options(props) {
 	const { quesId } = props;

@@ -1,16 +1,12 @@
+/**
+ * @module Admin/Section
+ */
 import { TextField } from '@material-ui/core';
 import moment from 'moment';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Col, Container, Row, Spinner } from 'reactstrap';
-import {
-	Button,
-	Dropdown,
-	Form,
-	Icon,
-	Input,
-	TextArea,
-} from 'semantic-ui-react';
+import { Button, Dropdown, Icon } from 'semantic-ui-react';
 import {
 	questionCreate,
 	questionDelete,
@@ -20,6 +16,17 @@ import {
 	sectionUpdate,
 } from '../../Store/ActionCreators/section';
 import Question from './Question/Question';
+
+/**
+ * Represents a Single Option in Multiple Choice Question On Admin Panel.
+ * @param {Integer} id - Unique ID of the Section.
+ * @param {Integer} index - Position of Section in Form.
+ * @param {String} userid -  Unique ID of the logged in user.
+ *
+ * @property {Function} addQuestion - Adds a Question in this section
+ * @property {Function} removeQuestion -Removes a Question from this section
+ * @property {Function} updateSection -Updates the Section details
+ */
 
 function Section(props) {
 	const { id, index, userid } = props;

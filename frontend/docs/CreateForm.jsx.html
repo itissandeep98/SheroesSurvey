@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: CreateForm.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: CreateForm.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @module Admin/FormEdit
+ */
+import { useEffect, useState } from 'react';
+import { Col, Container, Row, Spinner } from 'reactstrap';
+import { Button, Icon, List } from 'semantic-ui-react';
+import Section from './Section';
+import classNames from 'classnames';
+import Banner from './Banner';
+import { useDispatch, useSelector } from 'react-redux';
+import { formFetch, formUpdate } from '../../Store/ActionCreators/form';
+import {
+	sectionCreate,
+	sectionDelete,
+} from '../../Store/ActionCreators/section';
+import { withRouter } from 'react-router';
+import NavigationBar from '../Navigation/NavigationBar';
+import ConsentPage from './ConsentPage';
+
+/**
+ * Provides the ability to edit everything in the form.
+ * @param {Integer} id - Unique ID of the Form taken from the URL.
+ * @param {Integer} userid -  Unique ID of the logged in user.
+ *
+ * @property {Function} addSection -Updates the content in option
+ * @property {Function} removeSection -Updates the content in option
+ * @property {Function} updateForm -Updates the content in option
+ * 
+ */
+
+function CreateForm(props) {
+	const userid = useSelector(state => state?.auth?.userId);
+	const { id } = props?.match?.params;
+	const [details, setDetails] = useState('');
+	const [structure, setStructure] = useState([]);
+	const [loading, setLoading] = useState(false);
+	const [curr, setCurr] = useState(0);
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(formFetch(id)).then(res => {
+			setStructure(res?.section_sequence);
+			setDetails(res);
+		});
+	}, [dispatch]);
+
+	const addSection = () => {
+		setLoading(true);
+		const data = {
+			question_sequence: [],
+			form_id: id,
+			created_by: userid,
+			updated_by: userid,
+		};
+		dispatch(sectionCreate(data)).then(res => {
+			if (structure) {
+				setStructure([...structure, res.id]);
+			} else {
+				setStructure([res.id]);
+			}
+			setCurr(structure.length);
+			setLoading(false);
+		});
+	};
+
+	const removeSection = (id, index) => {
+		setStructure([...structure.slice(0, index), ...structure.slice(index + 1)]);
+		dispatch(sectionDelete(id));
+		if (index == 0) {
+			if (structure.length > 0) {
+				setCurr(0);
+			}
+		} else {
+			setCurr(index - 1);
+		}
+	};
+
+	const updateForm = data => {
+		dispatch(formUpdate({ id, data }));
+	};
+
+	return (
+		&lt;Container className="mt-3" fluid>
+			{details &amp;&amp; (
+				&lt;Row className="d-flex justify-content-center">
+					&lt;Col lg={8}>
+						&lt;Row>
+							&lt;Col className="text-center">
+								&lt;NavigationBar
+									form_id={id}
+									response_toggle={details?.edit_response_toggle}
+								/>
+								&lt;h1 className="d-inline text-capitalize">{details.heading}&lt;/h1>
+							&lt;/Col>
+						&lt;/Row>
+						&lt;Row>
+							&lt;Banner {...details} update={updateForm} key={3} />
+						&lt;/Row>
+						&lt;Row>
+							&lt;ConsentPage
+								update={updateForm}
+								consent_toggle={details?.consent_toggle}
+								consent_text={details?.consent_text}
+							/>
+						&lt;/Row>
+
+						&lt;Row className="mt-4">
+							&lt;Col xs={2}>
+								&lt;div className="sticky-top text-center" style={{ zIndex: 0 }}>
+									&lt;br />
+									&lt;Button onClick={addSection} size="mini" disabled={loading}>
+										{loading ? (
+											&lt;Spinner />
+										) : (
+											&lt;>
+												&lt;Icon name="plus" />
+												Add Section
+											&lt;/>
+										)}
+									&lt;/Button>
+									&lt;List>
+										{structure?.map((section, i) => (
+											&lt;List.Item
+												as="a"
+												key={i}
+												onClick={() => setCurr(i)}
+												className={classNames('text-center mb-2', {
+													'text-danger': curr === i,
+													'text-dark ': curr !== i,
+												})}>
+												Section {i + 1}
+											&lt;/List.Item>
+										))}
+									&lt;/List>
+								&lt;/div>
+							&lt;/Col>
+							{structure?.length > 0 &amp;&amp; curr > -1 &amp;&amp; (
+								&lt;Col>
+									{
+										&lt;Section
+											key={structure[curr]}
+											id={structure[curr]}
+											index={curr + 1}
+											userid={userid}
+											remove={() => removeSection(structure[curr], curr)}
+										/>
+									}
+								&lt;/Col>
+							)}
+						&lt;/Row>
+					&lt;/Col>
+				&lt;/Row>
+			)}
+		&lt;/Container>
+	);
+}
+
+export default withRouter(CreateForm);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Admin_Banner.html">Admin/Banner</a></li><li><a href="module-Admin_ConsentForm.html">Admin/ConsentForm</a></li><li><a href="module-Admin_DeleteModal.html">Admin/DeleteModal</a></li><li><a href="module-Admin_FormCard.html">Admin/FormCard</a></li><li><a href="module-Admin_FormEdit.html">Admin/FormEdit</a></li><li><a href="module-Admin_ImageCropper.html">Admin/ImageCropper</a></li><li><a href="module-Admin_Option.html">Admin/Option</a></li><li><a href="module-Admin_Options.html">Admin/Options</a></li><li><a href="module-Admin_Question.html">Admin/Question</a></li><li><a href="module-Admin_QuestionMore.html">Admin/QuestionMore</a></li><li><a href="module-Admin_QuestionSettings.html">Admin/QuestionSettings</a></li><li><a href="module-Admin_Section.html">Admin/Section</a></li><li><a href="module-AdminView.html">AdminView</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sat Apr 24 2021 00:41:12 GMT+0530 (India Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

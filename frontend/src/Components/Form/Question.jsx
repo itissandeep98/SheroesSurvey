@@ -1,5 +1,8 @@
+/**
+ * @module User/Question
+ */
 import { useEffect, useState } from 'react';
-import { connect, useDispatch } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { Col, Container, Row } from 'reactstrap';
 import { Icon, Placeholder } from 'semantic-ui-react';
 import { questionFetch } from '../../Store/ActionCreators/question';
@@ -10,8 +13,19 @@ import * as ActionTypes from '../../Store/ActionTypes';
 import { responseCreate } from '../../Store/ActionCreators/response';
 import { Tooltip } from '@material-ui/core';
 
+/**
+ * Provides the Question view
+ * @param {Integer} id - Unique ID of the Question.
+ * @param {Integer} formId - Unique ID of the Form.
+ * @param {Integer} sectionId - Unique ID of the section.
+ * @param {Integer} index - Position of question in section.
+ *
+ * @property {Function} modifyResponse - modifies the response of user
+ *
+ */
 function Question(props) {
 	const { id, index, sectionId, formId } = props;
+	const user = useSelector(state => state.user);
 	const dispatch = useDispatch();
 	const [ques, setQues] = useState({});
 	const [loading, setLoading] = useState(true);
@@ -24,7 +38,7 @@ function Question(props) {
 
 	const modifyResponse = value => {
 		const data = {
-			user_id: '2',
+			user_id: user.id,
 			form_id: formId,
 			question_id: id,
 			response: value,

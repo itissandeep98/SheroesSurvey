@@ -1,3 +1,6 @@
+/**
+ * @module Admin/FormCard
+ */
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { Button, Image } from 'semantic-ui-react';
 import { useState } from 'react';
@@ -14,6 +17,18 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import './style.scss';
+
+/**
+ * Provides a Card view for each form.
+ * @param {Integer} id - Unique ID of the Form.
+ * @param {String} heading - Heading of Form.
+ * @param {String} description - Description of Form.
+ * @param {List} section_sequence - List of section IDs.
+ * @param {String} created_by -Owner of form.
+ * @param {DateTime} updated_on - Date of Last update.
+ * @param {URL} banner_path - location of Banner Image.
+ *
+ */
 
 function FormCard(props) {
 	const {

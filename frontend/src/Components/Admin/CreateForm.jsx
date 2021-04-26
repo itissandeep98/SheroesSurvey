@@ -1,3 +1,6 @@
+/**
+ * @module Admin/FormEdit
+ */
 import { useEffect, useState } from 'react';
 import { Col, Container, Row, Spinner } from 'reactstrap';
 import { Button, Icon, List } from 'semantic-ui-react';
@@ -13,6 +16,17 @@ import {
 import { withRouter } from 'react-router';
 import NavigationBar from '../Navigation/NavigationBar';
 import ConsentPage from './ConsentPage';
+
+/**
+ * Provides the ability to edit everything in the form.
+ * @param {Integer} id - Unique ID of the Form taken from the URL.
+ * @param {Integer} userid -  Unique ID of the logged in user.
+ *
+ * @property {Function} addSection -Updates the content in option
+ * @property {Function} removeSection -Updates the content in option
+ * @property {Function} updateForm -Updates the content in option
+ * 
+ */
 
 function CreateForm(props) {
 	const userid = useSelector(state => state?.auth?.userId);

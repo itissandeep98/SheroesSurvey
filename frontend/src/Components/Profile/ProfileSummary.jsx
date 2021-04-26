@@ -1,8 +1,19 @@
+/**
+ * @module ProfileSummary
+ */
+
 import { Button } from '@material-ui/core';
 import { Col, Container, Row } from 'reactstrap';
 import { Label, Statistic } from 'semantic-ui-react';
 import { useSelector } from 'react-redux';
-
+/**
+ * Represents the user statistics with his details
+ * @property {Object} user -Details of currently logged in User
+ * @property {String} user.first_name - First name of user
+ * @property {String} user.last_name - Last name of user
+ * @property {String} user.username - Username of user
+ *
+ */
 function ProfileSummary() {
 	const user = useSelector(state => state.user);
 	return (

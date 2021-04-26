@@ -1,5 +1,15 @@
+/**
+ * @module User/ParagraphInput
+ */
 import TextField from '@material-ui/core/TextField';
 
+/**
+ * shows the Input for long answer questions.
+ * @param {Integer} value - response of user.
+ * @param {Boolean} required - Whether Question is mandatory or not
+ *
+ * @property {Function} handleChange - Modifies the response of user
+ */
 function ParagraphInput(props) {
 	const { value, required } = props;
 	const handleChange = e => {
