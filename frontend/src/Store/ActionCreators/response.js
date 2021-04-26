@@ -28,3 +28,25 @@ export const responseCreate = data => {
 			});
 	};
 };
+
+export const responseFetch = data => {
+	return async dispatch => {
+		dispatch({ type: ActionTypes.RESPONSE_FETCH_REQUEST });
+		return await axios
+			.get(apiUrl + '/responses/', data, { headers })
+			.then(response => {
+				dispatch({
+					type: ActionTypes.RESPONSE_FETCH_SUCCESS,
+					data: response.data,
+				});
+				return response.data;
+			})
+			.catch(error => {
+				console.log(error.response);
+				dispatch({
+					type: ActionTypes.RESPONSE_FETCH_FAILED,
+					errmess: 'Error in connection with Server',
+				});
+			});
+	};
+};

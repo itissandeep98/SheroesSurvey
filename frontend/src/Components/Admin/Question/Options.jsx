@@ -60,7 +60,7 @@ function Options(props) {
 			) : (
 				<List verticalAlign="middle">
 					{options.map((option, i) => (
-						<List.Item key={Math.random()}>
+						<List.Item key={option.id}>
 							<List.Icon
 								name="circle outline"
 								size="small"

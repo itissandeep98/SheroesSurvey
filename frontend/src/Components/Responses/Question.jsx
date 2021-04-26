@@ -1,12 +1,18 @@
 /**
  * @module Responses/Question
- */ 
-import { FormControl, FormControlLabel, Radio, RadioGroup } from '@material-ui/core';
+ */
+import {
+	FormControl,
+	FormControlLabel,
+	Radio,
+	RadioGroup,
+} from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { Col, Container, Row } from 'reactstrap';
 import { List, Placeholder } from 'semantic-ui-react';
 import { questionFetch } from '../../Store/ActionCreators/question';
+import Options from './Options';
 
 /**
  * Represents a Question in Response View.
@@ -69,20 +75,7 @@ function Question(props) {
 						</p>
 					)}
 
-					{ques.qtype === 'MC' && (
-						<FormControl>
-							<RadioGroup value="option 2">
-								{options.map((option, i) => (
-									<FormControlLabel
-										key={i}
-										value={option}
-										control={<Radio />}
-										label={option}
-									/>
-								))}
-							</RadioGroup>
-						</FormControl>
-					)}
+					{ques.qtype === 'MC' && <Options quesId={id} />}
 				</Col>
 			</Row>
 		</Container>
