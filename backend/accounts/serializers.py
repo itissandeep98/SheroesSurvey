@@ -22,11 +22,12 @@ class RegisterSerializer(serializers.ModelSerializer):
             validated_data['partner_id']=None
         
         
-        user=OurUsers.objects.create_user (
-            validated_data['username'], validated_data['user_type'], validated_data['email'], validated_data['password'], 
-            validated_data['first_name'],
-            validated_data['last_name'], validated_data['gender'], validated_data['partner_id'], validated_data['sheroes_id']
-        )
+        # user=OurUsers.objects.create_user (
+        #     validated_data['username'], validated_data['user_type'], validated_data['email'], validated_data['password'], 
+        #     validated_data['first_name'],
+        #     validated_data['last_name'], validated_data['gender'], validated_data['partner_id'], validated_data['sheroes_id']
+        # )
+        user=OurUsers.objects.create_user(**validated_data)
         return user
 
 #Login Serializer

@@ -1,4 +1,7 @@
-import { Form, List } from 'semantic-ui-react';
+/**
+ * @module Admin/Options
+ */
+import { Form, List, Placeholder } from 'semantic-ui-react';
 import Button from '@material-ui/core/Button';
 import { Icon } from '@material-ui/core';
 import { useEffect, useState } from 'react';
@@ -10,13 +13,24 @@ import {
 } from '../../../Store/ActionCreators/option';
 import Option from './Option';
 
+/**
+ * Represents All options in Multiple Choice Question On Admin Panel.
+ * @param {Integer} quesId - Unique ID of the Question.
+ *
+ * @property {Function} addOptions -Adds an option in the question
+ * @property {Function} deleteOption -Deletes an option in the question
+ *
+ */
+
 function Options(props) {
 	const { quesId } = props;
 	const [options, setOptions] = useState([]);
+	const [loading, setLoading] = useState(true);
 	const dispatch = useDispatch();
 	useEffect(() => {
 		dispatch(optionFetch(quesId)).then(res => {
-			setOptions(res??[]);
+			setOptions(res ?? []);
+			setLoading(false);
 		});
 	}, [dispatch]);
 	const addOptions = () => {
@@ -36,33 +50,42 @@ function Options(props) {
 	};
 	return (
 		<Form.Field className="mt-3">
-			<List verticalAlign="middle">
-				{options.map((option, i) => (
-					<List.Item key={Math.random()}>
-						<List.Icon
-							name="circle outline"
-							size="small"
-							verticalAlign="middle"
-							className="text-danger"
-						/>
-						<List.Content>
-							<Option
-								{...option}
-								index={i + 1}
-								deleteOption={() => deleteOption(option.id, i)}
+			{loading ? (
+				<Placeholder>
+					<Placeholder.Paragraph>
+						<Placeholder.Line />
+						<Placeholder.Line />
+					</Placeholder.Paragraph>
+				</Placeholder>
+			) : (
+				<List verticalAlign="middle">
+					{options.map((option, i) => (
+						<List.Item key={option.id}>
+							<List.Icon
+								name="circle outline"
+								size="small"
+								verticalAlign="middle"
+								className="text-danger"
 							/>
-						</List.Content>
+							<List.Content>
+								<Option
+									{...option}
+									index={i + 1}
+									deleteOption={() => deleteOption(option.id, i)}
+								/>
+							</List.Content>
+						</List.Item>
+					))}
+					<List.Item>
+						<Button
+							variant="outlined"
+							onClick={addOptions}
+							startIcon={<Icon className="fa fa-plus" />}>
+							Add option
+						</Button>
 					</List.Item>
-				))}
-				<List.Item>
-					<Button
-						variant="outlined"
-						onClick={addOptions}
-						startIcon={<Icon className="fa fa-plus" />}>
-						Add option
-					</Button>
-				</List.Item>
-			</List>
+				</List>
+			)}
 		</Form.Field>
 	);
 }

@@ -1,3 +1,6 @@
+/**
+ * @module Admin/ImageCropper
+ */
 import { Button, IconButton, Slider } from '@material-ui/core';
 import { useState } from 'react';
 import Cropper from 'react-easy-crop';
@@ -7,9 +10,21 @@ import './style.scss';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Image as Imag } from 'semantic-ui-react';
 
-const aspectX = 700;
-const aspectY = 200;
 
+const aspectX = 3500;
+const aspectY = 1000;
+
+/**
+ * Provides a popup with image cropping options.
+ * @param {Boolean} modal -Whether Popup is open or not.
+ * @param {String} bannerimg - Current Banner image.
+ * @param {Function} toggle - Closes the popup.
+ * @param {Function} updateBanner - Updates the new Banner image .
+ * @param {Function} removeBanner - Removes the existing banner image.
+ * @param {Function} setBlob - sets the current Banner Image which is being edited.
+ *
+ * @property {Function} onCropComplete -Updates Banner Image after crop is complete
+ */
 function ImageCropper(props) {
 	const {
 		modal,
@@ -105,6 +120,12 @@ function ImageCropper(props) {
 	);
 }
 
+/**
+ * Creates an Image HTML Object with given url of image.
+ * @param {URL} url -URL of Image.
+ *
+ * @returns {HTML} Image object
+ */
 const createImage = url =>
 	new Promise((resolve, reject) => {
 		const image = new Image();
@@ -114,7 +135,15 @@ const createImage = url =>
 		image.src = url;
 	});
 
-export const getCroppedImg = async (imageSrc, crop) => {
+/**
+ * Crops the Image with given Crop parameters.
+ * @param {URL} imageSrc -URL of Image.
+ * @param {Object} crop -Crop parameters of image.
+ *
+ *
+ * @returns {BLOB} Image File after getting cropped
+ */
+const getCroppedImg = async (imageSrc, crop) => {
 	const image = await createImage(imageSrc);
 	const canvas = document.createElement('canvas');
 	const ctx = canvas.getContext('2d');
@@ -134,9 +163,13 @@ export const getCroppedImg = async (imageSrc, crop) => {
 	);
 
 	return new Promise(resolve => {
-		canvas.toBlob(blob => {
-			resolve(blob);
-		}, 'image/jpeg');
+		canvas.toBlob(
+			blob => {
+				resolve(blob);
+			},
+			'image/png',
+			1
+		);
 	});
 };
 

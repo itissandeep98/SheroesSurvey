@@ -1,100 +1,77 @@
-import { Button, TextField } from '@material-ui/core';
-import React, { useState } from 'react';
+/**
+ * @module Admin/QuestionSettings
+ */
+import moment from 'moment';
+import { useState } from 'react';
+import { Dropdown, Icon } from 'semantic-ui-react';
+import QuestionMore from './QuestionMore';
 import { useDispatch } from 'react-redux';
-import {
-	Col,
-	Modal,
-	ModalBody,
-	ModalFooter,
-	ModalHeader,
-	Row,
-} from 'reactstrap';
-import { Dropdown } from 'semantic-ui-react';
-import { questionDetailsUpdate } from '../../../Store/ActionCreators/question';
-import { ShortQuestions } from '../../../Utils/QuestionTypes';
+import { questionUpdate } from '../../../Store/ActionCreators/question';
+
+/**
+ * Sets Question Settings such as mandatory Toggle and much more.
+ * @param {Integer} id - Unique ID of the Question.
+ * @param {Object} ques - Contains all details of the Question
+ * @param {String} ques.qtype - Type of Question('LP','SP','MC','FU' etc)
+ * @param {String} ques.statement - Question Statement
+ * @param {Boolean} mandatory - Whether this question is mandatory or not.
+ * @param {Function} remove - Deletes this Question.
+ *
+ *
+ * @property {Function} markImportant - Toogles the mandatory status of Question
+ *
+ */
 
 function QuestionSettings(props) {
-	const { modal, toggle, qtype, id } = props;
-	const [type, setType] = useState('TXT');
-	const [limits, setLimits] = useState({
-		limit_length: 100,
-		min_value: 0,
-		max_value: 100,
-	});
+	const { ques, id, remove, mandatory } = props;
+	const [modal, setModal] = useState(false);
+	const [selected, setSelected] = useState(mandatory);
 	const dispatch = useDispatch();
-	const handleUpdate = () => {
-		const data = {
-			datatype: type,
-			limit_length: limits.limit_length,
-			min_value: limits.min_value,
-			max_value: limits.max_value,
-		};
-		dispatch(questionDetailsUpdate({ id, data }));
-	};
 
+	const markImportant = () => {
+		const data = {
+			mandatory_toggle: !selected,
+		};
+		setSelected(!selected);
+		dispatch(questionUpdate({ id, data }));
+	};
 	return (
-		<Modal isOpen={modal} toggle={toggle}>
-			<ModalHeader toggle={toggle}>More Options</ModalHeader>
-			<ModalBody>
-				<Col>
-					<Dropdown
-						placeholder="Select Type"
-						search
-						selection
-						options={ShortQuestions}
-						value={type}
-						onChange={(e, { value }) => setType(value)}
-						fluid
-					/>
-				</Col>
-				{type === 'TXT' && (
-					<Col className="mt-3">
-						<TextField
-							fullWidth
-							variant="outlined"
-							type="number"
-							label="Limit number of characters"
-							onChange={e =>
-								setLimits({ ...limits, limit_length: e.target.value })
-							}
-						/>
-					</Col>
-				)}
-				{(type === 'INT' || type === 'FLT') && (
-					<Col xs={12} className="mt-3">
-						<Row>
-							<Col>
-								<TextField
-									fullWidth
-									variant="outlined"
-									type="number"
-									label="Minimum Accepted value"
-									onChange={e =>
-										setLimits({ ...limits, min_value: e.target.value })
-									}
-								/>
-							</Col>
-							<Col>
-								<TextField
-									fullWidth
-									variant="outlined"
-									type="number"
-									label="Maximum Accepted value"
-									onChange={e =>
-										setLimits({ ...limits, max_value: e.target.value })
-									}
-								/>
-							</Col>
-						</Row>
-					</Col>
-				)}
-			</ModalBody>
-			<ModalFooter>
-				<Button variant="outlined" onClick={handleUpdate}>
-					Update
-				</Button>
-			</ModalFooter>
-		</Modal>
+		<>
+			<QuestionMore
+				modal={modal}
+				toggle={() => setModal(!modal)}
+				qtype={ques.qtype}
+				id={id}
+			/>
+
+			<div className="d-flex justify-content-end">
+				<small className=" text-muted ">
+					Created {moment(ques?.created_on).fromNow()}
+				</small>
+				<Dropdown
+					item
+					direction="left"
+					icon={<Icon name="ellipsis vertical" />}
+					simple>
+					<Dropdown.Menu>
+						<Dropdown.Item onClick={remove}>
+							<Icon name="trash" />
+							Delete
+						</Dropdown.Item>
+						<Dropdown.Item onClick={markImportant}>
+							<Icon name="asterisk" />
+							{selected ? 'Mark  as Not Important' : 'Mark Important'}
+						</Dropdown.Item>
+						{ques.qtype === 'SP' && (
+							<Dropdown.Item onClick={() => setModal(!modal)}>
+								<Icon name="cogs" />
+								More Options
+							</Dropdown.Item>
+						)}
+					</Dropdown.Menu>
+				</Dropdown>
+			</div>
+		</>
 	);
 }
 

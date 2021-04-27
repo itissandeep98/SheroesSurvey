@@ -1,3 +1,7 @@
+/**
+ * @module Admin/Question
+ */
+
 import { useEffect, useState } from 'react';
 import { Col, Container, Row } from 'reactstrap';
 import { Image } from 'semantic-ui-react';
@@ -10,13 +14,20 @@ import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutAction } from '../../Store/ActionCreators/auth';
+import { useHistory } from 'react-router';
+/**
+ * Represents Top bar on every page.
+ * @param {Integer} key - Unique Auth token received from backend after login.
+ */
 
 function TopHeader() {
-	const { key } = useSelector(state => state?.auth);
+	const key = useSelector(state => state?.auth?.key);
 	const dispatch = useDispatch();
 	const [prevScrollpos, setprevScrollpos] = useState(window.pageYOffset);
 	const [top, setTop] = useState(0);
 	const [menu, setMenu] = useState(null);
+	const history = useHistory();
+
 	const handleClose = () => {
 		setMenu(null);
 	};
@@ -48,11 +59,15 @@ function TopHeader() {
 			style={{ top: top }}>
 			<Container>
 				<Row>
-					<Col className=" justify-content-center d-flex py-3">
-						<Image
-							src={process.env.PUBLIC_URL + '/assets/Icons/full-logo_white.svg'}
-							alt="sheroes"
-						/>
+					<Col className=" justify-content-center d-flex py-2 ">
+						<div className="btn" onClick={() => history.push('/')}>
+							<Image
+								src={
+									process.env.PUBLIC_URL + '/assets/Icons/full-logo_white.svg'
+								}
+								alt="sheroes"
+							/>
+						</div>
 					</Col>
 					{key && (
 						<>
@@ -60,7 +75,7 @@ function TopHeader() {
 								<AccountCircleIcon fontSize="large" />
 							</IconButton>
 							<Menu anchorEl={menu} open={Boolean(menu)} onClose={handleClose}>
-								<MenuItem onClick={handleClose}>
+								<MenuItem onClick={() => history.push('/profile')}>
 									<AssignmentIndIcon />
 									Profile
 								</MenuItem>

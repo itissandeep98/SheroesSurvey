@@ -1,6 +1,15 @@
+/**
+ * @module Admin/DeleteModal
+ */
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { Button } from 'semantic-ui-react';
 
+/**
+ * Provides a popup for deleting something.
+ * @param {Boolean} modal -Whether Popup is open or not.
+ * @param {Function} toggle - Toggles the popup.
+ * @param {Function} delete - function to call after user confirms deletion.
+ */
 function DeleteModal(props) {
 	const { modal, toggle } = props;
 	return (

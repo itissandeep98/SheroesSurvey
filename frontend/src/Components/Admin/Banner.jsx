@@ -1,3 +1,6 @@
+/**
+ * @module Admin/Banner
+ */
 import { TextField, Tooltip } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -6,12 +9,19 @@ import { Icon, Image } from 'semantic-ui-react';
 import { uploadContent } from '../../Store/ActionCreators/upload';
 import ImageCropper from './ImageCropper';
 
+/**
+ * Provides editing ability for form Title, description and for Banner image Displaying, Uploading and Editing abilities.
+ * @param {String} heading - Title of form.
+ * @param {String} description -Description of form.
+ * @param {URL} banner_path - URL for the banner Image.
+ *
+ * @property {Function} handleUpdate - Updates the Title and Description of form
+ * @property {Function} updateBanner - Updates the Banner Image
+ * @property {Function} removeBanner - Removes the Banner Image
+ */
 function Banner(props) {
 	const { heading, description, banner_path } = props;
 	const [bannerimg, setBannerimg] = useState(banner_path);
-	useEffect(() => {
-		setBannerimg(banner_path);
-	}, [props.banner_path]);
 	const [head, setheading] = useState(heading);
 	const [desc, setdescription] = useState(description);
 	const [modal, setModal] = useState(false);
@@ -54,17 +64,16 @@ function Banner(props) {
 					removeBanner={removeBanner}
 				/>
 				<Tooltip title="Click to update Image">
-					<div
-						className="w-100"
-						onClick={() => setModal(true)}
-						style={{
-							backgroundColor: '#bfbaba',
-						}}>
-						<Label className="text-white text-center w-100 btn p-0  ">
+					<div className="w-100 p-0" onClick={() => setModal(true)}>
+						<Label className="text-white text-center w-100 btn p-0">
 							{bannerimg ? (
 								<Image src={bannerimg ?? banner_path} fluid />
 							) : (
-								<div className="p-5">
+								<div
+									className="p-5"
+									style={{
+										backgroundColor: '#bfbaba',
+									}}>
 									<div
 										className="display-4 p-3"
 										style={{ borderStyle: 'dotted' }}>

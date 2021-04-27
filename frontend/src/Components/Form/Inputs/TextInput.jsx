@@ -1,7 +1,17 @@
+/**
+ * @module User/TextInput
+ */
 import { TextField } from '@material-ui/core';
 
+/**
+ * shows the Input for short answer questions.
+ * @param {Integer} quesId - Unique ID of the Question.
+ * @param {Boolean} required - Whether Question is mandatory or not
+ *
+ * @property {Function} handleChange - Modifies the response of user
+ */
 function TextInput(props) {
-	const { value } = props;
+	const { value, required } = props;
 	const handleChange = e => {
 		props.modifyResponse(e.target.value);
 	};
@@ -14,6 +24,7 @@ function TextInput(props) {
 				fullWidth
 				defaultValue={value}
 				onChange={handleChange}
+				required={required}
 			/>
 		</form>
 	);

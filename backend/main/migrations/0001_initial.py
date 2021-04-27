@@ -26,6 +26,7 @@ class Migration(migrations.Migration):
                 ('first_name', models.CharField(max_length=500, null=True)),
                 ('last_name', models.CharField(max_length=500, null=True)),
                 ('email', models.EmailField(max_length=64, unique=True, verbose_name='email')),
+                ('is_staff', models.BooleanField(default=False, verbose_name='staff status')),
                 ('gender', models.CharField(choices=[('M', 'Male'), ('F', 'Short'), ('O', 'Other')], default='F', max_length=2)),
                 ('partner_id', models.BigIntegerField(null=True)),
                 ('sheroes_id', models.BigIntegerField(null=True)),
