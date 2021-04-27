@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Admin/Question/QuestionSettings.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Admin/Question/QuestionSettings.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @module Admin/QuestionSettings
+ */
+import moment from 'moment';
+import { useState } from 'react';
+import { Dropdown, Icon } from 'semantic-ui-react';
+import QuestionMore from './QuestionMore';
+import { useDispatch } from 'react-redux';
+import { questionUpdate } from '../../../Store/ActionCreators/question';
+
+/**
+ * Sets Question Settings such as mandatory Toggle and much more.
+ * @param {Integer} id - Unique ID of the Question.
+ * @param {Object} ques - Contains all details of the Question
+ * @param {String} ques.qtype - Type of Question('LP','SP','MC','FU' etc)
+ * @param {String} ques.statement - Question Statement
+ * @param {Boolean} mandatory - Whether this question is mandatory or not.
+ * @param {Function} remove - Deletes this Question.
+ *
+ *
+ * @property {Function} markImportant - Toogles the mandatory status of Question
+ *
+ */
+
+function QuestionSettings(props) {
+	const { ques, id, remove, mandatory } = props;
+	const [modal, setModal] = useState(false);
+	const [selected, setSelected] = useState(mandatory);
+	const dispatch = useDispatch();
+
+	const markImportant = () => {
+		const data = {
+			mandatory_toggle: !selected,
+		};
+		setSelected(!selected);
+		dispatch(questionUpdate({ id, data }));
+	};
+	return (
+		&lt;>
+			&lt;QuestionMore
+				modal={modal}
+				toggle={() => setModal(!modal)}
+				qtype={ques.qtype}
+				id={id}
+			/>
+
+			&lt;div className="d-flex justify-content-end">
+				&lt;small className=" text-muted ">
+					Created {moment(ques?.created_on).fromNow()}
+				&lt;/small>
+				&lt;Dropdown
+					item
+					direction="left"
+					icon={&lt;Icon name="ellipsis vertical" />}
+					simple>
+					&lt;Dropdown.Menu>
+						&lt;Dropdown.Item onClick={remove}>
+							&lt;Icon name="trash" />
+							Delete
+						&lt;/Dropdown.Item>
+						&lt;Dropdown.Item onClick={markImportant}>
+							&lt;Icon name="asterisk" />
+							{selected ? 'Mark  as Not Important' : 'Mark Important'}
+						&lt;/Dropdown.Item>
+						{ques.qtype === 'SP' &amp;&amp; (
+							&lt;Dropdown.Item onClick={() => setModal(!modal)}>
+								&lt;Icon name="cogs" />
+								More Options
+							&lt;/Dropdown.Item>
+						)}
+					&lt;/Dropdown.Menu>
+				&lt;/Dropdown>
+			&lt;/div>
+		&lt;/>
+	);
+}
+
+export default QuestionSettings;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Admin_Banner.html">Admin/Banner</a></li><li><a href="module-Admin_ConsentForm.html">Admin/ConsentForm</a></li><li><a href="module-Admin_DeleteModal.html">Admin/DeleteModal</a></li><li><a href="module-Admin_FormCard.html">Admin/FormCard</a></li><li><a href="module-Admin_FormEdit.html">Admin/FormEdit</a></li><li><a href="module-Admin_ImageCropper.html">Admin/ImageCropper</a></li><li><a href="module-Admin_Option.html">Admin/Option</a></li><li><a href="module-Admin_Options.html">Admin/Options</a></li><li><a href="module-Admin_Question.html">Admin/Question</a></li><li><a href="module-Admin_QuestionMore.html">Admin/QuestionMore</a></li><li><a href="module-Admin_QuestionSettings.html">Admin/QuestionSettings</a></li><li><a href="module-Admin_Section.html">Admin/Section</a></li><li><a href="module-AdminView.html">AdminView</a></li><li><a href="module-Login.html">Login</a></li><li><a href="module-ProfileSummary.html">ProfileSummary</a></li><li><a href="module-Register.html">Register</a></li><li><a href="module-Responses.html">Responses</a></li><li><a href="module-Responses_Question.html">Responses/Question</a></li><li><a href="module-Responses_Section.html">Responses/Section</a></li><li><a href="module-SideNavigation.html">SideNavigation</a></li><li><a href="module-User_Banner.html">User/Banner</a></li><li><a href="module-User_Consent.html">User/Consent</a></li><li><a href="module-User_FormRestrict.html">User/FormRestrict</a></li><li><a href="module-User_FormView.html">User/FormView</a></li><li><a href="module-User_MultipleChoice.html">User/MultipleChoice</a></li><li><a href="module-User_ParagraphInput.html">User/ParagraphInput</a></li><li><a href="module-User_Question.html">User/Question</a></li><li><a href="module-User_Section.html">User/Section</a></li><li><a href="module-User_TextInput.html">User/TextInput</a></li><li><a href="module-User_ThankYou.html">User/ThankYou</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sat Apr 24 2021 02:46:40 GMT+0530 (India Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

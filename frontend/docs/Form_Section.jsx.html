@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Form/Section.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Form/Section.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @module User/Section
+ */
+import { Col, Container, Row } from 'reactstrap';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { sectionFetch } from '../../Store/ActionCreators/section';
+import Question from './Question';
+import { List, Placeholder } from 'semantic-ui-react';
+
+/**
+ * Shows the Section of form.
+ * @param {Integer} id - Unique ID of the Section.
+ * @param {Integer} index - Position of section in form.
+ *
+ * @property {Object} details - Details of the section
+ * @property {String} details.description - Description of Section
+ * @property {String} details.heading - Heading of Section
+ * @property {List} details.question_sequence - List of Question IDs
+ * 
+ */
+function Section(props) {
+	const { id, index } = props;
+	const [quesList, setQuesList] = useState([]);
+	const [details, setDetails] = useState({});
+	const [loading, setLoading] = useState(true);
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(sectionFetch(props.id)).then(res => {
+			setQuesList(res?.question_sequence);
+			setDetails(res);
+			setLoading(false);
+		});
+	}, [dispatch]);
+	return (
+		&lt;Container fluid className=" p-4 mb-4 rounded_lg  bg-white">
+			&lt;Row>
+				{loading ? (
+					&lt;Col>
+						&lt;Placeholder fluid>
+							&lt;Placeholder.Header image>
+								&lt;Placeholder.Line />
+								&lt;Placeholder.Line />
+							&lt;/Placeholder.Header>
+							&lt;Placeholder.Paragraph>
+								&lt;Placeholder.Line />
+								&lt;Placeholder.Line />
+								&lt;Placeholder.Line />
+								&lt;Placeholder.Line />
+							&lt;/Placeholder.Paragraph>
+						&lt;/Placeholder>
+					&lt;/Col>
+				) : (
+					&lt;Col>
+						&lt;h2 className="section_name d-inline-block pr-4">
+							Section {index}
+						&lt;/h2>
+						&lt;h3 className="text-capitalize">{details?.heading}&lt;/h3>
+						&lt;p className="text-justify text-muted">{details?.description}&lt;/p>
+						&lt;hr />
+						&lt;List>
+							{quesList &amp;&amp;
+								quesList.map((ques, i) => (
+									&lt;List.Item key={ques}>
+										&lt;Question
+											id={ques}
+											index={i + 1}
+											sectionId={id}
+											formId={props.formId}
+										/>
+									&lt;/List.Item>
+								))}
+						&lt;/List>
+					&lt;/Col>
+				)}
+			&lt;/Row>
+		&lt;/Container>
+	);
+}
+
+export default Section;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Admin_Banner.html">Admin/Banner</a></li><li><a href="module-Admin_ConsentForm.html">Admin/ConsentForm</a></li><li><a href="module-Admin_DeleteModal.html">Admin/DeleteModal</a></li><li><a href="module-Admin_FormCard.html">Admin/FormCard</a></li><li><a href="module-Admin_FormEdit.html">Admin/FormEdit</a></li><li><a href="module-Admin_ImageCropper.html">Admin/ImageCropper</a></li><li><a href="module-Admin_Option.html">Admin/Option</a></li><li><a href="module-Admin_Options.html">Admin/Options</a></li><li><a href="module-Admin_Question.html">Admin/Question</a></li><li><a href="module-Admin_QuestionMore.html">Admin/QuestionMore</a></li><li><a href="module-Admin_QuestionSettings.html">Admin/QuestionSettings</a></li><li><a href="module-Admin_Section.html">Admin/Section</a></li><li><a href="module-AdminView.html">AdminView</a></li><li><a href="module-Login.html">Login</a></li><li><a href="module-ProfileSummary.html">ProfileSummary</a></li><li><a href="module-Register.html">Register</a></li><li><a href="module-Responses.html">Responses</a></li><li><a href="module-Responses_Question.html">Responses/Question</a></li><li><a href="module-Responses_Section.html">Responses/Section</a></li><li><a href="module-SideNavigation.html">SideNavigation</a></li><li><a href="module-User_Banner.html">User/Banner</a></li><li><a href="module-User_Consent.html">User/Consent</a></li><li><a href="module-User_FormRestrict.html">User/FormRestrict</a></li><li><a href="module-User_FormView.html">User/FormView</a></li><li><a href="module-User_MultipleChoice.html">User/MultipleChoice</a></li><li><a href="module-User_ParagraphInput.html">User/ParagraphInput</a></li><li><a href="module-User_Question.html">User/Question</a></li><li><a href="module-User_Section.html">User/Section</a></li><li><a href="module-User_TextInput.html">User/TextInput</a></li><li><a href="module-User_ThankYou.html">User/ThankYou</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sat Apr 24 2021 02:46:40 GMT+0530 (India Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

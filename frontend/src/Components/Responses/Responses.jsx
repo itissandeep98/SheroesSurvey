@@ -1,3 +1,6 @@
+/**
+ * @module Responses
+ */
 import React, { useEffect, useState } from 'react';
 import { Col, Container, Row } from 'reactstrap';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
@@ -7,7 +10,15 @@ import { useDispatch } from 'react-redux';
 import { formFetch } from '../../Store/ActionCreators/form';
 import Section from './Section';
 import NavigationBar from '../Navigation/NavigationBar';
-
+/**
+ * Represents the Responses received for a form.
+ * @param {Integer} id - Unique ID of the Form.
+ *
+ * @property {Object} details -Details of the form
+ * @property {String} details.heading -Heading of form
+ * @property {List} structure -List of section IDs in form
+ * 
+ */
 function Responses(props) {
 	const { id } = props?.match?.params;
 	const [curr, setCurr] = useState(1);

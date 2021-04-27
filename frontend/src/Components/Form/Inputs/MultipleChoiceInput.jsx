@@ -1,15 +1,25 @@
+/**
+ * @module User/MultipleChoice
+ */
 import {
 	FormControl,
 	FormControlLabel,
 	Radio,
 	RadioGroup,
 } from '@material-ui/core';
-
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { optionFetch } from '../../../Store/ActionCreators/option';
+
+/**
+ * shows the multiple options of MCQ.
+ * @param {Integer} quesId - Unique ID of the Question.
+ * @param {Boolean} required - Whether Question is mandatory or not
+ * 
+ * @property {Function} handleChange - Modifies the response of user
+ */
 function MultipleChoiceInput(props) {
-	const { quesId } = props;
+	const { quesId, required } = props;
 	const [value, setValue] = useState(props.value);
 	const [options, setOptions] = useState([]);
 	const dispatch = useDispatch();
@@ -24,7 +34,7 @@ function MultipleChoiceInput(props) {
 	};
 
 	return (
-		<FormControl>
+		<FormControl required={required}>
 			<RadioGroup value={value} onChange={handleChange}>
 				{options.map((option, i) => (
 					<FormControlLabel
