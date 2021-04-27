@@ -1,5 +1,5 @@
 from rest_framework.routers import DefaultRouter
-from .views import FormsViewSet, SectionsViewSet, QuestionsViewSet, OptionsViewSet, ShortParaViewSet, ResponsesViewSet
+from .views import FormsViewSet, SectionsViewSet, QuestionsViewSet, OptionsViewSet, ShortParaViewSet, ResponsesViewSet, FileUploadViewSet
 from django.urls import path, include
 
 router = DefaultRouter()
@@ -9,6 +9,7 @@ router.register(r'questions', QuestionsViewSet)
 router.register(r'options', OptionsViewSet)
 router.register(r'shortparas', ShortParaViewSet)
 router.register(r'responses', ResponsesViewSet)
+router.register(r'fileuploads', FileUploadViewSet)
 # router.register(r'', OurUsersViewSet)
 
 

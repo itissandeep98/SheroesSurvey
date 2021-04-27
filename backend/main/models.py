@@ -267,5 +267,5 @@ class ShortPara(models.Model):
 class FileUpload(models.Model):
     question_id = models.ForeignKey(Questions,on_delete=models.CASCADE) #edit
     limit_mb = models.FloatField()
-    file_extenstion = models.CharField(max_length = 10)
+    file_extenstion = models.CharField(max_length = 10, null=True)
 

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from main.models import Forms, OurUsers, Sections, Questions, Options, ShortPara, Responses
+from main.models import Forms, OurUsers, Sections, Questions, Options, ShortPara, Responses, FileUpload
 
 class FormSerializers(serializers.ModelSerializer):
     class Meta:
@@ -25,6 +25,12 @@ class QuestionSerializers(serializers.ModelSerializer):
             spObj.datatype="TXT"
             spObj.save()
             return spObj.id
+        elif (obj.qtype=='FU'):
+            flObj = FileUpload()
+            flObj.question_id=obj
+            flObj.limit_mb=5
+            flObj.save()
+            return flObj.id
         return None
         
     # def create(self, validated_data):
@@ -47,4 +53,9 @@ class OptionsSerializers(serializers.ModelSerializer):
 class ResponsesSerializers(serializers.ModelSerializer):
     class Meta:
         model = Responses
+        fields = '__all__'
+
+class FileUploadSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = FileUpload
         fields = '__all__'
