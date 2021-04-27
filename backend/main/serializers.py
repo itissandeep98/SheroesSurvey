@@ -12,9 +12,27 @@ class SectionSerializers(serializers.ModelSerializer):
         fields = '__all__'
 
 class QuestionSerializers(serializers.ModelSerializer):
+    question_metadata_id = serializers.SerializerMethodField('create_sub')
     class Meta:
         model = Questions
         fields = '__all__'
+    
+    def create_sub(self, obj):
+        if(obj.qtype=="SP"):
+            spObj = ShortPara()
+            spObj.question_id=obj
+            spObj.limit_length=25
+            spObj.datatype="TXT"
+            spObj.save()
+            return spObj.id
+        return None
+        
+    # def create(self, validated_data):
+    #     print("I was here")
+    #     # super.create(validated_data)
+    #     obj = Questions.objects.create(**validated_data)
+        
+    #     return obj,spObj
 
 class ShortParaSerializers(serializers.ModelSerializer):
     class Meta:

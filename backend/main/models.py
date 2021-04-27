@@ -262,7 +262,7 @@ class ShortPara(models.Model):
         choices = DataType.choices,
         default = DataType.TEXT
     )
-    correct_answer = models.TextField(max_length = 5000)
+    correct_answer = models.TextField(max_length = 5000,null=True)
 
 class FileUpload(models.Model):
     question_id = models.ForeignKey(Questions,on_delete=models.CASCADE) #edit

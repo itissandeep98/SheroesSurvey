@@ -199,6 +199,7 @@ class QuestionsViewSet(viewsets.ModelViewSet):
     ]
     serializer_class = QuestionSerializers
 
+
     @action(methods=['patch','post'], detail=True)
     def update_fields(self, request, pk=None):
         """
