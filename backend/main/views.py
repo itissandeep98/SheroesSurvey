@@ -1,20 +1,23 @@
-from main.models import Forms, OurUsers, Sections, Questions, Options, ShortPara, Responses
+from main.models import Forms, OurUsers, Sections, Questions, Options, ShortPara, Responses, FileUpload
 from rest_framework import viewsets, permissions, status
 from rest_framework.decorators import action
 from rest_framework.decorators import api_view
-from .serializers import FormSerializers, SectionSerializers, QuestionSerializers, OptionsSerializers, ShortParaSerializers, ResponsesSerializers
+from .serializers import FormSerializers, SectionSerializers, QuestionSerializers, OptionsSerializers, ShortParaSerializers, ResponsesSerializers, FileUploadSerializers
 from rest_framework.response import Response
+from django.contrib.auth.models import AnonymousUser
 
 
 class FormsViewSet(viewsets.ModelViewSet):
     permission_classes = [
-        permissions.IsAuthenticated
+        permissions.IsAuthenticatedOrReadOnly
     ]
 
     serializer_class = FormSerializers
 
 
     def get_queryset(self, username=None):
+        if isinstance(self.request.user,AnonymousUser):
+            return Forms.objects.all()
         if self.request.user.user_type=='AD':
             return Forms.objects.all()
         elif self.request.user.user_type=='CR':
@@ -198,6 +201,7 @@ class QuestionsViewSet(viewsets.ModelViewSet):
         # permissions.AllowAny
     ]
     serializer_class = QuestionSerializers
+
 
     @action(methods=['patch','post'], detail=True)
     def update_fields(self, request, pk=None):
@@ -389,6 +393,44 @@ class ResponsesViewSet(viewsets.ModelViewSet):
                 else:
                     setattr(response_instance,field,request.data[field])
             response_instance.save()
+        except:
+            return Response("Invalid Request", status=status.HTTP_400_BAD_REQUEST)
+
+        return Response("Update Accepted", status=status.HTTP_200_OK)
+
+
+
+
+class FileUploadViewSet(viewsets.ModelViewSet):
+    queryset = FileUpload.objects.all()
+    permission_classes = [
+        permissions.IsAuthenticated
+        # permissions.AllowAny,
+    ]
+    serializer_class = FileUploadSerializers
+
+    @action(methods=['patch','post'], detail=True)
+    def update_fields(self, request, pk=None):
+        """
+        Format:
+            url: https://sheroes-form.herokuapp.com/fileupload/<fileupload-id>/update_fields/
+            url: http://127.0.0.1:8000/fileupload/<fileupload-id>/update_fields/
+            {
+                "limit_mb": 2,
+                "file_extenstion" : "jpg",
+            }
+        """
+        try:
+            if(pk == None):
+                raise Exception()
+            fileupload_id = pk
+            fileupload_instance = FileUpload.objects.get(id=fileupload_id)
+            for field in request.data:
+                if field=="question_id":   #Changing question id after creating is not sensible
+                    pass
+                else:
+                    setattr(fileupload_instance,field,request.data[field])
+            fileupload_instance.save()
         except:
             return Response("Invalid Request", status=status.HTTP_400_BAD_REQUEST)
 
