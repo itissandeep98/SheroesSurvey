@@ -4,17 +4,20 @@ from rest_framework.decorators import action
 from rest_framework.decorators import api_view
 from .serializers import FormSerializers, SectionSerializers, QuestionSerializers, OptionsSerializers, ShortParaSerializers, ResponsesSerializers
 from rest_framework.response import Response
+from django.contrib.auth.models import AnonymousUser
 
 
 class FormsViewSet(viewsets.ModelViewSet):
     permission_classes = [
-        permissions.IsAuthenticated
+        permissions.IsAuthenticatedOrReadOnly
     ]
 
     serializer_class = FormSerializers
 
 
     def get_queryset(self, username=None):
+        if isinstance(self.request.user,AnonymousUser):
+            return Forms.objects.all()
         if self.request.user.user_type=='AD':
             return Forms.objects.all()
         elif self.request.user.user_type=='CR':

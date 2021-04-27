@@ -7,8 +7,25 @@ User = settings.AUTH_USER_MODEL
 
 # Manger for OurUser model
 class OurUserManager(UserManager):
-    def _create_user(self, username, user_type, email, password,
-                     is_staff, is_superuser, first_name, last_name, gender, partner_id, sheroes_id, **extra_fields):
+    # def _create_user(self, username, user_type, email, password,
+    #                  is_staff, is_superuser, first_name, last_name, gender, partner_id, sheroes_id, **extra_fields):
+    #     """
+    #     Creates and saves a User with the given username, email and password.
+    #     """
+    #     now = timezone.now()
+    #     if not username:
+    #         raise ValueError('The given username must be set')
+    #     email = self.normalize_email(email)
+    #     user = self.model(username=username, email=email, first_name=first_name,
+    #                         last_name=last_name, gender=gender, partner_id=partner_id, sheroes_id=sheroes_id, user_type=user_type, **extra_fields)
+    #     user.set_password(password)
+    #     user.save(using=self._db)
+    #     return user
+
+    # def create_user(self, username, user_type,email=None, password=None, first_name=None, last_name=None, gender='F', partner_id=None, sheroes_id=None,**extra_fields):
+    #     return self._create_user(username, user_type, email, password, False, False, first_name, last_name, gender, partner_id, sheroes_id, **extra_fields)
+    def _create_user(self, username, email, password,
+                     is_staff, is_superuser, **extra_fields):
         """
         Creates and saves a User with the given username, email and password.
         """
@@ -16,14 +33,21 @@ class OurUserManager(UserManager):
         if not username:
             raise ValueError('The given username must be set')
         email = self.normalize_email(email)
-        user = self.model(username=username, email=email, first_name=first_name,
-                            last_name=last_name, gender=gender, partner_id=partner_id, sheroes_id=sheroes_id, user_type=user_type, **extra_fields)
+        user = self.model(username=username, email=email,
+                          is_staff=is_staff,
+                          is_superuser=is_superuser,
+                           **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_user(self, username, user_type,email=None, password=None, first_name=None, last_name=None, gender='F', partner_id=None, sheroes_id=None,**extra_fields):
-        return self._create_user(username, user_type, email, password, False, False, first_name, last_name, gender, partner_id, sheroes_id, **extra_fields)
+    def create_user(self, username, email=None, password=None, **extra_fields):
+        return self._create_user(username, email, password, False, False,
+                                 **extra_fields)
+
+    def create_superuser(self, username, password, email=None, **extra_fields):
+        return self._create_user(username, email, password, True, True,
+                                 **extra_fields)
 
 
 class OurUsers(AbstractBaseUser, PermissionsMixin):
@@ -44,7 +68,7 @@ class OurUsers(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=500, null = True)
     USERNAME_FIELD =    'username' 
     email =                 models.EmailField(verbose_name='email', max_length=64, unique=True)
-    
+    is_staff = models.BooleanField(('staff status'), default=False)
     # id = models.BigIntegerField(primary_key=True)
     gender = models.CharField(
         max_length=2,
