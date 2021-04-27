@@ -91,10 +91,10 @@ WSGI_APPLICATION = 'sheroes_forms.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'LOXjHh5mKV',
-        'USER': 'LOXjHh5mKV',
-        'PASSWORD' : 'Y5zbmFHGMo',
-        'HOST' : 'remotemysql.com',
+        'NAME': 'sheroesbackend',
+        'USER': 'sheroes_admin',
+        'PASSWORD' : '3fyEiLlxsJa4ctOaot9I',
+        'HOST' : 'sheroes-form.czdw77kneec2.us-east-1.rds.amazonaws.com',
         'PORT' : '3306',
     }
 }

@@ -12,7 +12,7 @@
 
 # Usage
 
-- Visit the website [here](https://sheroes.pages.dev/).
+- Visit the website [here](https://sheroes.pages.dev).
 - Login/Register into the portal.
 - Now, you can view all the previous forms and have the option to create new form.
 - Clicking on any of the old forms or clicking on the option to create a new form lands the user on the form editing page.

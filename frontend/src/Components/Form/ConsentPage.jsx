@@ -13,7 +13,7 @@ function ConsentPage(props) {
 	const { setCurr, consent_text } = props;
 	const history = useHistory();
 	return (
-		<Container>
+		<Container fluid>
 			<Row className="bg-white p-3 rounded_lg">
 				<Col>
 					<h1>Consent </h1>
