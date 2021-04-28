@@ -261,7 +261,7 @@ class Responses(models.Model):
                 "response": "Hello"
             }   
     """
-    user_id = models.ForeignKey(OurUsers,on_delete=models.CASCADE) #edit
+    user_id = models.ForeignKey(OurUsers,on_delete=models.CASCADE,null= True) #edit
     form_id = models.ForeignKey(Forms,on_delete=models.CASCADE) #edit
     created_on = models.DateTimeField(auto_now_add=True,null=False)
     updated_on = models.DateTimeField(auto_now=True, null=False) #update

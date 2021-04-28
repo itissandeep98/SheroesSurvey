@@ -117,6 +117,44 @@ class FormsViewSet(viewsets.ModelViewSet):
         """
         return Response(Forms.objects.all().filter(is_deleted = True).values(),status=status.HTTP_200_OK)
 
+    @action(methods=['post'], detail=True)
+    def accept_response(self, request, pk=None):
+        """
+        Format:
+            url: https://sheroes-form.herokuapp.com/forms/<form-id>/accept_response/
+            url: http://127.0.0.1:8000/forms/<form-id>/accept_response/
+            Dictionary to be sent :
+            user_id = models.ForeignKey(OurUsers,on_delete=models.CASCADE,null= True) #edit
+            form_id = models.ForeignKey(Forms,on_delete=models.CASCADE) #edit
+            created_on = models.DateTimeField(auto_now_add=True,null=False)
+            updated_on = models.DateTimeField(auto_now=True, null=False) #update
+            is_deleted = models.BooleanField(default=False)
+            question_id = models.ForeignKey(Questions,on_delete = models.CASCADE)     
+            response = models.JSONField()
+
+        """
+        try:
+            if(pk == None):
+                raise Exception()
+            user_type = self.request.user_type 
+            print("User type",user_type) 
+            form_id = pk
+            form_instance = Forms.objects.get(id=form_id)
+            for field in request.data:
+                
+                if field=="updated_by":      #special conditions for foreign key
+                    setattr(form_instance,field,OurUsers.objects.get(id=request.data[field]))
+                elif field=="created_by" or field == "created_on":   #Cannot update created by
+                    pass
+                
+                else:
+                    setattr(form_instance,field,request.data[field])
+            form_instance.save()
+        except:
+            return Response("Invalid Request", status=status.HTTP_400_BAD_REQUEST)
+
+        return Response("Update Accepted", status=status.HTTP_200_OK)
+
 
 # class OurUsersViewSet(viewsets.ModelViewSet):
 #     queryset = OurUsers.objects.all()
