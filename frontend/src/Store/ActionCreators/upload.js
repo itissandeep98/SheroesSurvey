@@ -1,8 +1,10 @@
+import { showAlert } from '../../Components/Alert';
 import { storage } from '../../Config/fire';
 import * as ActionTypes from '../ActionTypes';
 
 export const uploadContent = data => {
 	const filename = new Date().toString() + Math.random();
+	showAlert('Uploading File');
 	return async dispatch => {
 		dispatch({ type: ActionTypes.UPLOAD_REQUEST });
 		const uploadTask = storage
@@ -12,15 +14,41 @@ export const uploadContent = data => {
 			'state_changed',
 			snapShot => {},
 			err => {
-				console.log(err);
+				showAlert('Something went wrong while Uploading', 'error');
 				dispatch({ type: ActionTypes.UPLOAD_FAILED, errmess: err });
 			},
 			() => {
+				showAlert('File Uploaded Successfully', 'success');
 				dispatch({ type: ActionTypes.UPLOAD_SUCCESS });
 			}
 		);
 		return await uploadTask.then(res =>
 			storage.ref(`/${filename}`).getDownloadURL()
+		);
+	};
+};
+
+export const uploadFiles = data => {
+	showAlert('Uploading File');
+	return async dispatch => {
+		dispatch({ type: ActionTypes.UPLOAD_REQUEST });
+		const uploadTask = storage
+			.ref(`/${data.content}/${data.file.name}`)
+			.put(data.file);
+		uploadTask.on(
+			'state_changed',
+			snapShot => {},
+			err => {
+				showAlert('Something went wrong while Uploading', 'error');
+				dispatch({ type: ActionTypes.UPLOAD_FAILED, errmess: err });
+			},
+			() => {
+				showAlert('File Uploaded Successfully', 'success');
+				dispatch({ type: ActionTypes.UPLOAD_SUCCESS });
+			}
+		);
+		return await uploadTask.then(res =>
+			storage.ref(data.content).child(data.file.name).getDownloadURL()
 		);
 	};
 };

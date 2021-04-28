@@ -12,6 +12,7 @@ import TextInput from './Inputs/TextInput';
 import * as ActionTypes from '../../Store/ActionTypes';
 import { responseCreate } from '../../Store/ActionCreators/response';
 import { Tooltip } from '@material-ui/core';
+import FileInput from './Inputs/FileInput';
 
 /**
  * Provides the Question view
@@ -105,7 +106,14 @@ function Question(props) {
 							required={ques.mandatory_toggle}
 						/>
 					)}
-					{/* {ques.qtype == 'number' && <NumberInput />} */}
+					{ques.qtype === 'FU' && (
+						<FileInput
+							modifyResponse={modifyResponse}
+							quesId={id}
+							value={props.response?.[sectionId]?.[id]}
+							required={ques.mandatory_toggle}
+						/>
+					)}
 				</Col>
 			</Row>
 		</Container>
