@@ -3,15 +3,15 @@ import { getAuthToken } from '../../Components/checkAuth';
 import * as ActionTypes from '../ActionTypes';
 import { apiUrl } from '../Url';
 
-const headers = {
+const headers = () => ({
 	Authorization: 'Token ' + getAuthToken(),
-};
+});
 
 export const optionCreate = data => {
 	return async dispatch => {
 		dispatch({ type: ActionTypes.OPTION_CREATE_REQUEST });
 		return await axios
-			.post(`${apiUrl}/options/`, data, { headers })
+			.post(`${apiUrl}/options/`, data, { headers: headers() })
 			.then(response => {
 				dispatch({
 					type: ActionTypes.OPTION_CREATE_SUCCESS,
@@ -32,7 +32,9 @@ export const optionUpdate = ({ id, data }) => {
 	return async dispatch => {
 		dispatch({ type: ActionTypes.OPTION_UPDATE_REQUEST });
 		return await axios
-			.post(`${apiUrl}/options/${id}/update_fields/`, data, { headers })
+			.post(`${apiUrl}/options/${id}/update_fields/`, data, {
+				headers: headers(),
+			})
 			.then(response => {
 				dispatch({
 					type: ActionTypes.OPTION_UPDATE_SUCCESS,
@@ -53,7 +55,7 @@ export const optionFetch = id => {
 	return async dispatch => {
 		dispatch({ type: ActionTypes.OPTION_FETCH_REQUEST });
 		return await axios
-			.get(`${apiUrl}/questions/${id}/get_options/`, { headers })
+			.get(`${apiUrl}/questions/${id}/get_options/`, { headers: headers() })
 			.then(response => {
 				dispatch({
 					type: ActionTypes.OPTION_FETCH_SUCCESS,
@@ -74,7 +76,7 @@ export const optionDelete = id => {
 	return async dispatch => {
 		dispatch({ type: ActionTypes.OPTION_DELETE_REQUEST });
 		return await axios
-			.delete(`${apiUrl}/options/${id}/`, { headers })
+			.delete(`${apiUrl}/options/${id}/`, { headers: headers() })
 			.then(response => {
 				dispatch({
 					type: ActionTypes.OPTION_DELETE_SUCCESS,

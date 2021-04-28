@@ -3,15 +3,15 @@ import { getAuthToken } from '../../Components/checkAuth';
 import * as ActionTypes from '../ActionTypes';
 import { apiUrl } from '../Url';
 
-const headers = {
+const headers = () => ({
 	Authorization: 'Token ' + getAuthToken(),
-};
+});
 
 export const allformFetch = () => {
 	return async dispatch => {
 		dispatch({ type: ActionTypes.ALL_FORM_FETCH_REQUEST });
 		return await axios
-			.get(apiUrl + '/forms/get_all_not_del/', { headers })
+			.get(apiUrl + '/forms/get_all_not_del/', { headers: headers() })
 			.then(response => {
 				dispatch({
 					type: ActionTypes.ALL_FORM_FETCH_SUCCESS,
@@ -32,7 +32,7 @@ export const formCreate = data => {
 	return async dispatch => {
 		dispatch({ type: ActionTypes.FORM_CREATE_REQUEST });
 		return await axios
-			.post(apiUrl + '/forms/', data, { headers })
+			.post(apiUrl + '/forms/', data, { headers: headers() })
 			.then(response => {
 				dispatch({
 					type: ActionTypes.FORM_CREATE_SUCCESS,
@@ -53,7 +53,7 @@ export const formFetch = id => {
 	return async dispatch => {
 		dispatch({ type: ActionTypes.FORM_FETCH_REQUEST });
 		return await axios
-			.get(`${apiUrl}/forms/${id}/`, { headers })
+			.get(`${apiUrl}/forms/${id}/`, { headers: headers() })
 			.then(response => {
 				dispatch({
 					type: ActionTypes.FORM_FETCH_SUCCESS,
@@ -83,7 +83,9 @@ export const formUpdate = ({ id, data }) => {
 	return async dispatch => {
 		dispatch({ type: ActionTypes.FORM_UPDATE_REQUEST });
 		return await axios
-			.post(`${apiUrl}/forms/${id}/update_fields/`, data, { headers })
+			.post(`${apiUrl}/forms/${id}/update_fields/`, data, {
+				headers: headers(),
+			})
 			.then(response => {
 				dispatch({
 					type: ActionTypes.FORM_UPDATE_SUCCESS,
@@ -104,7 +106,7 @@ export const formDelete = id => {
 	return async dispatch => {
 		dispatch({ type: ActionTypes.FORM_DELETE_REQUEST });
 		return await axios
-			.delete(`${apiUrl}/forms/${id}/`, { headers })
+			.delete(`${apiUrl}/forms/${id}/`, { headers: headers() })
 			.then(response => {
 				dispatch({
 					type: ActionTypes.FORM_DELETE_SUCCESS,
