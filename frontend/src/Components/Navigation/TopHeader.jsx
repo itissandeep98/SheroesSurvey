@@ -35,7 +35,7 @@ function TopHeader() {
 		setMenu(e.currentTarget);
 	};
 	const handleLogout = () => {
-		dispatch(logoutAction());
+		dispatch(logoutAction())
 	};
 	const handleScroll = () => {
 		var currentScrollPos = window.pageYOffset;

@@ -1,0 +1,16 @@
+.file_input {
+	border-radius: 500px !important;
+	padding: 10px;
+	margin-top: 10px;
+	// font-size: large;
+	color: rgb(255, 255, 255);
+	text-align: center;
+	background-color: #e26b34;
+	transition: all 0.5s;
+	&:hover {
+		background-color: rgb(228, 129, 15);
+		color: #ffffff;
+		cursor: pointer;
+		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	}
+}

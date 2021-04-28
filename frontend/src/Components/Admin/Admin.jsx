@@ -78,7 +78,7 @@ function Admin(props) {
 					</h2>
 				</Row>
 			)}
-			<Row className=" mt-5 justify-content-center">
+			<Row className=" mt-5">
 				{cards?.map((card, index) => (
 					<Col sm={6} md={4} lg={3} key={Math.random()} className="h-100">
 						<FormCard {...card} delete={() => handleDelete(card.id, index)} />
