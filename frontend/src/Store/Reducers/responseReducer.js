@@ -4,10 +4,11 @@ const initState = {};
 
 const responseReducer = (state = initState, action) => {
 	switch (action.type) {
-		case ActionTypes.RESPONSE_UPDATE_REQUEST:
-			let sec = state[action.section];
-			sec = { ...sec, [action.question]: action.value };
-			return { ...state, [action.section]: { ...sec } };
+		case ActionTypes.RESPONSE_LOCAL_UPDATE_SUCCESS:
+			return { ...state, [action.question]: action.value };
+
+		case ActionTypes.RESPONSE_LOCAL_CLEAR_SUCCESS:
+			return {};
 
 		default:
 			return state;

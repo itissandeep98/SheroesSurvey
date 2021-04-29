@@ -7,11 +7,31 @@ const headers = () => ({
 	Authorization: 'Token ' + getAuthToken(),
 });
 
-export const responseCreate = data => {
+export const updateLocalResponse = ({ id, value }) => {
+	return async dispatch => {
+		dispatch({
+			type: ActionTypes.RESPONSE_LOCAL_UPDATE_SUCCESS,
+			question: id,
+			value: value,
+		});
+	};
+};
+
+export const clearLocalResponse = () => {
+	return async dispatch => {
+		dispatch({
+			type: ActionTypes.RESPONSE_LOCAL_CLEAR_SUCCESS,
+		});
+	};
+};
+
+export const responseCreate = ({ id, data }) => {
 	return async dispatch => {
 		dispatch({ type: ActionTypes.RESPONSE_CREATE_REQUEST });
 		return await axios
-			.post(apiUrl + '/responses/', data, { headers: headers() })
+			.post(`${apiUrl}/forms/${id}/accept_response/`, data, {
+				headers: headers(),
+			})
 			.then(response => {
 				dispatch({
 					type: ActionTypes.RESPONSE_CREATE_SUCCESS,
