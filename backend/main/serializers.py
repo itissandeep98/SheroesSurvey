@@ -55,6 +55,10 @@ class ResponsesSerializers(serializers.ModelSerializer):
         model = Responses
         fields = '__all__'
 
+
+
+
+ 
 class FileUploadSerializers(serializers.ModelSerializer):
     class Meta:
         model = FileUpload
