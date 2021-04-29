@@ -8,10 +8,19 @@ from django.contrib.auth.models import AnonymousUser
 
 
 class FormsViewSet(viewsets.ModelViewSet):
-    permission_classes = [
-        permissions.IsAuthenticatedOrReadOnly
-    ]
+    # permission_classes = [
+    #     permissions.AllowAny
+    # ]
 
+    def get_permissions(self):
+        print(self.action)
+        if self.action in ['update', 'partial_update', 'destroy', 'create']:
+            self.permission_classes = [permissions.IsAuthenticated, ]
+        elif self.action in ['list','accept_response']:
+            self.permission_classes = [permissions.AllowAny, ]
+        # elif self.action in ['accept_response']:
+        return super().get_permissions()
+            
     serializer_class = FormSerializers
 
 
@@ -124,76 +133,54 @@ class FormsViewSet(viewsets.ModelViewSet):
             url: https://sheroes-form.herokuapp.com/forms/<form-id>/accept_response/
             url: http://127.0.0.1:8000/forms/<form-id>/accept_response/
             Dictionary to be sent :
-            user_id = models.ForeignKey(OurUsers,on_delete=models.CASCADE,null= True) #edit
-            form_id = models.ForeignKey(Forms,on_delete=models.CASCADE) #edit
-            created_on = models.DateTimeField(auto_now_add=True,null=False)
-            updated_on = models.DateTimeField(auto_now=True, null=False) #update
-            is_deleted = models.BooleanField(default=False)
-            question_id = models.ForeignKey(Questions,on_delete = models.CASCADE)     
-            response = models.JSONField()
+            user_id 
+            form_id 
+            created_on
+            updated_on
+            is_deleted 
+            question_id    
+            response 
+            Format:
+            
+            {
+                question_no: "answer",
+                question_no: "answer",
+                question_no: "answer",
+                ...
+            }
 
         """
         try:
+
             if(pk == None):
                 raise Exception()
-            user_type = self.request.user_type 
+            user_type = self.request.user 
             print("User type",user_type) 
+            print(type(self.request.user))
             form_id = pk
-            form_instance = Forms.objects.get(id=form_id)
-            for field in request.data:
-                
-                if field=="updated_by":      #special conditions for foreign key
-                    setattr(form_instance,field,OurUsers.objects.get(id=request.data[field]))
-                elif field=="created_by" or field == "created_on":   #Cannot update created by
-                    pass
-                
-                else:
-                    setattr(form_instance,field,request.data[field])
-            form_instance.save()
+            form_instance=Forms.objects.get(id=form_id)
+            if form_instance.anonymous_response or not isinstance(user_type,AnonymousUser):        
+                for question_no in request.data:
+                    question_instance=Questions.objects.get(id=question_no)
+                    new_response=Responses()
+                    if not form_instance.anonymous_response:
+                        new_response.user_id=user_type
+                    new_response.form_id=form_instance
+                    new_response.is_deleted=False
+                    new_response.question_id=question_instance
+                    new_response.response=request.data[question_no]
+                    new_response.save()
+
+
         except:
-            return Response("Invalid Request", status=status.HTTP_400_BAD_REQUEST)
+            return Response("Something went wrong", status=status.HTTP_400_BAD_REQUEST)
 
         return Response("Update Accepted", status=status.HTTP_200_OK)
-
-
-# class OurUsersViewSet(viewsets.ModelViewSet):
-#     queryset = OurUsers.objects.all()
-#     permission_classes = [
-#         permissions.AllowAny
-#     ]
-#     serializer_class = OurUsersSerializers
-
-#     @action(methods=['patch','post'], detail=True)
-#     def update_fields(self, request, pk=None):
-#         """
-#         Format:
-#             url: https://sheroes-form.herokuapp.com/users/<user-id>/update_fields/
-#             url: http://127.0.0.1:8000/users/<user-id>/update_fields/
-#             {
-#                 "fields": ["first_name" , "partner_id" , "user_type"]
-#                 "first_name": "Bond",
-#                 "partner_id" : "007"
-#                 "user_type" : "CR"
-#             }
-#         """
-#         try:
-#             if(pk == None):
-#                 raise Exception()
-#             user_id = pk
-#             user_instance = OurUsers.objects.get(id=user_id)
-#             for field in request.data:
-#                 setattr(user_instance,field,request.data[field])
-#             user_instance.save()
-#         except:
-#             return Response("Invalid Request", status=status.HTTP_400_BAD_REQUEST)
-
-#         return Response("Update Accepted", status=status.HTTP_200_OK)
-
 
 class SectionsViewSet(viewsets.ModelViewSet):
     queryset = Sections.objects.all()
     permission_classes = [
-        permissions.IsAuthenticated
+        permissions.IsAuthenticatedOrReadOnly
     ]
     serializer_class = SectionSerializers
 
@@ -235,7 +222,7 @@ class SectionsViewSet(viewsets.ModelViewSet):
 class QuestionsViewSet(viewsets.ModelViewSet):
     queryset = Questions.objects.all()
     permission_classes = [
-        permissions.IsAuthenticated
+        permissions.IsAuthenticatedOrReadOnly
         # permissions.AllowAny
     ]
     serializer_class = QuestionSerializers

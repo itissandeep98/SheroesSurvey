@@ -84,6 +84,9 @@ class OurUsers(AbstractBaseUser, PermissionsMixin):
         choices = UserType.choices,
         default = UserType.ENDUSER
     )
+    
+    def __str__(self):
+        return str(self.username)
 
     
 
@@ -105,6 +108,7 @@ class Forms(models.Model):
     created_by =  models.ForeignKey(OurUsers,on_delete=models.CASCADE,related_name = "form_created_by") #edit
     updated_by =  models.ForeignKey(OurUsers,on_delete=models.CASCADE,related_name = "form_updated_by") #edit
     is_deleted = models.BooleanField(null=False,default=False)
+    anonymous_response = models.BooleanField(null=False,default=True)
 
     def delete(self, *args, **kwargs):
         """
@@ -127,6 +131,9 @@ class Forms(models.Model):
         # super().save(*args, **kwargs)
     def all(self, *args, **kwargs):
         print("all")
+
+    def __str__(self):
+        return str(self.heading)
 
 
 
@@ -153,6 +160,9 @@ class Sections(models.Model):
     created_by =  models.ForeignKey(OurUsers,on_delete=models.CASCADE,related_name = "section_created_by") #edit
     updated_by =  models.ForeignKey(OurUsers,on_delete=models.CASCADE,related_name = "section_updated_by") #edit
     
+    def __str__(self):
+        return "Form:"+str(self.form_id)+"-"+(self.heading)
+
     def save(self,*args,**kwargs):
         new_section = super().save(*args, **kwargs)
         current_form = self.form_id
