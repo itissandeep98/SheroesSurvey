@@ -59,7 +59,7 @@ function NavigationBar(props) {
 			onClick: () => window.open(`/${form_id}`, '_blank').focus(),
 		},
 		{
-			text: 'Copy Preview Link',
+			text: 'Copy Form URL',
 			icon: <FileCopyIcon />,
 			onClick: () => {
 				navigator.clipboard.writeText(`${frontUrl}/${form_id}`);
