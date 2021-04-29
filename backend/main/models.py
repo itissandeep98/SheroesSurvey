@@ -109,7 +109,18 @@ class Forms(models.Model):
     updated_by =  models.ForeignKey(OurUsers,on_delete=models.CASCADE,related_name = "form_updated_by") #edit
     is_deleted = models.BooleanField(null=False,default=False)
     anonymous_response = models.BooleanField(null=False,default=True)
-
+    user_responses = models.JSONField(default=dict) 
+            #  {
+            #     user_id : {question_no: "answer",
+            #                question_no: "answer",
+            #                question_no: "answer" 
+            #                ...}
+            #     user_id : {question_no: "answer",
+            #                question_no: "answer",
+            #                question_no: "answer" 
+            #                ...} 
+            #     ...
+            # }
     def delete(self, *args, **kwargs):
         """
         This function was Overriden because we want to soft delete instead of hard delete.
@@ -259,6 +270,9 @@ class Dropdown(models.Model):
     dropdown_json = models.JSONField()
     correct_answer = models.CharField(max_length=256, null=True)
 
+class MyAnonymousUser(models.Model):
+    is_deleted = models.BooleanField(default=False)
+
 
 class Responses(models.Model):
     """
@@ -278,6 +292,9 @@ class Responses(models.Model):
     is_deleted = models.BooleanField(default=False)
     question_id = models.ForeignKey(Questions,on_delete = models.CASCADE)     
     response = models.JSONField()
+    anoymous_user_flag = models.BooleanField(default=False)
+    anoymous_user_id = models.ForeignKey(MyAnonymousUser,on_delete = models.CASCADE,null=True) 
+
     def save(self,*args,**kwargs):        
         current_form = self.form_id
         if( current_form.is_active and not(current_form.is_deleted) ):
