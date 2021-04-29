@@ -27,11 +27,10 @@ import Options from './Options';
  * @property {Boolean} ques.mandatory_toggle - Whether the Question is mandatory
  */
 function Question(props) {
-	const { id, index, sectionId, formId } = props;
+	const { id, index, resp } = props;
 	const dispatch = useDispatch();
 	const [ques, setQues] = useState({});
 	const [loading, setLoading] = useState(true);
-	const options = ['option 1', 'option 2', 'option 3'];
 	useEffect(() => {
 		dispatch(questionFetch(id)).then(res => {
 			setQues(res);
@@ -64,18 +63,10 @@ function Question(props) {
 			<Row>
 				<Col>
 					{(ques.qtype === 'SP' || ques.qtype === 'LP') && (
-						<p className="mt-2 text-justify border p-2">
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-							eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-							enim ad minim veniam, quis nostrud exercitation ullamco laboris
-							nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-							reprehenderit in voluptate velit esse cillum dolore eu fugiat
-							nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-							sunt in culpa qui officia deserunt mollit anim id est laborum.
-						</p>
+						<p className="mt-2 text-justify border p-2">{resp}</p>
 					)}
 
-					{ques.qtype === 'MC' && <Options quesId={id} />}
+					{ques.qtype === 'MC' && <Options quesId={id} response={resp} />}
 				</Col>
 			</Row>
 		</Container>
