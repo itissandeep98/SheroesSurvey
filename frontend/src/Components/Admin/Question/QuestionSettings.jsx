@@ -60,7 +60,7 @@ function QuestionSettings(props) {
 						</Dropdown.Item>
 						<Dropdown.Item onClick={markImportant}>
 							<Icon name="asterisk" />
-							{selected ? 'Mark  as Not Important' : 'Mark Important'}
+							{selected ? 'Mark  as Not Mandatory' : 'Mark as Mandatory'}
 						</Dropdown.Item>
 						{ques.qtype === 'SP' && (
 							<Dropdown.Item onClick={() => setModal(!modal)}>
