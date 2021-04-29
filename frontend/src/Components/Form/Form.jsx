@@ -6,11 +6,16 @@ import { Col, Container, Progress, Row } from 'reactstrap';
 import { Button, Divider, Icon } from 'semantic-ui-react';
 import Banner from './Banner';
 import Section from './Section';
-import { useDispatch } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import './style.css';
 import { formFetch } from '../../Store/ActionCreators/form';
 import { Redirect, useHistory } from 'react-router';
 import ConsentPage from './ConsentPage';
+import {
+	clearLocalResponse,
+	responseCreate,
+} from '../../Store/ActionCreators/response';
+
 /**
  * Provides the ability to preview the form.
  * @param {Integer} id - Unique ID of the Form taken from the URL.
@@ -29,6 +34,7 @@ function Form(props) {
 	const [details, setDetails] = useState('');
 	const [structure, setStructure] = useState([]);
 	const [curr, setCurr] = useState(-1);
+	const [submitLoading, setSubmitLoading] = useState(false);
 	const dispatch = useDispatch();
 	useEffect(() => {
 		dispatch(formFetch(id)).then(res => {
@@ -41,6 +47,19 @@ function Form(props) {
 	}, [dispatch]);
 
 	const history = useHistory();
+
+	const handleSubmit = e => {
+		e.preventDefault();
+		setSubmitLoading(true);
+		const data = props.response;
+		dispatch(responseCreate({ id, data })).then(res => {
+			dispatch(clearLocalResponse()).then(res => {
+				setSubmitLoading(false);
+				history.push(`/${id}/thank`);
+			});
+		});
+	};
+
 	if (details && !details?.edit_response_toggle) {
 		return <Redirect to={`/${id}/restrict`} />;
 	}
@@ -98,7 +117,8 @@ function Form(props) {
 							<>
 								<Button
 									className="float-right"
-									onClick={() => history.push(`/${id}/thank`)}>
+									onClick={handleSubmit}
+									disabled={submitLoading}>
 									<Icon name="check" />
 									Submit
 								</Button>
@@ -118,4 +138,7 @@ function Form(props) {
 	);
 }
 
-export default Form;
+const mapStateToProps = state => ({
+	response: state.response,
+});
+export default connect(mapStateToProps)(Form);
