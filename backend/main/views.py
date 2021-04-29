@@ -167,16 +167,17 @@ class FormsViewSet(viewsets.ModelViewSet):
                     temp_response_obj = Responses.objects.get(user_id = cur_user_id ,question_id = question_no)
                 except:
                     temp_response_obj = None
+                
+                if(not form_instance.anonymous_response and temp_response_obj):
+                    new_response = temp_response_obj
+                else:
+                    new_response=Responses()
                 if not form_instance.anonymous_response:
                     new_response.user_id=user_type
                 else:
                     new_response.anoymous_user_flag = True
                     new_response.anoymous_user_id = new_anonymous_user
-                if(not form_instance.anonymous_response and temp_response_obj):
-                    new_response = temp_response_obj
-                else:
-                    new_response=Responses()
-
+                    
                 new_response.form_id=form_instance
                 new_response.is_deleted=False
                 new_response.question_id=question_instance
@@ -220,9 +221,9 @@ class FormsViewSet(viewsets.ModelViewSet):
         try:
             if(pk == None):
                 raise Exception()
-            # user_type = self.request.user 
-            # print("User type",user_type) 
-            # print(type(self.request.user))
+            user_type = self.request.user 
+            print("User type",user_type) 
+            print(type(self.request.user))
             form_response = {}
 
             form_id = pk
@@ -243,12 +244,18 @@ class FormsViewSet(viewsets.ModelViewSet):
                             user_obj = OurUsers.objects.get(id=user_id)
                             form_response[user_id]["username"]=user_obj.first_name + " " + user_obj.last_name
                             username_flag = True
-
-
+            form_resp_lis = []
+            for user_id in responses :
+                cur_lis = []
+                cur_lis.append(user_id)
+                cur_lis.append(form_response[user_id]["username"])
+                cur_lis.append(form_response[user_id]["response"])
+                form_resp_lis.append(cur_lis)
+    
         except:
             return Response("Something went wrong", status=status.HTTP_400_BAD_REQUEST)
 
-        return Response(form_response, status=status.HTTP_200_OK)
+        return Response(form_resp_lis, status=status.HTTP_200_OK)
 
 
 
