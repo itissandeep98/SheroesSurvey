@@ -10,7 +10,7 @@ import { Placeholder } from 'semantic-ui-react';
 import { optionFetch } from '../../Store/ActionCreators/option';
 
 function Options(props) {
-	const { quesId } = props;
+	const { quesId, response } = props;
 	const [options, setOptions] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const dispatch = useDispatch();
@@ -32,7 +32,7 @@ function Options(props) {
 				</Placeholder>
 			) : (
 				<FormControl>
-					<RadioGroup value={options[0]?.content}>
+					<RadioGroup value={response}>
 						{options.map((option, i) => (
 							<FormControlLabel
 								key={i}

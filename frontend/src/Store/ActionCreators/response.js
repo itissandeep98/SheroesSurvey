@@ -49,11 +49,11 @@ export const responseCreate = ({ id, data }) => {
 	};
 };
 
-export const responseFetch = data => {
+export const responseFetch = id => {
 	return async dispatch => {
 		dispatch({ type: ActionTypes.RESPONSE_FETCH_REQUEST });
 		return await axios
-			.get(apiUrl + '/responses/', data, { headers: headers() })
+			.get(`${apiUrl}/forms/${id}/get_response/`, { headers: headers() })
 			.then(response => {
 				dispatch({
 					type: ActionTypes.RESPONSE_FETCH_SUCCESS,
