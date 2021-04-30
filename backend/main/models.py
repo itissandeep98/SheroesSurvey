@@ -84,6 +84,9 @@ class OurUsers(AbstractBaseUser, PermissionsMixin):
         choices = UserType.choices,
         default = UserType.ENDUSER
     )
+    
+    def __str__(self):
+        return str(self.username)
 
     
 
@@ -105,7 +108,19 @@ class Forms(models.Model):
     created_by =  models.ForeignKey(OurUsers,on_delete=models.CASCADE,related_name = "form_created_by") #edit
     updated_by =  models.ForeignKey(OurUsers,on_delete=models.CASCADE,related_name = "form_updated_by") #edit
     is_deleted = models.BooleanField(null=False,default=False)
-
+    anonymous_response = models.BooleanField(null=False,default=True)
+    user_responses = models.JSONField(default=dict) 
+            #  {
+            #     user_id : {question_no: "answer",
+            #                question_no: "answer",
+            #                question_no: "answer" 
+            #                ...}
+            #     user_id : {question_no: "answer",
+            #                question_no: "answer",
+            #                question_no: "answer" 
+            #                ...} 
+            #     ...
+            # }
     def delete(self, *args, **kwargs):
         """
         This function was Overriden because we want to soft delete instead of hard delete.
@@ -127,6 +142,9 @@ class Forms(models.Model):
         # super().save(*args, **kwargs)
     def all(self, *args, **kwargs):
         print("all")
+
+    def __str__(self):
+        return str(self.heading)
 
 
 
@@ -153,6 +171,9 @@ class Sections(models.Model):
     created_by =  models.ForeignKey(OurUsers,on_delete=models.CASCADE,related_name = "section_created_by") #edit
     updated_by =  models.ForeignKey(OurUsers,on_delete=models.CASCADE,related_name = "section_updated_by") #edit
     
+    def __str__(self):
+        return "Form:"+str(self.form_id)+"-"+(self.heading)
+
     def save(self,*args,**kwargs):
         new_section = super().save(*args, **kwargs)
         current_form = self.form_id
@@ -249,6 +270,9 @@ class Dropdown(models.Model):
     dropdown_json = models.JSONField()
     correct_answer = models.CharField(max_length=256, null=True)
 
+class MyAnonymousUser(models.Model):
+    is_deleted = models.BooleanField(default=False)
+
 
 class Responses(models.Model):
     """
@@ -261,13 +285,16 @@ class Responses(models.Model):
                 "response": "Hello"
             }   
     """
-    user_id = models.ForeignKey(OurUsers,on_delete=models.CASCADE) #edit
+    user_id = models.ForeignKey(OurUsers,on_delete=models.CASCADE,null= True) #edit
     form_id = models.ForeignKey(Forms,on_delete=models.CASCADE) #edit
     created_on = models.DateTimeField(auto_now_add=True,null=False)
     updated_on = models.DateTimeField(auto_now=True, null=False) #update
     is_deleted = models.BooleanField(default=False)
     question_id = models.ForeignKey(Questions,on_delete = models.CASCADE)     
     response = models.JSONField()
+    anoymous_user_flag = models.BooleanField(default=False)
+    anoymous_user_id = models.ForeignKey(MyAnonymousUser,on_delete = models.CASCADE,null=True) 
+
     def save(self,*args,**kwargs):        
         current_form = self.form_id
         if( current_form.is_active and not(current_form.is_deleted) ):

@@ -1,6 +1,6 @@
 /**
  * @module Responses/Section
- */ 
+ */
 import { Col, Container, Row, Spinner } from 'reactstrap';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -15,10 +15,10 @@ import { List, Placeholder } from 'semantic-ui-react';
  * @property {String} details.heading -heading of section
  * @property {String} details.description -Description of section
  * @property {String} quesList List of question IDs in section
- * 
+ *
  */
 function Section(props) {
-	const { id } = props;
+	const { id, response } = props;
 	const [quesList, setQuesList] = useState([]);
 	const [details, setDetails] = useState({});
 	const [loading, setLoading] = useState(true);
@@ -30,6 +30,7 @@ function Section(props) {
 			setLoading(false);
 		});
 	}, [dispatch]);
+
 	return (
 		<Container fluid className=" p-4 mb-4 rounded_lg  bg-white">
 			<Row>
@@ -62,8 +63,7 @@ function Section(props) {
 										<Question
 											id={ques}
 											index={i + 1}
-											sectionId={id}
-											formId={props.formId}
+											resp={response?.[ques]}
 										/>
 									</List.Item>
 								))}

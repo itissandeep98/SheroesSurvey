@@ -1,4 +1,4 @@
-from main.models import Forms, OurUsers, Sections, Questions, Options, ShortPara, Responses, FileUpload
+from main.models import Forms, OurUsers, Sections, Questions, Options, ShortPara, Responses, FileUpload, MyAnonymousUser
 from rest_framework import viewsets, permissions, status
 from rest_framework.decorators import action
 from rest_framework.decorators import api_view
@@ -8,10 +8,19 @@ from django.contrib.auth.models import AnonymousUser
 
 
 class FormsViewSet(viewsets.ModelViewSet):
-    permission_classes = [
-        permissions.IsAuthenticatedOrReadOnly
-    ]
+    # permission_classes = [
+    #     permissions.AllowAny
+    # ]
 
+    def get_permissions(self):
+        print(self.action)
+        if self.action in ['update', 'partial_update', 'destroy', 'create','get_response','update_fields']:
+            self.permission_classes = [permissions.IsAuthenticated, ]
+        elif self.action in ['list','accept_response']:
+            self.permission_classes = [permissions.AllowAny, ]
+        # elif self.action in ['accept_response']:
+        return super().get_permissions()
+            
     serializer_class = FormSerializers
 
 
@@ -117,45 +126,143 @@ class FormsViewSet(viewsets.ModelViewSet):
         """
         return Response(Forms.objects.all().filter(is_deleted = True).values(),status=status.HTTP_200_OK)
 
+    @action(methods=['post'], detail=True)
+    def accept_response(self, request, pk=None):
+        """
+        Format:
+            url: https://sheroes-form.herokuapp.com/forms/<form-id>/accept_response/
+            url: http://127.0.0.1:8000/forms/<form-id>/accept_response/
+            JSON to be sent :
+            Format:
+            
+            {
+                question_no: "answer",
+                question_no: "answer",
+                question_no: "answer",
+                ...
+            }
 
-# class OurUsersViewSet(viewsets.ModelViewSet):
-#     queryset = OurUsers.objects.all()
-#     permission_classes = [
-#         permissions.AllowAny
-#     ]
-#     serializer_class = OurUsersSerializers
+        """
+        # try:
+        if(pk == None):
+            raise Exception()
+        user_type = self.request.user 
+        print("User type",user_type) 
+        print(type(self.request.user))
+        form_id = pk
+        form_instance=Forms.objects.get(id=form_id)
+        current_response = {}
+        cur_user_id = 0
+        if form_instance.anonymous_response or not isinstance(user_type,AnonymousUser):
+            if form_instance.anonymous_response:
+                new_anonymous_user = MyAnonymousUser()
+                new_anonymous_user.save()
+                cur_user_id = new_anonymous_user.id
+            else:
+                cur_user_id = user_type.id
+            for question_no in request.data:
 
-#     @action(methods=['patch','post'], detail=True)
-#     def update_fields(self, request, pk=None):
-#         """
-#         Format:
-#             url: https://sheroes-form.herokuapp.com/users/<user-id>/update_fields/
-#             url: http://127.0.0.1:8000/users/<user-id>/update_fields/
-#             {
-#                 "fields": ["first_name" , "partner_id" , "user_type"]
-#                 "first_name": "Bond",
-#                 "partner_id" : "007"
-#                 "user_type" : "CR"
-#             }
-#         """
-#         try:
-#             if(pk == None):
-#                 raise Exception()
-#             user_id = pk
-#             user_instance = OurUsers.objects.get(id=user_id)
-#             for field in request.data:
-#                 setattr(user_instance,field,request.data[field])
-#             user_instance.save()
-#         except:
-#             return Response("Invalid Request", status=status.HTTP_400_BAD_REQUEST)
+                question_instance=Questions.objects.get(id=question_no)
+                try:
+                    temp_response_obj = Responses.objects.get(user_id = cur_user_id ,question_id = question_no)
+                except:
+                    temp_response_obj = None
+                
+                if(not form_instance.anonymous_response and temp_response_obj):
+                    new_response = temp_response_obj
+                else:
+                    new_response=Responses()
+                if not form_instance.anonymous_response:
+                    new_response.user_id=user_type
+                else:
+                    new_response.anoymous_user_flag = True
+                    new_response.anoymous_user_id = new_anonymous_user
+                    
+                new_response.form_id=form_instance
+                new_response.is_deleted=False
+                new_response.question_id=question_instance
+                new_response.response=request.data[question_no]
+                new_response.save()
+                current_response[question_no]=new_response.id
 
-#         return Response("Update Accepted", status=status.HTTP_200_OK)
+        else:
+            return Response("Something went wrong", status=status.HTTP_400_BAD_REQUEST)
+                # form_instance.user_responses()
+        print(len(form_instance.user_responses))
+        print("This got printed")
+        print(cur_user_id)
+        form_instance.user_responses[cur_user_id]=current_response
+        form_instance.save()
+        # except:
+        #     return Response("Something went wrong", status=status.HTTP_400_BAD_REQUEST)
+
+        return Response("Update Accepted", status=status.HTTP_200_OK)
+    
+    @action(methods=['get'], detail=True)
+    def get_response(self, request, pk=None):
+        """
+        Format:
+            url: https://sheroes-form.herokuapp.com/forms/<form-id>/get_response/
+            url: http://127.0.0.1:8000/forms/<form-id>/get_response/
+            Dictionary to be sent :            
+            {
+                user_id : {question_no: "answer",
+                           question_no: "answer",
+                           question_no: "answer" 
+                           ...}
+                user_id : {question_no: "answer",
+                           question_no: "answer",
+                           question_no: "answer" 
+                           ...} 
+                ...
+            }
+
+        """
+        try:
+            if(pk == None):
+                raise Exception()
+            user_type = self.request.user 
+            print("User type",user_type) 
+            print(type(self.request.user))
+            form_response = {}
+
+            form_id = pk
+            form_instance=Forms.objects.get(id=form_id)
+            responses = form_instance.user_responses
+            for user_id in responses :
+                username_flag = False
+                form_response[user_id]={}
+                form_response[user_id]["response"]={}
+                for ques_no in responses[user_id]:
+                    response_obj = Responses.objects.get(id=responses[user_id][ques_no])
+                    form_response[user_id]["response"][ques_no]= response_obj.response
+                    if not username_flag :
+                        if response_obj.anoymous_user_flag :
+                            form_response[user_id]["username"]="Anonymous"
+                            username_flag = True
+                        else:
+                            user_obj = OurUsers.objects.get(id=user_id)
+                            form_response[user_id]["username"]=user_obj.first_name + " " + user_obj.last_name
+                            username_flag = True
+            form_resp_lis = []
+            for user_id in responses :
+                cur_lis = []
+                cur_lis.append(user_id)
+                cur_lis.append(form_response[user_id]["username"])
+                cur_lis.append(form_response[user_id]["response"])
+                form_resp_lis.append(cur_lis)
+    
+        except:
+            return Response("Something went wrong", status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(form_resp_lis, status=status.HTTP_200_OK)
+
 
 
 class SectionsViewSet(viewsets.ModelViewSet):
     queryset = Sections.objects.all()
     permission_classes = [
-        permissions.IsAuthenticated
+        permissions.IsAuthenticatedOrReadOnly
     ]
     serializer_class = SectionSerializers
 
@@ -197,7 +304,7 @@ class SectionsViewSet(viewsets.ModelViewSet):
 class QuestionsViewSet(viewsets.ModelViewSet):
     queryset = Questions.objects.all()
     permission_classes = [
-        permissions.IsAuthenticated
+        permissions.IsAuthenticatedOrReadOnly
         # permissions.AllowAny
     ]
     serializer_class = QuestionSerializers

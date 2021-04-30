@@ -9,10 +9,9 @@ import { questionFetch } from '../../Store/ActionCreators/question';
 import MultipleChoiceInput from './Inputs/MultipleChoiceInput';
 import ParagraphInput from './Inputs/ParagraphInput';
 import TextInput from './Inputs/TextInput';
-import * as ActionTypes from '../../Store/ActionTypes';
-import { responseCreate } from '../../Store/ActionCreators/response';
 import { Tooltip } from '@material-ui/core';
 import FileInput from './Inputs/FileInput';
+import { updateLocalResponse } from '../../Store/ActionCreators/response';
 
 /**
  * Provides the Question view
@@ -38,19 +37,7 @@ function Question(props) {
 	}, [dispatch]);
 
 	const modifyResponse = value => {
-		const data = {
-			user_id: user.id,
-			form_id: formId,
-			question_id: id,
-			response: value,
-		};
-		dispatch(responseCreate(data));
-		dispatch({
-			type: ActionTypes.RESPONSE_UPDATE_REQUEST,
-			section: sectionId,
-			question: id,
-			value: value,
-		});
+		dispatch(updateLocalResponse({ id, value }));
 	};
 
 	return (
@@ -87,14 +74,14 @@ function Question(props) {
 					{ques.qtype === 'SP' && (
 						<TextInput
 							modifyResponse={modifyResponse}
-							value={props.response?.[sectionId]?.[id]}
+							value={props.response?.[id]}
 							required={ques.mandatory_toggle}
 						/>
 					)}
 					{ques.qtype === 'LP' && (
 						<ParagraphInput
 							modifyResponse={modifyResponse}
-							value={props.response?.[sectionId]?.[id]}
+							value={props.response?.[id]}
 							required={ques.mandatory_toggle}
 						/>
 					)}
@@ -102,7 +89,7 @@ function Question(props) {
 						<MultipleChoiceInput
 							modifyResponse={modifyResponse}
 							quesId={id}
-							value={props.response?.[sectionId]?.[id]}
+							value={props.response?.[id]}
 							required={ques.mandatory_toggle}
 						/>
 					)}
@@ -110,7 +97,7 @@ function Question(props) {
 						<FileInput
 							modifyResponse={modifyResponse}
 							quesId={id}
-							value={props.response?.[sectionId]?.[id]}
+							value={props.response?.[id]}
 							required={ques.mandatory_toggle}
 						/>
 					)}

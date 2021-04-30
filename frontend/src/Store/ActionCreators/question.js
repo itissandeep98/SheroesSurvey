@@ -97,12 +97,11 @@ export const questionDetailsUpdate = ({ id, data }) => {
 
 export const questionDelete = id => {
 	return async dispatch => {
-		dispatch(
-			{ type: ActionTypes.QUESTION_DELETE_REQUEST },
-			{ headers: headers() }
-		);
+		dispatch({ type: ActionTypes.QUESTION_DELETE_REQUEST });
 		return await axios
-			.delete(`${apiUrl}/questions/${id}/`)
+			.delete(`${apiUrl}/questions/${id}/`, {
+				headers: headers(),
+			})
 			.then(response => {
 				dispatch({
 					type: ActionTypes.QUESTION_DELETE_SUCCESS,
