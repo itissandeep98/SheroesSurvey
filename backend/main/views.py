@@ -227,6 +227,7 @@ class FormsViewSet(viewsets.ModelViewSet):
             form_id = pk
             form_instance=Forms.objects.get(id=form_id)
             responses = form_instance.user_responses
+            form_resp_lis = []
             if(responses):
                 for user_id in responses :
                     username_flag = False
@@ -243,7 +244,6 @@ class FormsViewSet(viewsets.ModelViewSet):
                                 user_obj = OurUsers.objects.get(id=user_id)
                                 form_response[user_id]["username"]=user_obj.first_name + " " + user_obj.last_name
                                 username_flag = True
-                form_resp_lis = []
                 for user_id in responses :
                     cur_lis = []
                     cur_lis.append(user_id)
@@ -251,10 +251,10 @@ class FormsViewSet(viewsets.ModelViewSet):
                     cur_lis.append(form_response[user_id]["response"])
                     form_resp_lis.append(cur_lis)
     
+            return Response(form_resp_lis, status=status.HTTP_200_OK)
         except:
             return Response("Something went wrong", status=status.HTTP_400_BAD_REQUEST)
 
-        return Response(form_resp_lis, status=status.HTTP_200_OK)
 
     @action(methods=['get'], detail=True)
     def get_csv(self, request, pk=None):
@@ -263,65 +263,65 @@ class FormsViewSet(viewsets.ModelViewSet):
             url: https://sheroes-form.herokuapp.com/forms/<form-id>/get_response/
             url: http://127.0.0.1:8000/forms/<form-id>/get_response/
         """
-        # try:
-        if(pk == None):
-            raise Exception()
-        user_type = self.request.user 
-        print("User type",user_type) 
-        print(type(self.request.user))
-        form_response = {}
+        try:
+            if(pk == None):
+                raise Exception()
+            user_type = self.request.user 
+            print("User type",user_type) 
+            print(type(self.request.user))
+            form_response = {}
 
-        form_id = pk
-        form_instance=Forms.objects.get(id=form_id)
-        responses = form_instance.user_responses
-        response = HttpResponse(
-            content_type='text/csv',
-            headers={'Content-Disposition': f'attachment; filename="{form_instance.heading}.csv"'}
-        )
+            form_id = pk
+            form_instance=Forms.objects.get(id=form_id)
+            responses = form_instance.user_responses
+            response = HttpResponse(
+                content_type='text/csv',
+                headers={'Content-Disposition': f'attachment; filename="{form_instance.heading}.csv"'}
+            )
 
-        if(responses):
-            for user_id in responses :
-                username_flag = False
-                form_response[user_id]={}
-                form_response[user_id]["response"]={}
-                for ques_no in responses[user_id]:
-                    response_obj = Responses.objects.get(id=responses[user_id][ques_no])
-                    form_response[user_id]["response"][ques_no]= response_obj.response
-                    if not username_flag :
-                        if response_obj.anoymous_user_flag :
-                            form_response[user_id]["username"]="Anonymous"
-                            username_flag = True
+            if(responses):
+                for user_id in responses :
+                    username_flag = False
+                    form_response[user_id]={}
+                    form_response[user_id]["response"]={}
+                    for ques_no in responses[user_id]:
+                        response_obj = Responses.objects.get(id=responses[user_id][ques_no])
+                        form_response[user_id]["response"][ques_no]= response_obj.response
+                        if not username_flag :
+                            if response_obj.anoymous_user_flag :
+                                form_response[user_id]["username"]="Anonymous"
+                                username_flag = True
+                            else:
+                                user_obj = OurUsers.objects.get(id=user_id)
+                                form_response[user_id]["username"]=user_obj.first_name + " " + user_obj.last_name
+                                username_flag = True
+                writer = csv.writer(response)
+                writer.writerow(["Title",form_instance.heading])
+                writer.writerow(["Desciption",form_instance.description])
+
+                section_instance = Sections.objects.all().filter(form_id=form_instance)
+                ques_id_to_detail_map = {}
+                for sec in section_instance:
+                    ques_instance = Questions.objects.all().filter(section_id=sec)                 
+                    for ques in ques_instance:
+                        ques_id_to_detail_map[ques.id] = ques.statement
+                writer.writerow(["UserName"]+list(ques_id_to_detail_map.values()))
+                ques_lis = list(ques_id_to_detail_map.keys())
+                # print(ques_lis)
+                for user_id in responses :
+                    cur_resp = [""]*(len(ques_lis))
+                    for idx,ques_no in enumerate(ques_lis):
+                        temp_dic = form_response[user_id]["response"]
+                        str_ques = str(ques_no)
+                        if(str_ques in temp_dic):
+                            cur_resp[idx] = temp_dic[str_ques]
                         else:
-                            user_obj = OurUsers.objects.get(id=user_id)
-                            form_response[user_id]["username"]=user_obj.first_name + " " + user_obj.last_name
-                            username_flag = True
-            writer = csv.writer(response)
-            writer.writerow(["Title",form_instance.heading])
-            writer.writerow(["Desciption",form_instance.description])
+                            cur_resp[idx] = " "
+                    writer.writerow([form_response[user_id]["username"]]+cur_resp) 
+            return response
 
-            section_instance = Sections.objects.all().filter(form_id=form_instance)
-            ques_id_to_detail_map = {}
-            for sec in section_instance:
-                ques_instance = Questions.objects.all().filter(section_id=sec)                 
-                for ques in ques_instance:
-                    ques_id_to_detail_map[ques.id] = ques.statement
-            writer.writerow(["UserName"]+list(ques_id_to_detail_map.values()))
-            ques_lis = list(ques_id_to_detail_map.keys())
-            # print(ques_lis)
-            for user_id in responses :
-                cur_resp = [""]*(len(ques_lis))
-                for idx,ques_no in enumerate(ques_lis):
-                    temp_dic = form_response[user_id]["response"]
-                    str_ques = str(ques_no)
-                    if(str_ques in temp_dic):
-                        cur_resp[idx] = temp_dic[str_ques]
-                    else:
-                        cur_resp[idx] = " "
-                writer.writerow([form_response[user_id]["username"]]+cur_resp)
-     
-        # except:
-        #     return Response("Something went wrong", status=status.HTTP_400_BAD_REQUEST)
-        return response
+        except:
+            return Response("Something went wrong", status=status.HTTP_400_BAD_REQUEST)
 
 
 
