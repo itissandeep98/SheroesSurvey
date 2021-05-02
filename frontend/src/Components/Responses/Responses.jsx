@@ -85,7 +85,7 @@ function Responses(props) {
 		<Container>
 			<Row>
 				<Col className="text-center mt-1">
-					<NavigationBar form_id={id} />
+					<NavigationBar form_id={id} response_toggle={details?.is_active} />
 					<h1 className="d-inline text-capitalize">{details.heading}</h1>
 					{responses?.length > 0 && (
 						<Tooltip title="Download All Responses">
