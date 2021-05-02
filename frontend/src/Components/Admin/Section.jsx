@@ -36,7 +36,7 @@ function Section(props) {
 	const dispatch = useDispatch();
 	useEffect(() => {
 		dispatch(sectionFetch(id)).then(res => {
-			setQuesList(res.question_sequence);
+			setQuesList(res?.question_sequence);
 			setDetails(res);
 		});
 	}, [dispatch]);
@@ -88,7 +88,7 @@ function Section(props) {
 						</Dropdown.Menu>
 					</Dropdown>
 					<small className="float-right text-muted">
-						{details.created_on ? (
+						{details?.created_on ? (
 							<>Created {moment(details.created_on).fromNow()}</>
 						) : (
 							<Spinner size="sm" />
@@ -102,7 +102,7 @@ function Section(props) {
 							variant="outlined"
 							multiline
 							fullWidth
-							defaultValue={details.heading}
+							defaultValue={details?.heading}
 							onChange={e =>
 								setDetails({ ...details, heading: e.target.value })
 							}
@@ -115,7 +115,7 @@ function Section(props) {
 							variant="outlined"
 							fullWidth
 							multiline
-							defaultValue={details.description}
+							defaultValue={details?.description}
 							onChange={e =>
 								setDetails({ ...details, description: e.target.value })
 							}

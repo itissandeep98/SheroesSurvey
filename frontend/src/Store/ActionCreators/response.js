@@ -70,3 +70,26 @@ export const responseFetch = id => {
 			});
 	};
 };
+
+export const generateExcel = id => {
+	return async dispatch => {
+		dispatch({ type: ActionTypes.RESPONSE_EXCEL_CREATE_REQUEST });
+		return await axios
+			.get(`${apiUrl}/forms/${id}/get_csv/`, { headers: headers() })
+			.then(response => {
+				console.log(response);
+				dispatch({
+					type: ActionTypes.RESPONSE_EXCEL_CREATE_SUCCESS,
+					data: response.data,
+				});
+				return response.data;
+			})
+			.catch(error => {
+				console.log(error.response);
+				dispatch({
+					type: ActionTypes.RESPONSE_EXCEL_CREATE_FAILED,
+					errmess: 'Error in connection with Server',
+				});
+			});
+	};
+};
