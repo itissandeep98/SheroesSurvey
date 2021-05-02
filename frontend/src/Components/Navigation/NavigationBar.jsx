@@ -87,7 +87,7 @@ function NavigationBar(props) {
 				),
 			onClick: () => {
 				const data = {
-					edit_response_toggle: !(response ?? props.response_toggle),
+					is_active: !(response ?? props.response_toggle),
 				};
 				const id = form_id;
 				dispatch(formUpdate({ id, data }));

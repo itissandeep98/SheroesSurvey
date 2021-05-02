@@ -33,7 +33,7 @@ export const sectionFetch = id => {
 	return async dispatch => {
 		dispatch({ type: ActionTypes.SECTION_FETCH_REQUEST });
 		return await axios
-			.get(`${apiUrl}/sections/${id}/`, { headers: headers() })
+			.get(`${apiUrl}/sections/${id}/`)
 			.then(response => {
 				dispatch({
 					type: ActionTypes.SECTION_FETCH_SUCCESS,

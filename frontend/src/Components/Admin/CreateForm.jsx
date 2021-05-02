@@ -88,7 +88,7 @@ function CreateForm(props) {
 							<Col className="text-center">
 								<NavigationBar
 									form_id={id}
-									response_toggle={details?.edit_response_toggle}
+									response_toggle={details?.is_active}
 								/>
 								<h1 className="d-inline text-capitalize">{details.heading}</h1>
 							</Col>

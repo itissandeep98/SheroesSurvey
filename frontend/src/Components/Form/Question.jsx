@@ -54,28 +54,24 @@ function Question(props) {
 							</Placeholder.Paragraph>
 						</Placeholder>
 					) : (
-						<>
-							<div className="float-right ">
-								<Image
-									src={ques.image_path_1}
-									size="small"
-									className="float-right"
-								/>
-							</div>
-							<h4 className="text-justify">
-								Q{index}: {ques?.statement}
-								{ques.mandatory_toggle && (
-									<Tooltip title="Mandatory Question">
-										<Icon
-											name="asterisk"
-											size="small"
-											className="text-danger ml-2"
-										/>
-									</Tooltip>
-								)}
-							</h4>
-						</>
+						<h4 className="text-justify">
+							Q{index}: {ques?.statement}
+							{ques.mandatory_toggle && (
+								<Tooltip title="Mandatory Question">
+									<Icon
+										name="asterisk"
+										size="small"
+										className="text-danger ml-2"
+									/>
+								</Tooltip>
+							)}
+						</h4>
 					)}
+				</Col>
+			</Row>
+			<Row className="d-flex justify-content-center mt-2">
+				<Col xs={8}>
+					<Image src={ques.image_path_1} rounded/>
 				</Col>
 			</Row>
 			<Row>

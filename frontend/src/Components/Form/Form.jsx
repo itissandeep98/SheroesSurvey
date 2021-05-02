@@ -21,7 +21,7 @@ import {
  * @param {Integer} id - Unique ID of the Form taken from the URL.
  *
  * @property {Object} details - Details of the form
- * @property {Boolean} details.edit_response_toggle - Whether Form is accepting response
+ * @property {Boolean} details.is_active - Whether Form is accepting response
  * @property {Boolean} details.consent_toggle - Whether Form has a consent page
  * @property {String} details.consent_text - Consent form details
  * @property {String} details.description - Description of form
@@ -60,7 +60,7 @@ function Form(props) {
 		});
 	};
 
-	if (details && !details?.edit_response_toggle) {
+	if (details && !details?.is_active) {
 		return <Redirect to={`/${id}/restrict`} />;
 	}
 	return (

@@ -5,7 +5,7 @@
 import { IconButton, TextField, Tooltip } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Col, Input, Label, Row } from 'reactstrap';
+import { Col, Row } from 'reactstrap';
 import { Dropdown, Image, Placeholder } from 'semantic-ui-react';
 import {
 	questionFetch,
@@ -15,8 +15,9 @@ import { QuestionTypes } from '../../../Utils/QuestionTypes';
 import Options from './Options';
 import QuestionSettings from './QuestionSettings';
 import PanoramaIcon from '@material-ui/icons/Panorama';
-import { uploadFiles } from '../../../Store/ActionCreators/upload';
+import { uploadContent } from '../../../Store/ActionCreators/upload';
 import ClearIcon from '@material-ui/icons/Clear';
+import ImageCropper from '../ImageCropper';
 
 /**
  * Represents a Single Question On Admin Panel.
@@ -38,6 +39,8 @@ function Question(props) {
 	const [ques, setQues] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [quesImage, setQuesImage] = useState(null);
+	const [modal, setModal] = useState(false);
+	const [blob, setBlob] = useState(null);
 
 	useEffect(() => {
 		dispatch(questionFetch(id)).then(res => {
@@ -62,24 +65,21 @@ function Question(props) {
 	};
 
 	const handleImage = e => {
-		const file = e.target.files[0];
-		if (file) {
-			const data = {
-				content: 'Images',
-				file: file,
-			};
-			dispatch(uploadFiles(data)).then(res => {
+		if (blob) {
+			dispatch(uploadContent(blob)).then(res => {
 				setQuesImage(res);
 				const data = {
 					image_path_1: res,
 				};
 				dispatch(questionUpdate({ id, data }));
+				setModal(false);
 			});
 		}
 	};
 
 	const deleteImage = e => {
 		setQuesImage(null);
+		setModal(false);
 		const data = {
 			image_path_1: null,
 		};
@@ -87,6 +87,16 @@ function Question(props) {
 	};
 	return (
 		<>
+			<ImageCropper
+				modal={modal}
+				toggle={() => setModal(!modal)}
+				bannerimg={quesImage}
+				setBlob={setBlob}
+				updateBanner={handleImage}
+				removeBanner={deleteImage}
+				aspectX={3500}
+				aspectY={2000}
+			/>
 			{loading ? (
 				<Placeholder>
 					<Placeholder.Paragraph>
@@ -115,12 +125,11 @@ function Question(props) {
 							InputLabelProps={{ shrink: true }}
 						/>
 						{!quesImage ? (
-							<Label className="btn p-2">
-								<Tooltip title="Add Image">
+							<Tooltip title="Add Image">
+								<IconButton onClick={() => setModal(true)}>
 									<PanoramaIcon fontSize="large" />
-								</Tooltip>
-								<Input type="file" hidden onChange={handleImage} />
-							</Label>
+								</IconButton>
+							</Tooltip>
 						) : (
 							<>
 								<Image src={quesImage} size="tiny" className="d-inline mt-2" />

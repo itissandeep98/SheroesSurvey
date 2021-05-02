@@ -46,7 +46,7 @@ function MultipleChoiceInput(props) {
 							label={option.content}
 						/>
 						
-						<Image src={option.image_path} size="small"/>
+						<Image src={option.image_path} size="small" rounded/>
 					</>
 				))}
 			</RadioGroup>
