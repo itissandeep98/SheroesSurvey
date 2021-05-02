@@ -16,19 +16,27 @@ class QuestionSerializers(serializers.ModelSerializer):
     class Meta:
         model = Questions
         fields = '__all__'
-    
+
     def create_sub(self, obj):
+        print(obj)
+        print(self.fields)
         if(obj.qtype=="SP"):
             spObj = ShortPara()
-            spObj.question_id=obj
-            spObj.limit_length=25
-            spObj.datatype="TXT"
+            if(obj.other_ques_params["datatype"] == "TXT"):
+                spObj.datatype="TXT"
+                spObj.question_id=obj
+                spObj.limit_length=obj.other_ques_params["limit_length"]
+            elif(obj.other_ques_params["datatype"] == "INT" or obj.other_ques_params["datatype"]  == "FLT" ):
+                spObj.datatype=obj.other_ques_params["datatype"] 
+                spObj.question_id=obj
+                spObj.max_val=obj.other_ques_params["max_val"]
+                spObj.min_val=obj.other_ques_params["min_val"]
             spObj.save()
             return spObj.id
         elif (obj.qtype=='FU'):
             flObj = FileUpload()
             flObj.question_id=obj
-            flObj.limit_mb=5
+            flObj.limit_mb=obj.other_ques_params["limit_mb"]
             flObj.save()
             return flObj.id
         return None

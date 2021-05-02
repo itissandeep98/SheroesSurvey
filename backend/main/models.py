@@ -102,7 +102,7 @@ class Forms(models.Model):
     start_time = models.DateTimeField(null=True)
     end_time = models.DateTimeField(null=True)
     is_active = models.BooleanField(null=False, default=True)
-    edit_response_toggle = models.BooleanField(null=False, default=False)
+    edit_response_toggle = models.BooleanField(null=False, default=True)
     created_on = models.DateTimeField(auto_now_add=True,null=False)
     updated_on = models.DateTimeField(auto_now=True, null=False) #update
     created_by =  models.ForeignKey(OurUsers,on_delete=models.CASCADE,related_name = "form_created_by") #edit
@@ -232,7 +232,9 @@ class Questions(models.Model):
     updated_on = models.DateTimeField(auto_now=True, null=False) #update
     created_by =  models.ForeignKey(OurUsers,on_delete=models.CASCADE,related_name = "question_created_by") #edit
     updated_by =  models.ForeignKey(OurUsers,on_delete=models.CASCADE,related_name = "question_updated_by") #edit
-    
+    other_ques_params = models.JSONField(default= dict)    
+    # short_para_params max_value, min_value , limit_length ,qtype
+    # file upload params limit_mb
     def save(self,*args,**kwargs):
         new_question = super().save(*args, **kwargs)
         current_section = self.section_id
@@ -294,7 +296,7 @@ class Responses(models.Model):
     response = models.JSONField()
     anoymous_user_flag = models.BooleanField(default=False)
     anoymous_user_id = models.ForeignKey(MyAnonymousUser,on_delete = models.CASCADE,null=True) 
-
+    
     def save(self,*args,**kwargs):        
         current_form = self.form_id
         if( current_form.is_active and not(current_form.is_deleted) ):
@@ -307,7 +309,9 @@ class ShortPara(models.Model):
         FLOATING = 'FLT','Float'
 
     question_id = models.ForeignKey(Questions,on_delete=models.CASCADE) #edit
-    limit_length = models.BigIntegerField()
+    limit_length = models.BigIntegerField(default=100,null=True)
+    min_val = models.FloatField(default=0,null=True)
+    max_val = models.FloatField(default=100,null=True)
     datatype = models.CharField(
         max_length=3,
         choices = DataType.choices,
