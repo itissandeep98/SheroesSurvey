@@ -11,6 +11,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import { uploadContent } from '../../../Store/ActionCreators/upload';
 import { Image } from 'semantic-ui-react';
 import ImageCropper from '../ImageCropper';
+import { Col, Container, Row } from 'reactstrap';
 
 /**
  * Represents a Single Option in Multiple Choice Question On Admin Panel.
@@ -56,43 +57,51 @@ function Option(props) {
 	};
 
 	return (
-		<>
-			<ImageCropper
-				modal={modal}
-				toggle={() => setModal(!modal)}
-				bannerimg={optImage}
-				setBlob={setBlob}
-				updateBanner={handleImage}
-				removeBanner={deleteImage}
-				aspectX={2000}
-				aspectY={2000}
-			/>
-			<TextField
-				variant="outlined"
-				label={`Option ${index}`}
-				value={value}
-				className="w-50"
-				onChange={e => setValue(e.target.value)}
-				onKeyUp={updateOption}
-			/>
-			{!optImage ? (
-				<Tooltip title="Add Image">
-					<IconButton onClick={() => setModal(true)}>
-						<PanoramaIcon fontSize="large" />
+		<Container>
+			<Row>
+				<Col xs={12} lg={6} className="align-items-center d-flex">
+					<ImageCropper
+						modal={modal}
+						toggle={() => setModal(!modal)}
+						bannerimg={optImage}
+						setBlob={setBlob}
+						updateBanner={handleImage}
+						removeBanner={deleteImage}
+						aspectX={2000}
+						aspectY={2000}
+					/>
+					<TextField
+						variant="outlined"
+						label={`Option ${index}`}
+						value={value}
+						fullWidth
+						onChange={e => setValue(e.target.value)}
+						onKeyUp={updateOption}
+					/>
+				</Col>
+				<Col className="d-flex flex-row mb-2">
+					{!optImage ? (
+						<Tooltip title="Add Image">
+							<IconButton onClick={() => setModal(true)}>
+								<PanoramaIcon fontSize="large" />
+							</IconButton>
+						</Tooltip>
+					) : (
+						<>
+							<Image src={optImage} size="tiny" className="d-inline ml-2" />
+							<IconButton onClick={deleteImage}>
+								<ClearIcon />
+							</IconButton>
+						</>
+					)}
+				</Col>
+				<Col >
+					<IconButton onClick={deleteOption} className="float-right">
+						<DeleteIcon />
 					</IconButton>
-				</Tooltip>
-			) : (
-				<>
-					<Image src={optImage} size="tiny" className="d-inline ml-2" />
-					<IconButton onClick={deleteImage}>
-						<ClearIcon />
-					</IconButton>
-				</>
-			)}
-			<IconButton onClick={deleteOption} className="float-right">
-				<DeleteIcon />
-			</IconButton>
-		</>
+				</Col>
+			</Row>
+		</Container>
 	);
 }
 

@@ -3,7 +3,7 @@
  */
 import { useEffect, useState } from 'react';
 import { Col, Container, Row, Spinner } from 'reactstrap';
-import { Button, Icon, List } from 'semantic-ui-react';
+import { Button, Dropdown, Icon, List, Loader } from 'semantic-ui-react';
 import Section from './Section';
 import classNames from 'classnames';
 import Banner from './Banner';
@@ -25,7 +25,7 @@ import ConsentPage from './ConsentPage';
  * @property {Function} addSection -Updates the content in option
  * @property {Function} removeSection -Updates the content in option
  * @property {Function} updateForm -Updates the content in option
- * 
+ *
  */
 
 function CreateForm(props) {
@@ -79,9 +79,19 @@ function CreateForm(props) {
 		dispatch(formUpdate({ id, data }));
 	};
 
+	const sectionOptions = structure.map((sec, i) => ({
+		key: sec,
+		text: `Section ${i + 1}`,
+		value: i,
+	}));
+
 	return (
 		<Container className="mt-3" fluid>
-			{details && (
+			{!details ? (
+				<Row className=" d-flex justify-content-center align-items-center  text-muted">
+					<Loader active inline /> Fetching Form details
+				</Row>
+			) : (
 				<Row className="d-flex justify-content-center">
 					<Col lg={8}>
 						<Row>
@@ -105,7 +115,29 @@ function CreateForm(props) {
 						</Row>
 
 						<Row className="mt-4">
-							<Col xs={2}>
+							<Col
+								xs={12}
+								className="d-md-none mb-3 d-flex justify-content-around">
+								<Dropdown
+									placeholder="Select Section"
+									compact
+									defaultValue={curr}
+									selection
+									options={sectionOptions}
+									onChange={(e, { value }) => setCurr(value)}
+								/>
+								<Button onClick={addSection} disabled={loading}>
+									{loading ? (
+										<Spinner />
+									) : (
+										<>
+											<Icon name="plus" />
+											Add Section
+										</>
+									)}
+								</Button>
+							</Col>
+							<Col xs={2} className="d-none d-md-block">
 								<div className="sticky-top text-center" style={{ zIndex: 0 }}>
 									<br />
 									<Button onClick={addSection} size="mini" disabled={loading}>
