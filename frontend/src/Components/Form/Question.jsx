@@ -4,7 +4,7 @@
 import { useEffect, useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { Col, Container, Row } from 'reactstrap';
-import { Icon, Placeholder } from 'semantic-ui-react';
+import { Icon, Image, Placeholder } from 'semantic-ui-react';
 import { questionFetch } from '../../Store/ActionCreators/question';
 import MultipleChoiceInput from './Inputs/MultipleChoiceInput';
 import ParagraphInput from './Inputs/ParagraphInput';
@@ -54,18 +54,27 @@ function Question(props) {
 							</Placeholder.Paragraph>
 						</Placeholder>
 					) : (
-						<h4 className="text-justify">
-							Q{index}: {ques?.statement}
-							{ques.mandatory_toggle && (
-								<Tooltip title="Mandatory Question">
-									<Icon
-										name="asterisk"
-										size="small"
-										className="text-danger ml-2"
-									/>
-								</Tooltip>
-							)}
-						</h4>
+						<>
+							<div className="float-right ">
+								<Image
+									src={ques.image_path_1}
+									size="small"
+									className="float-right"
+								/>
+							</div>
+							<h4 className="text-justify">
+								Q{index}: {ques?.statement}
+								{ques.mandatory_toggle && (
+									<Tooltip title="Mandatory Question">
+										<Icon
+											name="asterisk"
+											size="small"
+											className="text-danger ml-2"
+										/>
+									</Tooltip>
+								)}
+							</h4>
+						</>
 					)}
 				</Col>
 			</Row>

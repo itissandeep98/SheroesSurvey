@@ -2,11 +2,11 @@
  * @module Admin/Question
  */
 
-import { TextField } from '@material-ui/core';
+import { IconButton, TextField, Tooltip } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Col, Row } from 'reactstrap';
-import { Dropdown, Placeholder } from 'semantic-ui-react';
+import { Col, Input, Label, Row } from 'reactstrap';
+import { Dropdown, Image, Placeholder } from 'semantic-ui-react';
 import {
 	questionFetch,
 	questionUpdate,
@@ -14,6 +14,9 @@ import {
 import { QuestionTypes } from '../../../Utils/QuestionTypes';
 import Options from './Options';
 import QuestionSettings from './QuestionSettings';
+import PanoramaIcon from '@material-ui/icons/Panorama';
+import { uploadFiles } from '../../../Store/ActionCreators/upload';
+import ClearIcon from '@material-ui/icons/Clear';
 
 /**
  * Represents a Single Question On Admin Panel.
@@ -34,10 +37,12 @@ function Question(props) {
 	const dispatch = useDispatch();
 	const [ques, setQues] = useState(null);
 	const [loading, setLoading] = useState(true);
+	const [quesImage, setQuesImage] = useState(null);
 
 	useEffect(() => {
 		dispatch(questionFetch(id)).then(res => {
 			setQues(res);
+			setQuesImage(res.image_path_1);
 			setLoading(false);
 		});
 	}, [dispatch]);
@@ -56,6 +61,30 @@ function Question(props) {
 		dispatch(questionUpdate({ id, data }));
 	};
 
+	const handleImage = e => {
+		const file = e.target.files[0];
+		if (file) {
+			const data = {
+				content: 'Images',
+				file: file,
+			};
+			dispatch(uploadFiles(data)).then(res => {
+				setQuesImage(res);
+				const data = {
+					image_path_1: res,
+				};
+				dispatch(questionUpdate({ id, data }));
+			});
+		}
+	};
+
+	const deleteImage = e => {
+		setQuesImage(null);
+		const data = {
+			image_path_1: null,
+		};
+		dispatch(questionUpdate({ id, data }));
+	};
 	return (
 		<>
 			{loading ? (
@@ -85,6 +114,21 @@ function Question(props) {
 							onKeyUp={updateQuestion}
 							InputLabelProps={{ shrink: true }}
 						/>
+						{!quesImage ? (
+							<Label className="btn p-2">
+								<Tooltip title="Add Image">
+									<PanoramaIcon fontSize="large" />
+								</Tooltip>
+								<Input type="file" hidden onChange={handleImage} />
+							</Label>
+						) : (
+							<>
+								<Image src={quesImage} size="tiny" className="d-inline mt-2" />
+								<IconButton onClick={deleteImage}>
+									<ClearIcon />
+								</IconButton>
+							</>
+						)}
 						<br />
 						<br />
 						<Row>

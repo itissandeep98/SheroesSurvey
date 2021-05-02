@@ -53,7 +53,7 @@ export const formFetch = id => {
 	return async dispatch => {
 		dispatch({ type: ActionTypes.FORM_FETCH_REQUEST });
 		return await axios
-			.get(`${apiUrl}/forms/${id}/`, { headers: headers() })
+			.get(`${apiUrl}/forms/${id}/`)
 			.then(response => {
 				dispatch({
 					type: ActionTypes.FORM_FETCH_SUCCESS,

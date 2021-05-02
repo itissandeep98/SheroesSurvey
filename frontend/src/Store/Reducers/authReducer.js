@@ -22,12 +22,9 @@ const authReducer = (state = initState, action) => {
 				errmess: null,
 				isLoading: false,
 			};
+
 		case ActionTypes.LOGOUT_SUCCESS:
 			return {
-				...state,
-				key: null,
-				userId: null,
-				errmess: null,
 				isLoading: false,
 			};
 		default:
