@@ -44,7 +44,7 @@ function Responses(props) {
 		<Container>
 			<Row>
 				<Col className="text-center mt-1">
-					<NavigationBar form_id={id} />
+					<NavigationBar form_id={id} response_toggle={details?.is_active} />
 					<h1 className="d-inline text-capitalize">{details.heading}</h1>
 				</Col>
 			</Row>
@@ -59,7 +59,9 @@ function Responses(props) {
 						<IconButton onClick={() => setCurr(Math.min(total, curr + 1))}>
 							<ArrowForwardIosIcon />
 						</IconButton>
-						<p className="text-muted float-right">Response by {responses?.[curr - 1]?.[1]}</p>
+						<p className="text-muted float-right">
+							Response by {responses?.[curr - 1]?.[1]}
+						</p>
 					</Col>
 				) : (
 					<Col>

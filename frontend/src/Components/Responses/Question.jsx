@@ -1,18 +1,14 @@
 /**
  * @module Responses/Question
  */
-import {
-	FormControl,
-	FormControlLabel,
-	Radio,
-	RadioGroup,
-} from '@material-ui/core';
+import { Tooltip } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { Col, Container, Row } from 'reactstrap';
-import { List, Placeholder } from 'semantic-ui-react';
+import { Placeholder } from 'semantic-ui-react';
 import { questionFetch } from '../../Store/ActionCreators/question';
 import Options from './Options';
+import AttachmentIcon from '@material-ui/icons/Attachment';
 
 /**
  * Represents a Question in Response View.
@@ -62,6 +58,16 @@ function Question(props) {
 			</Row>
 			<Row>
 				<Col>
+					{ques.qtype === 'FU' && (
+						<div className="ml-2">
+							<Tooltip title="Open file in new tab">
+								<a href={resp} target="__blank" rel="noopener noreferer">
+									File
+									<AttachmentIcon />
+								</a>
+							</Tooltip>
+						</div>
+					)}
 					{(ques.qtype === 'SP' || ques.qtype === 'LP') && (
 						<p className="mt-2 text-justify border p-2">{resp}</p>
 					)}
