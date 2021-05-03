@@ -32,7 +32,7 @@ export const questionFetch = id => {
 	return async dispatch => {
 		dispatch({ type: ActionTypes.QUESTION_FETCH_REQUEST });
 		return await axios
-			.get(`${apiUrl}/questions/${id}/`, { headers: headers() })
+			.get(`${apiUrl}/questions/${id}/`)
 			.then(response => {
 				dispatch({
 					type: ActionTypes.QUESTION_FETCH_SUCCESS,

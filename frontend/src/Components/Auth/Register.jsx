@@ -32,7 +32,7 @@ import { Image } from 'semantic-ui-react';
 function Register(props) {
 	const dispatch = useDispatch();
 	const [data, setData] = useState({
-		user_type: 'CR',
+		user_type: 'EU',
 		gender:'F'
 	});
 	const [cnfpassword, setcnfpassword] = useState(false);

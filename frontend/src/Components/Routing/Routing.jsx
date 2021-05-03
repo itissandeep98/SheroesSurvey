@@ -57,19 +57,16 @@ export default function Routing() {
 		},
 		{
 			path: '/:id/restrict',
-			private: true,
 			layout: true,
 			render: props => <FormRestrict key={props.match.params.id} {...props} />,
 		},
 		{
 			path: '/:id/thank',
-			private: true,
 			layout: true,
 			render: props => <ThankYou key={props.match.params.id} {...props} />,
 		},
 		{
 			path: '/:id',
-			private: true,
 			layout: true,
 			render: props => <Form key={props.match.params.id} {...props} />,
 		},

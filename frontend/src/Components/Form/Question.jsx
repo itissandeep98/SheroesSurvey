@@ -4,7 +4,7 @@
 import { useEffect, useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { Col, Container, Row } from 'reactstrap';
-import { Icon, Placeholder } from 'semantic-ui-react';
+import { Icon, Image, Placeholder } from 'semantic-ui-react';
 import { questionFetch } from '../../Store/ActionCreators/question';
 import MultipleChoiceInput from './Inputs/MultipleChoiceInput';
 import ParagraphInput from './Inputs/ParagraphInput';
@@ -67,6 +67,11 @@ function Question(props) {
 							)}
 						</h4>
 					)}
+				</Col>
+			</Row>
+			<Row className="d-flex justify-content-center mt-2">
+				<Col xs={8}>
+					<Image src={ques.image_path_1} rounded/>
 				</Col>
 			</Row>
 			<Row>

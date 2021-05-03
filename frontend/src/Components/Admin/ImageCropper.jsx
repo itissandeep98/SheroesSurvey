@@ -10,10 +10,6 @@ import './style.scss';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Image as Imag } from 'semantic-ui-react';
 
-
-const aspectX = 3500;
-const aspectY = 1000;
-
 /**
  * Provides a popup with image cropping options.
  * @param {Boolean} modal -Whether Popup is open or not.
@@ -34,6 +30,8 @@ function ImageCropper(props) {
 		bannerimg,
 		setBlob,
 	} = props;
+	const aspectX = props.aspectX ?? 3500;
+	const aspectY = props.aspectY ?? 1000;
 	const [crop, setCrop] = useState({ x: 0, y: 0 });
 	const [zoom, setZoom] = useState(1);
 
@@ -63,10 +61,62 @@ function ImageCropper(props) {
 			}
 		},
 	});
+	/**
+	 * Creates an Image HTML Object with given url of image.
+	 * @param {URL} url -URL of Image.
+	 *
+	 * @returns {HTML} Image object
+	 */
+	const createImage = url =>
+		new Promise((resolve, reject) => {
+			const image = new Image();
+			image.addEventListener('load', () => resolve(image));
+			image.addEventListener('error', error => reject(error));
+			image.setAttribute('crossOrigin', 'anonymous');
+			image.src = url;
+		});
+
+	/**
+	 * Crops the Image with given Crop parameters.
+	 * @param {URL} imageSrc -URL of Image.
+	 * @param {Object} crop -Crop parameters of image.
+	 *
+	 *
+	 * @returns {BLOB} Image File after getting cropped
+	 */
+	const getCroppedImg = async (imageSrc, crop) => {
+		const image = await createImage(imageSrc);
+		const canvas = document.createElement('canvas');
+		const ctx = canvas.getContext('2d');
+		canvas.width = aspectX;
+		canvas.height = aspectY;
+
+		ctx.drawImage(
+			image,
+			crop.x,
+			crop.y,
+			crop.width,
+			crop.height,
+			0,
+			0,
+			canvas.width,
+			canvas.height
+		);
+
+		return new Promise(resolve => {
+			canvas.toBlob(
+				blob => {
+					resolve(blob);
+				},
+				'image/png',
+				1
+			);
+		});
+	};
 
 	return (
 		<Modal isOpen={modal} toggle={toggle} size="lg">
-			<ModalHeader toggle={toggle}>Update Banner</ModalHeader>
+			<ModalHeader toggle={toggle}>Crop Image</ModalHeader>
 			<ModalBody>
 				{bannerimg && (
 					<div className="mb-2 d-flex">
@@ -113,64 +163,11 @@ function ImageCropper(props) {
 			</ModalBody>
 			<ModalFooter>
 				<Button variant="outlined" onClick={updateBanner}>
-					Update Banner
+					Update
 				</Button>
 			</ModalFooter>
 		</Modal>
 	);
 }
-
-/**
- * Creates an Image HTML Object with given url of image.
- * @param {URL} url -URL of Image.
- *
- * @returns {HTML} Image object
- */
-const createImage = url =>
-	new Promise((resolve, reject) => {
-		const image = new Image();
-		image.addEventListener('load', () => resolve(image));
-		image.addEventListener('error', error => reject(error));
-		image.setAttribute('crossOrigin', 'anonymous');
-		image.src = url;
-	});
-
-/**
- * Crops the Image with given Crop parameters.
- * @param {URL} imageSrc -URL of Image.
- * @param {Object} crop -Crop parameters of image.
- *
- *
- * @returns {BLOB} Image File after getting cropped
- */
-const getCroppedImg = async (imageSrc, crop) => {
-	const image = await createImage(imageSrc);
-	const canvas = document.createElement('canvas');
-	const ctx = canvas.getContext('2d');
-	canvas.width = aspectX;
-	canvas.height = aspectY;
-
-	ctx.drawImage(
-		image,
-		crop.x,
-		crop.y,
-		crop.width,
-		crop.height,
-		0,
-		0,
-		canvas.width,
-		canvas.height
-	);
-
-	return new Promise(resolve => {
-		canvas.toBlob(
-			blob => {
-				resolve(blob);
-			},
-			'image/png',
-			1
-		);
-	});
-};
 
 export default ImageCropper;

@@ -55,7 +55,7 @@ export const optionFetch = id => {
 	return async dispatch => {
 		dispatch({ type: ActionTypes.OPTION_FETCH_REQUEST });
 		return await axios
-			.get(`${apiUrl}/questions/${id}/get_options/`, { headers: headers() })
+			.get(`${apiUrl}/questions/${id}/get_options/`)
 			.then(response => {
 				dispatch({
 					type: ActionTypes.OPTION_FETCH_SUCCESS,
