@@ -22,6 +22,11 @@ class QuestionSerializers(serializers.ModelSerializer):
         print(self.fields)
         if(obj.qtype=="SP"):
             spObj = ShortPara()
+            if len(obj.other_ques_params)==0:
+                #default
+                obj.other_ques_params["datatype"]="TXT"
+                obj.other_ques_params["limit_length"]=100
+
             if(obj.other_ques_params["datatype"] == "TXT"):
                 spObj.datatype="TXT"
                 spObj.question_id=obj
@@ -34,6 +39,9 @@ class QuestionSerializers(serializers.ModelSerializer):
             spObj.save()
             return spObj.id
         elif (obj.qtype=='FU'):
+            if len(obj.other_ques_params)==0:
+                #default
+                obj.other_ques_params["limit_mb"]=2
             flObj = FileUpload()
             flObj.question_id=obj
             flObj.limit_mb=obj.other_ques_params["limit_mb"]
