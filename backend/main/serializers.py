@@ -4,8 +4,8 @@ from main.models import Forms, OurUsers, Sections, Questions, Options, ShortPara
 class FormSerializers(serializers.ModelSerializer):
     class Meta:
         model = Forms
-        fields = '__all__'
-
+        # fields = '__all__'
+        exclude = ['user_responses']
 class SectionSerializers(serializers.ModelSerializer):
     class Meta:
         model = Sections
