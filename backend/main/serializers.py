@@ -42,6 +42,8 @@ class QuestionSerializers(serializers.ModelSerializer):
             if len(obj.other_ques_params)==0:
                 #default
                 obj.other_ques_params["limit_mb"]=2
+            elif "limit_mb" not in obj.other_ques_params :
+                obj.other_ques_params["limit_mb"]=2
             flObj = FileUpload()
             flObj.question_id=obj
             flObj.limit_mb=obj.other_ques_params["limit_mb"]
