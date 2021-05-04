@@ -33,7 +33,7 @@ class FormsViewSet(viewsets.ModelViewSet):
         elif self.request.user.user_type=='CR':
             return self.request.user.form_created_by.all()
         else:
-            return None
+            return Forms.objects.all()
  
         
 
@@ -114,7 +114,8 @@ class FormsViewSet(viewsets.ModelViewSet):
             Example : If user wants to access form number 37 use the following url
             https://sheroes-form.herokuapp.com/forms/37/
         """
-        return Response(Forms.objects.all().filter(is_deleted = False).values(),status=status.HTTP_200_OK)
+        data=FormSerializers(self.get_queryset(request.user).filter(is_deleted = False), many=True).data
+        return Response( data,status=status.HTTP_200_OK)
 
     @action(methods=['get'], detail=False)
     def get_all_deleted_forms(self,request):
@@ -125,7 +126,8 @@ class FormsViewSet(viewsets.ModelViewSet):
             heroku url: https://sheroes-form.herokuapp.com/forms/get_all_deleted_forms/
             local url:  http://127.0.0.1:8000/forms/get_all_deleted_forms/
         """
-        return Response(Forms.objects.all().filter(is_deleted = True).values(),status=status.HTTP_200_OK)
+        data=FormSerializers(self.get_queryset(request.user).filter(is_deleted = True), many=True).data
+        return Response(data,status=status.HTTP_200_OK)
 
     @action(methods=['post'], detail=True)
     def accept_response(self, request, pk=None):
