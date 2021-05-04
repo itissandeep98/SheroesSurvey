@@ -36,6 +36,7 @@ function QuestionMore(props) {
 				limit_length: limits.limit_length,
 				min_val: limits.min_value,
 				max_val: limits.max_value,
+				limit_mb: limits.limit_mb,
 			},
 		};
 		dispatch(questionUpdate({ id, data }));
@@ -45,20 +46,34 @@ function QuestionMore(props) {
 		<Modal isOpen={modal} toggle={toggle}>
 			<ModalHeader toggle={toggle}>More Options</ModalHeader>
 			<ModalBody>
-				<Col>
-					<Dropdown
-						placeholder="Select Type"
-						search
-						selection
-						options={ShortQuestions}
-						value={limits.datatype}
-						onChange={(e, { value }) =>
-							setLimits({ ...limits, datatype: value })
-						}
-						fluid
-					/>
-				</Col>
-				{limits.datatype === 'TXT' && (
+				{qtype === 'SP' && (
+					<Col>
+						<Dropdown
+							placeholder="Select Type"
+							search
+							selection
+							options={ShortQuestions}
+							value={limits.datatype}
+							onChange={(e, { value }) =>
+								setLimits({ ...limits, datatype: value })
+							}
+							fluid
+						/>
+					</Col>
+				)}
+				{qtype === 'FU' && (
+					<Col className="mt-3">
+						<TextField
+							fullWidth
+							variant="outlined"
+							value={limits.limit_mb}
+							type="number"
+							label="File Size Limit (in MB)"
+							onChange={e => setLimits({ ...limits, limit_mb: e.target.value })}
+						/>
+					</Col>
+				)}
+				{limits.datatype === 'TXT' && qtype === 'SP' && (
 					<Col className="mt-3">
 						<TextField
 							fullWidth
@@ -72,36 +87,37 @@ function QuestionMore(props) {
 						/>
 					</Col>
 				)}
-				{(limits.datatype === 'INT' || limits.datatype === 'FLT') && (
-					<Col xs={12} className="mt-3">
-						<Row>
-							<Col>
-								<TextField
-									fullWidth
-									value={limits.min_val}
-									variant="outlined"
-									type="number"
-									label="Minimum Accepted value"
-									onChange={e =>
-										setLimits({ ...limits, min_val: e.target.value })
-									}
-								/>
-							</Col>
-							<Col>
-								<TextField
-									fullWidth
-									variant="outlined"
-									value={limits.max_val}
-									type="number"
-									label="Maximum Accepted value"
-									onChange={e =>
-										setLimits({ ...limits, max_val: e.target.value })
-									}
-								/>
-							</Col>
-						</Row>
-					</Col>
-				)}
+				{(limits.datatype === 'INT' || limits.datatype === 'FLT') &&
+					qtype === 'SP' && (
+						<Col xs={12} className="mt-3">
+							<Row>
+								<Col>
+									<TextField
+										fullWidth
+										value={limits.min_val}
+										variant="outlined"
+										type="number"
+										label="Minimum Accepted value"
+										onChange={e =>
+											setLimits({ ...limits, min_val: e.target.value })
+										}
+									/>
+								</Col>
+								<Col>
+									<TextField
+										fullWidth
+										variant="outlined"
+										value={limits.max_val}
+										type="number"
+										label="Maximum Accepted value"
+										onChange={e =>
+											setLimits({ ...limits, max_val: e.target.value })
+										}
+									/>
+								</Col>
+							</Row>
+						</Col>
+					)}
 			</ModalBody>
 			<ModalFooter>
 				<Button variant="outlined" onClick={handleUpdate}>
