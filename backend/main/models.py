@@ -7,6 +7,10 @@ User = settings.AUTH_USER_MODEL
 
 # Manger for OurUser model
 class OurUserManager(UserManager):
+    """
+    This is a manager class for creating different types of users
+    """
+
     # def _create_user(self, username, user_type, email, password,
     #                  is_staff, is_superuser, first_name, last_name, gender, partner_id, sheroes_id, **extra_fields):
     #     """
@@ -51,6 +55,10 @@ class OurUserManager(UserManager):
 
 
 class OurUsers(AbstractBaseUser, PermissionsMixin):
+    """
+    This class gives us accessibility for three types of users to be used on our platform.
+    The three types of users include Admin, Forms Creator and End user.
+    """
     class GenderType(models.TextChoices):
         MALE = 'M', 'Male'
         FEMALE = 'F','Short'

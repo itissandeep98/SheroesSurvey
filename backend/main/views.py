@@ -9,6 +9,73 @@ import csv
 from django.http import HttpResponse
 
 class FormsViewSet(viewsets.ModelViewSet):
+    """
+    This viewset is used to create api's related to forms like fetching them, submitting responses , getting responses etc.
+
+    1. Fetch all forms \n
+        GET request on https://sheroes-form.herokuapp.com/forms/
+
+        The above URL can be used to fetch all the forms from the database. 
+
+    2. Fetch a particular form \n
+        GET request on https://sheroes-form.herokuapp.com/forms/<form_id>/
+
+        The above URL can be used to fetch a particular form from the database. 
+
+    3. Update fields of a particular form \n
+        POST request on https://sheroes-form.herokuapp.com/forms/<form-id>/update_fields/
+        eg: You can send this
+        {
+        "updated_by": 4,
+        "section_sequence" : [1,3,2]
+        "description" : "This is a sample description"
+        } to update the section_sequence and description.
+        This helps to change any field related to the forms like it's title, decription, section sequence, banner etc.
+        Only those field which needs to be updated are sent using this API. The user needs to be authenticated as a Form Creator if
+        he owns the form or Admin to make changes to a form. The authorization token for this will be passed as a Header. update_by is a mandatory field here.
+
+    4. Fetch all Not deleted forms \n
+        GET request on https://sheroes-form.herokuapp.com/forms/get_all_not_del/
+
+        Returns all the forms which are not deleted.By deleted it means that they are not soft deleted.
+        Note: If you want to access a particular form, use the default GET request.
+        Example : If user wants to access form number 37 use the following url
+        https://sheroes-form.herokuapp.com/forms/37/
+
+    5. Fetch all deleted forms \n
+        GET request on https://sheroes-form.herokuapp.com/forms/get_all_deleted_forms/
+
+        Returns all the forms which were soft deleted.By deleted it means that they are not soft deleted.
+
+    6. Accept Responses  for a form \n
+        Post request on https://sheroes-form.herokuapp.com/forms/<form-id>/accept_response/
+
+        To send a response for a partiular form.
+        The authorization token for this will be passed as a Header if forms wants authenticated responses otherwise NUll.
+        This also supports editing response as of now.        
+            Data Format :
+            {
+            question_id: "answer",
+            question_id: "answer",
+            question_id: "answer",
+            ...
+            }
+
+    7. Get Responses  for a form \n
+        Get request on https://sheroes-form.herokuapp.com/forms/<form-id>/get_response/
+
+        To get responses for a partiular form.The authorization token for this will be passed as a Header.
+        Data is returned as a list.
+            Format :
+            ["user_id","user_name","response"]
+            "response" has the data format of data submitted throug accet responses functionality.
+
+    8. Get Responses in csv format which can be downloaded \n
+        Get request on https://sheroes-form.herokuapp.com/forms/<form-id>/get_response/
+
+        To get csv of the user responses.The authorization token for this will be passed as a Header. 
+
+    """
     # permission_classes = [
     #     permissions.AllowAny
     # ]
@@ -110,9 +177,9 @@ class FormsViewSet(viewsets.ModelViewSet):
             heroku url: https://sheroes-form.herokuapp.com/forms/get_all_not_del/
             local url:  http://127.0.0.1:8000/forms/get_all_not_del/
             ********************
-            Note: If you want to access a particular form, use the default GET request.
-            Example : If user wants to access form number 37 use the following url
-            https://sheroes-form.herokuapp.com/forms/37/
+                Note: If you want to access a particular form, use the default GET request.
+                Example : If user wants to access form number 37 use the following url
+                https://sheroes-form.herokuapp.com/forms/37/
         """
         data=FormSerializers(self.get_queryset(request.user).filter(is_deleted = False), many=True).data
         return Response( data,status=status.HTTP_200_OK)
