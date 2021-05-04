@@ -35,9 +35,10 @@ import { showAlert } from '../Alert';
  * @property {Function} handleDelete -Deletes the form
  */
 function NavigationBar(props) {
-	const { form_id, response_toggle } = props;
+	const { form_id, response_toggle, anonymous_response } = props;
 	const history = useHistory();
 	const [response, setResponse] = useState(response_toggle);
+	const [anon_response, setanon_response] = useState(anonymous_response);
 	const [open, setOpen] = useState(false);
 	const [modal, setModal] = useState(false);
 	const dispatch = useDispatch();
@@ -92,6 +93,23 @@ function NavigationBar(props) {
 				const id = form_id;
 				dispatch(formUpdate({ id, data }));
 				setResponse(!(response ?? props.response_toggle));
+			},
+		},
+		{
+			text: 'Anonymous Responses',
+			icon:
+				anon_response ?? props.anonymous_response ? (
+					<CheckBoxIcon />
+				) : (
+					<CheckBoxOutlineBlankIcon />
+				),
+			onClick: () => {
+				const data = {
+					anonymous_response: !(anon_response ?? props.anonymous_response),
+				};
+				const id = form_id;
+				dispatch(formUpdate({ id, data }));
+				setanon_response(!(anon_response ?? props.anonymous_response));
 			},
 		},
 	];

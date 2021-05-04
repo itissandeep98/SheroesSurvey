@@ -13,7 +13,7 @@ import {
 	Row,
 } from 'reactstrap';
 import { Dropdown } from 'semantic-ui-react';
-import { questionDetailsUpdate } from '../../../Store/ActionCreators/question';
+import { questionUpdate } from '../../../Store/ActionCreators/question';
 import { ShortQuestions } from '../../../Utils/QuestionTypes';
 
 /**
@@ -26,24 +26,21 @@ import { ShortQuestions } from '../../../Utils/QuestionTypes';
  */
 
 function QuestionMore(props) {
-	const { modal, toggle, qtype, id } = props;
-	const [type, setType] = useState('TXT');
-	const [limits, setLimits] = useState({
-		limit_length: 100,
-		min_value: 0,
-		max_value: 100,
-	});
+	const { modal, toggle, qtype, id, other_params } = props;
+	const [limits, setLimits] = useState({ ...other_params });
 	const dispatch = useDispatch();
 	const handleUpdate = () => {
 		const data = {
-			datatype: type,
-			limit_length: limits.limit_length,
-			min_value: limits.min_value,
-			max_value: limits.max_value,
+			other_ques_params: {
+				datatype: limits.datatype,
+				limit_length: limits.limit_length,
+				min_val: limits.min_value,
+				max_val: limits.max_value,
+			},
 		};
-		dispatch(questionDetailsUpdate({ id, data }));
+		dispatch(questionUpdate({ id, data }));
+		toggle();
 	};
-
 	return (
 		<Modal isOpen={modal} toggle={toggle}>
 			<ModalHeader toggle={toggle}>More Options</ModalHeader>
@@ -54,16 +51,19 @@ function QuestionMore(props) {
 						search
 						selection
 						options={ShortQuestions}
-						value={type}
-						onChange={(e, { value }) => setType(value)}
+						value={limits.datatype}
+						onChange={(e, { value }) =>
+							setLimits({ ...limits, datatype: value })
+						}
 						fluid
 					/>
 				</Col>
-				{type === 'TXT' && (
+				{limits.datatype === 'TXT' && (
 					<Col className="mt-3">
 						<TextField
 							fullWidth
 							variant="outlined"
+							value={limits.limit_length}
 							type="number"
 							label="Limit number of characters"
 							onChange={e =>
@@ -72,17 +72,18 @@ function QuestionMore(props) {
 						/>
 					</Col>
 				)}
-				{(type === 'INT' || type === 'FLT') && (
+				{(limits.datatype === 'INT' || limits.datatype === 'FLT') && (
 					<Col xs={12} className="mt-3">
 						<Row>
 							<Col>
 								<TextField
 									fullWidth
+									value={limits.min_val}
 									variant="outlined"
 									type="number"
 									label="Minimum Accepted value"
 									onChange={e =>
-										setLimits({ ...limits, min_value: e.target.value })
+										setLimits({ ...limits, min_val: e.target.value })
 									}
 								/>
 							</Col>
@@ -90,10 +91,11 @@ function QuestionMore(props) {
 								<TextField
 									fullWidth
 									variant="outlined"
+									value={limits.max_val}
 									type="number"
 									label="Maximum Accepted value"
 									onChange={e =>
-										setLimits({ ...limits, max_value: e.target.value })
+										setLimits({ ...limits, max_val: e.target.value })
 									}
 								/>
 							</Col>

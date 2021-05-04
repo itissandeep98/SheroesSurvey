@@ -71,7 +71,7 @@ function Question(props) {
 			</Row>
 			<Row className="d-flex justify-content-center mt-2">
 				<Col xs={8}>
-					<Image src={ques.image_path_1} rounded/>
+					<Image src={ques.image_path_1} rounded />
 				</Col>
 			</Row>
 			<Row>
@@ -81,6 +81,7 @@ function Question(props) {
 							modifyResponse={modifyResponse}
 							value={props.response?.[id]}
 							required={ques.mandatory_toggle}
+							other_params={ques.other_ques_params}
 						/>
 					)}
 					{ques.qtype === 'LP' && (
@@ -104,6 +105,7 @@ function Question(props) {
 							quesId={id}
 							value={props.response?.[id]}
 							required={ques.mandatory_toggle}
+							other_params={ques.other_ques_params}
 						/>
 					)}
 				</Col>

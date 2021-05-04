@@ -42,6 +42,7 @@ function QuestionSettings(props) {
 				toggle={() => setModal(!modal)}
 				qtype={ques.qtype}
 				id={id}
+				other_params={ques.other_ques_params}
 			/>
 
 			<div className="d-flex justify-content-end">

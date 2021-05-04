@@ -15,6 +15,7 @@ import {
 	clearLocalResponse,
 	responseCreate,
 } from '../../Store/ActionCreators/response';
+import { getAuthToken } from '../checkAuth';
 
 /**
  * Provides the ability to preview the form.
@@ -62,6 +63,9 @@ function Form(props) {
 
 	if (details && !details?.is_active) {
 		return <Redirect to={`/${id}/restrict`} />;
+	}
+	if (details && !details?.anonymous_response && !getAuthToken()) {
+		return <Redirect to={`/login`} />;
 	}
 	return (
 		<Container className="mb-5" fluid>
