@@ -26,22 +26,43 @@ class QuestionSerializers(serializers.ModelSerializer):
                 #default
                 obj.other_ques_params["datatype"]="TXT"
                 obj.other_ques_params["limit_length"]=100
-
+                obj.save()
             if(obj.other_ques_params["datatype"] == "TXT"):
                 spObj.datatype="TXT"
                 spObj.question_id=obj
-                spObj.limit_length=obj.other_ques_params["limit_length"]
+                if("limit_length" in obj.other_ques_params ):
+                    spObj.limit_length=obj.other_ques_params["limit_length"]
+
+                else:
+                    spObj.limit_length= 100
+                    obj.other_ques_params["limit_length"] = 100
+                    onj.save()
+
             elif(obj.other_ques_params["datatype"] == "INT" or obj.other_ques_params["datatype"]  == "FLT" ):
                 spObj.datatype=obj.other_ques_params["datatype"] 
                 spObj.question_id=obj
-                spObj.max_val=obj.other_ques_params["max_val"]
-                spObj.min_val=obj.other_ques_params["min_val"]
+                if("max_val" in obj.other_ques_params ):
+                    spObj.max_val=obj.other_ques_params["max_val"]
+                else:
+                    spObj.max_val= 50
+                    obj.other_ques_params["max_val"] = 50
+                    obj.save()
+                if("min_val" in obj.other_ques_params ):
+                    spObj.min_val=obj.other_ques_params["min_val"]
+                else:
+                    spObj.min_val=-100
+                    obj.other_ques_params["min_val"]=-100
+                    obj.save()
             spObj.save()
             return spObj.id
         elif (obj.qtype=='FU'):
             if len(obj.other_ques_params)==0:
                 #default
                 obj.other_ques_params["limit_mb"]=2
+                obj.save()
+            elif "limit_mb" not in obj.other_ques_params :
+                obj.other_ques_params["limit_mb"]=2
+                obj.save()
             flObj = FileUpload()
             flObj.question_id=obj
             flObj.limit_mb=obj.other_ques_params["limit_mb"]
