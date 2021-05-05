@@ -29,4 +29,4 @@ jobs:
     - name: Django Testing project
       run: |
         cd backend/
-        pipenv run python3 - Wa manage.py test
+        pipenv run python3 -Wa manage.py test
