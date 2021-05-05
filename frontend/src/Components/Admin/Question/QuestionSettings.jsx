@@ -42,6 +42,7 @@ function QuestionSettings(props) {
 				toggle={() => setModal(!modal)}
 				qtype={ques.qtype}
 				id={id}
+				other_params={ques.other_ques_params}
 			/>
 
 			<div className="d-flex justify-content-end">
@@ -62,12 +63,13 @@ function QuestionSettings(props) {
 							<Icon name="asterisk" />
 							{selected ? 'Mark  as Not Mandatory' : 'Mark as Mandatory'}
 						</Dropdown.Item>
-						{ques.qtype === 'SP' && (
-							<Dropdown.Item onClick={() => setModal(!modal)}>
-								<Icon name="cogs" />
-								More Options
-							</Dropdown.Item>
-						)}
+						{ques.qtype === 'SP' ||
+							(ques.qtype === 'FU' && (
+								<Dropdown.Item onClick={() => setModal(!modal)}>
+									<Icon name="cogs" />
+									More Options
+								</Dropdown.Item>
+							))}
 					</Dropdown.Menu>
 				</Dropdown>
 			</div>

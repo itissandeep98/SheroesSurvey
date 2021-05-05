@@ -10,6 +10,21 @@ from sendgrid.helpers.mail import Mail, Email, To, Content
 
 #Register API
 class RegisterAPI(generics.GenericAPIView):
+    """
+    Api to register on out platform.
+
+    Post request on https://sheroes-form.herokuapp.com/auth/register
+
+        Example of Data format to be sent = {
+        "username": "itisunderhood998",
+        "email": "manavjeet@gmail.com",
+        "password": "123456",
+        "first_name": "MANAVJeet", 
+        "last_name": "Singh",
+        "gender": "M",
+        "user_type": "EU"
+        }
+    """
     serializer_class=RegisterSerializer
 
     def post(self, request, *args, **kwargs):
@@ -40,6 +55,18 @@ class RegisterAPI(generics.GenericAPIView):
 
 #Login API
 class LoginAPI(generics.GenericAPIView):
+    """
+    Api to log in out platform.
+
+    Post request on https://sheroes-form.herokuapp.com/auth/login
+
+        Example of Data format to be sent = {
+        "username": "itisunderhood998",
+        "password": "123456",
+        }
+        You get Authentication token in response.
+    """
+
     serializer_class=LoginSerializer
 
     def post(self, request, *args, **kwargs):

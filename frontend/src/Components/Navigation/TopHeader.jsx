@@ -35,7 +35,7 @@ function TopHeader() {
 		setMenu(e.currentTarget);
 	};
 	const handleLogout = () => {
-		dispatch(logoutAction())
+		dispatch(logoutAction());
 	};
 	const handleScroll = () => {
 		var currentScrollPos = window.pageYOffset;
@@ -75,10 +75,10 @@ function TopHeader() {
 								<AccountCircleIcon fontSize="large" />
 							</IconButton>
 							<Menu anchorEl={menu} open={Boolean(menu)} onClose={handleClose}>
-								<MenuItem onClick={() => history.push('/profile')}>
+								{/* <MenuItem onClick={() => history.push('/profile')}>
 									<AssignmentIndIcon />
 									Profile
-								</MenuItem>
+								</MenuItem> */}
 								<MenuItem onClick={handleLogout}>
 									<ExitToAppIcon /> Logout
 								</MenuItem>

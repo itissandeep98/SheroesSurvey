@@ -53,6 +53,7 @@ psycopg2 = "==2.8.6"
 whitenoise = "==5.2.0"
 PyMySQL = "==1.0.2"
 sendgrid = "*"
+docutils = "*"
 
 [requires]
 python_version = "3.7"

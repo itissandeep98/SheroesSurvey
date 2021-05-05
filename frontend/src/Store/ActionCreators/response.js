@@ -30,7 +30,7 @@ export const responseCreate = ({ id, data }) => {
 		dispatch({ type: ActionTypes.RESPONSE_CREATE_REQUEST });
 		return await axios
 			.post(`${apiUrl}/forms/${id}/accept_response/`, data, {
-				headers: headers(),
+				headers: getAuthToken() && headers(),
 			})
 			.then(response => {
 				dispatch({
