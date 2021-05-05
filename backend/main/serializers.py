@@ -36,14 +36,17 @@ class QuestionSerializers(serializers.ModelSerializer):
                 else:
                     spObj.limit_length= 100
                     obj.other_ques_params["limit_length"] = 100
-                    onj.save()
+                    obj.save()
 
             elif(obj.other_ques_params["datatype"] == "INT" or obj.other_ques_params["datatype"]  == "FLT" ):
                 spObj.datatype=obj.other_ques_params["datatype"] 
                 spObj.question_id=obj
+                print("here")
                 if("max_val" in obj.other_ques_params ):
+                    print("if works")
                     spObj.max_val=obj.other_ques_params["max_val"]
                 else:
+                    print("this works")
                     spObj.max_val= 50
                     obj.other_ques_params["max_val"] = 50
                     obj.save()

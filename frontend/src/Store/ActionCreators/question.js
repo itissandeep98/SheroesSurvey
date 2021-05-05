@@ -51,7 +51,7 @@ export const questionFetch = id => {
 
 export const questionUpdate = ({ id, data }) => {
 	return async dispatch => {
-		dispatch({ type: ActionTypes.QUESTION_UPDATE_REQUEST });
+		dispatch({ type: ActionTypes.QUESTION_UPDATE_REQUEST, data: data });
 		return await axios
 			.post(`${apiUrl}/questions/${id}/update_fields/`, data, {
 				headers: headers(),

@@ -34,8 +34,8 @@ function QuestionMore(props) {
 			other_ques_params: {
 				datatype: limits.datatype,
 				limit_length: limits.limit_length,
-				min_val: limits.min_value,
-				max_val: limits.max_value,
+				min_val: limits.min_val,
+				max_val: limits.max_val,
 				limit_mb: limits.limit_mb,
 			},
 		};
