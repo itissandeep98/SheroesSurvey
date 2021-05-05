@@ -26,8 +26,8 @@ jobs:
         pip install pipenv
         cd backend/
         pipenv install
-        apt-get install mysqlclient=8.0
+        sudo apt-get install mysqlclient=8.0
     - name: Django Testing project
       run: |
         cd backend/
-        pipenv run python3 -Wa manage.py test
+        pipenv run python3 manage.py test --keepdb
