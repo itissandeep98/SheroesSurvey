@@ -99,6 +99,7 @@ function CreateForm(props) {
 								<NavigationBar
 									form_id={id}
 									response_toggle={details?.is_active}
+									anonymous_response={details?.anonymous_response}
 								/>
 								<h1 className="d-inline text-capitalize">{details.heading}</h1>
 							</Col>

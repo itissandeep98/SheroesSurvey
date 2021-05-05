@@ -60,31 +60,40 @@ function Admin(props) {
 	return (
 		<Container className="mt-3" fluid>
 			<ProfileSummary />
-			<Row className="d-flex justify-content-center">
-				<Col lg={8}>
-					<div
-						onClick={handleCreate}
-						className="border p-3 bg-white text-dark"
-						style={{ cursor: 'pointer' }}>
-						<Icon name="plus circle" size="big" />
-						Create New Form
-					</div>
-				</Col>
-			</Row>
-			{loading && (
-				<Row className=" mt-5 justify-content-center">
-					<h2 className="text-muted">
-						<Spinner /> Fetching Latest Forms
-					</h2>
-				</Row>
+			{user.user_type !== 'EU' ? (
+				<>
+					<Row className="d-flex justify-content-center">
+						<Col lg={8}>
+							<div
+								onClick={handleCreate}
+								className="border p-3 bg-white text-dark"
+								style={{ cursor: 'pointer' }}>
+								<Icon name="plus circle" size="big" />
+								Create New Form
+							</div>
+						</Col>
+					</Row>
+					{loading && (
+						<Row className=" mt-5 justify-content-center">
+							<h2 className="text-muted">
+								<Spinner /> Fetching Latest Forms
+							</h2>
+						</Row>
+					)}
+					<Row className=" mt-5">
+						{cards?.map((card, index) => (
+							<Col sm={6} md={4} lg={3} key={Math.random()} className="h-100">
+								<FormCard
+									{...card}
+									delete={() => handleDelete(card.id, index)}
+								/>
+							</Col>
+						))}
+					</Row>
+				</>
+			) : (
+				<h3 className="text-center">You have Logged in Successfully!!</h3>
 			)}
-			<Row className=" mt-5">
-				{cards?.map((card, index) => (
-					<Col sm={6} md={4} lg={3} key={Math.random()} className="h-100">
-						<FormCard {...card} delete={() => handleDelete(card.id, index)} />
-					</Col>
-				))}
-			</Row>
 		</Container>
 	);
 }

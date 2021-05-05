@@ -9,6 +9,7 @@ import './style.scss';
 import { IconButton, Tooltip } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { uploadFiles } from '../../../Store/ActionCreators/upload';
+import { showAlert } from '../../Alert';
 
 /**
  * shows the multiple options of MCQ.
@@ -18,13 +19,17 @@ import { uploadFiles } from '../../../Store/ActionCreators/upload';
  * @property {Function} handleChange - Modifies the response of user
  */
 function FileInput(props) {
-	const { quesId, required } = props;
+	const { quesId, required, limit_mb } = props;
 	const [file, setFile] = useState(null);
 	const [link, setLink] = useState(props.value);
 	const dispatch = useDispatch();
 	const handleChange = e => {
 		const file = e.target.files[0];
 		if (file) {
+			if (file.size / (1024 * 1024) > limit_mb) {
+				showAlert(`File Size should be Less than ${limit_mb} MB`);
+				return;
+			}
 			setFile(file);
 			const data = {
 				content: 'Files',
@@ -42,15 +47,20 @@ function FileInput(props) {
 	return (
 		<div className="d-flex flex-row align-items-center ">
 			{!link ? (
-				<Label className="file_input">
-					Upload File
-					<Input
-						type="file"
-						onChange={handleChange}
-						required={required}
-						hidden
-					/>
-				</Label>
+				<>
+					<Label className="file_input">
+						Upload File
+						<Input
+							type="file"
+							onChange={handleChange}
+							required={required}
+							hidden
+						/>
+					</Label>
+					<small className="text-muted">
+						File Size should be Less than {limit_mb} MB
+					</small>
+				</>
 			) : (
 				<div className="ml-2">
 					<Tooltip title="Open file in new tab">
