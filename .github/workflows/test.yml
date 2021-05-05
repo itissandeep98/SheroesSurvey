@@ -26,6 +26,7 @@ jobs:
         pip install pipenv
         cd backend/
         pipenv install
+        apt-get install mysqlclient=8.0
     - name: Django Testing project
       run: |
         cd backend/
