@@ -58,6 +58,7 @@ class OurUsers(AbstractBaseUser, PermissionsMixin):
     """
     This class gives us accessibility for three types of users to be used on our platform.
     The three types of users include Admin, Forms Creator and End user.
+    These types of users can login by a token based authentication system provided by Django.
     """
     class GenderType(models.TextChoices):
         MALE = 'M', 'Male'
@@ -100,23 +101,27 @@ class OurUsers(AbstractBaseUser, PermissionsMixin):
 
 # Create your models here.
 class Forms(models.Model):
-    heading = models.TextField(max_length=50,null=True)
-    banner_toggle = models.BooleanField(null=False, default=False)
-    banner_path = models.CharField(max_length=500, null=True)
-    description = models.TextField(null=True)
-    section_sequence = models.JSONField()
-    consent_toggle = models.BooleanField(null=False, default=False)
-    consent_text = models.TextField(null=True)
-    start_time = models.DateTimeField(null=True)
-    end_time = models.DateTimeField(null=True)
-    is_active = models.BooleanField(null=False, default=True)
-    edit_response_toggle = models.BooleanField(null=False, default=True)
-    created_on = models.DateTimeField(auto_now_add=True,null=False)
+    """
+    This is one of the most used class for our platfrom. It includes all the fields required for a form.
+    """
+
+    heading = models.TextField(max_length=50,null=True,help_text = "This is the heading of the form")
+    banner_toggle = models.BooleanField(null=False, default=False,help_text = "Boolean value to check if banner is present")
+    banner_path = models.CharField(max_length=500, null=True,help_text = "Path to the banner added by the user")
+    description = models.TextField(null=True,help_text = "This is the description of the form")
+    section_sequence = models.JSONField(help_text = "This includes the sequence of the sections")
+    consent_toggle = models.BooleanField(null=False, default=False,help_text = "Boolean value to check if consent is added")
+    consent_text = models.TextField(null=True,help_text = "Customized consent text")
+    start_time = models.DateTimeField(null=True,help_text = "Start time for a form")
+    end_time = models.DateTimeField(null=True,help_text = "End time for a form")
+    is_active = models.BooleanField(null=False, default=True,help_text = "Check if a form is active or not")
+    edit_response_toggle = models.BooleanField(null=False, default=True,help_text = "Boolean value to check if editing response is allowed")
+    created_on = models.DateTimeField(auto_now_add=True,null=False,)
     updated_on = models.DateTimeField(auto_now=True, null=False) #update
     created_by =  models.ForeignKey(OurUsers,on_delete=models.CASCADE,related_name = "form_created_by") #edit
     updated_by =  models.ForeignKey(OurUsers,on_delete=models.CASCADE,related_name = "form_updated_by") #edit
-    is_deleted = models.BooleanField(null=False,default=False)
-    anonymous_response = models.BooleanField(null=False,default=True)
+    is_deleted = models.BooleanField(null=False,default=False,help_text = "Toggle to see if form is soft deleted")
+    anonymous_response = models.BooleanField(null=False,default=True,help_text = "Toggle to see if form accepts anonymous responses")
     user_responses = models.JSONField(default=dict) 
             #  {
             #     user_id : {question_no: "answer",
@@ -167,13 +172,16 @@ class Forms(models.Model):
 #     updated_by =  models.ForeignKey(User)
 
 class Sections(models.Model):
-    heading = models.TextField(max_length=50,null=True)
-    description = models.TextField(max_length=50,null=True)
-    question_sequence = models.JSONField()
+    """
+    It includes all the fields required for a section. Every form has different types of sections
+    """
+    heading = models.TextField(max_length=50,null=True,help_text = "Heading of a seciton")
+    description = models.TextField(max_length=50,null=True,help_text=" Section Description")
+    question_sequence = models.JSONField(help_text=" Question sequence inside sections")
     form_id = models.ForeignKey(Forms,on_delete=models.CASCADE) #edit
     #update in form_id
     # deete.cascade option
-    randomize_toggle = models.BooleanField(null=False, default=False)
+    randomize_toggle = models.BooleanField(null=False, default=False,help_text="Toggle to see if questions should be randomized while displaying to end user")
     created_on = models.DateTimeField(auto_now_add=True,null=False)
     updated_on = models.DateTimeField(auto_now=True, null=False) #update
     created_by =  models.ForeignKey(OurUsers,on_delete=models.CASCADE,related_name = "section_created_by") #edit
@@ -215,32 +223,35 @@ class Sections(models.Model):
                     ques_obj.delete()
 
 class Questions(models.Model):
+    """
+    It includes all the fields required for a question. Every sections has different types of question
+    """
     class QuestionType(models.TextChoices): #edit
         MULTIPLE = 'MC', 'Multiple Choice'
         SHORT = 'SP', 'Short Para'
         LONG = 'LP', 'Long Para'
         FILE = 'FU', 'File Upload'
-    statement = models.TextField(null=False)
+    statement = models.TextField(null=False,help_text="Question Statement")
     section_id = models.ForeignKey(Sections,on_delete=models.CASCADE) #edit
     qtype = models.CharField(
         max_length=2, 
         choices=QuestionType.choices,
         null=False
     )
-    mandatory_toggle = models.BooleanField(default=False, null=False)
-    image_toggle_1 = models.BooleanField(default=False, null=False)
-    image_path_1 =models.CharField(max_length=500, null=True)
+    mandatory_toggle = models.BooleanField(default=False, null=False,help_text="If question is mandatory")
+    image_toggle_1 = models.BooleanField(default=False, null=False,help_text="Toggle for image with question")
+    image_path_1 =models.CharField(max_length=500, null=True,help_text="Path for image with question")
     image_toggle_2 = models.BooleanField(default=False, null=False)
     image_path_2 =models.CharField(max_length=500, null=True)
     quiz_toggle = models.BooleanField(null=False, default=False)
-    correct_score = models.IntegerField(null=True, default=0)
-    incorrect_score = models.IntegerField(null=True, default=0)
+    correct_score = models.IntegerField(null=True, default=0,help_text="Score for a question in quiz mode")
+    incorrect_score = models.IntegerField(null=True, default=0,help_text="Negative marking for quiz mdoe")
     # title = models.CharField(max_length=255, null=False)
     created_on = models.DateTimeField(auto_now_add=True,null=False)
     updated_on = models.DateTimeField(auto_now=True, null=False) #update
     created_by =  models.ForeignKey(OurUsers,on_delete=models.CASCADE,related_name = "question_created_by") #edit
     updated_by =  models.ForeignKey(OurUsers,on_delete=models.CASCADE,related_name = "question_updated_by") #edit
-    other_ques_params = models.JSONField(default= dict)    
+    other_ques_params = models.JSONField(default= dict,help_text="Other parameters for questions like short answer,integer type,file upload")    
     # short_para_params max_value, min_value , limit_length ,qtype
     # file upload params limit_mb
     def save(self,*args,**kwargs):
@@ -268,6 +279,9 @@ class Questions(models.Model):
 
 
 class Options(models.Model):
+    """
+    It includes all the fields required for a MCQ options. Every MCQ question can have multiple type of options
+    """
     question_id = models.ForeignKey(Questions,on_delete=models.CASCADE) #edit
     content = models.TextField(max_length=255)
     image_toggle = models.BooleanField(default=False, null=False)
@@ -276,24 +290,23 @@ class Options(models.Model):
 
 
 class Dropdown(models.Model):
+    """
+    It includes all the fields required for a drop down question.
+    """
     question_id = models.ForeignKey(Questions,on_delete=models.CASCADE) #edit
     dropdown_json = models.JSONField()
     correct_answer = models.CharField(max_length=256, null=True)
 
 class MyAnonymousUser(models.Model):
+    """
+    This class was created in order to save unique responses of Anonymous users.
+    """
     is_deleted = models.BooleanField(default=False)
 
 
 class Responses(models.Model):
     """
-    Send response at https://sheroes-form.herokuapp.com/responses/
-    Example: 
-            {
-                "user_id": "2",
-                "form_id": "30",
-                "question_id": "29",
-                "response": "Hello"
-            }   
+    This class was created in order to save unique responses for different types of questions.
     """
     user_id = models.ForeignKey(OurUsers,on_delete=models.CASCADE,null= True) #edit
     form_id = models.ForeignKey(Forms,on_delete=models.CASCADE) #edit
@@ -311,6 +324,9 @@ class Responses(models.Model):
             new_response = super().save(*args, **kwargs)
 
 class ShortPara(models.Model):
+    """
+    This class was created in order to store details related to the short para questions
+    """
     class DataType(models.TextChoices):
         TEXT = 'TXT', 'Text'
         INTEGER = 'INT','Integer'
@@ -328,6 +344,9 @@ class ShortPara(models.Model):
     correct_answer = models.TextField(max_length = 5000,null=True)
 
 class FileUpload(models.Model):
+    """
+    This class was created in order to store details related to the File Upload questions
+    """
     question_id = models.ForeignKey(Questions,on_delete=models.CASCADE) #edit
     limit_mb = models.FloatField()
     file_extenstion = models.CharField(max_length = 10, null=True)

@@ -12,17 +12,17 @@ class FormsViewSet(viewsets.ModelViewSet):
     """
     This viewset is used to create api's related to forms like fetching them, submitting responses , getting responses etc.
 
-    1. Fetch all forms \n
+    1. Fetch all forms 
         GET request on https://sheroes-form.herokuapp.com/forms/
 
         The above URL can be used to fetch all the forms from the database. 
 
-    2. Fetch a particular form \n
+    2. Fetch a particular form 
         GET request on https://sheroes-form.herokuapp.com/forms/<form_id>/
 
         The above URL can be used to fetch a particular form from the database. 
 
-    3. Update fields of a particular form \n
+    3. Update fields of a particular form 
         POST request on https://sheroes-form.herokuapp.com/forms/<form-id>/update_fields/
         eg: You can send this
         {
@@ -34,7 +34,7 @@ class FormsViewSet(viewsets.ModelViewSet):
         Only those field which needs to be updated are sent using this API. The user needs to be authenticated as a Form Creator if
         he owns the form or Admin to make changes to a form. The authorization token for this will be passed as a Header. update_by is a mandatory field here.
 
-    4. Fetch all Not deleted forms \n
+    4. Fetch all Not deleted forms 
         GET request on https://sheroes-form.herokuapp.com/forms/get_all_not_del/
 
         Returns all the forms which are not deleted.By deleted it means that they are not soft deleted.
@@ -42,17 +42,18 @@ class FormsViewSet(viewsets.ModelViewSet):
         Example : If user wants to access form number 37 use the following url
         https://sheroes-form.herokuapp.com/forms/37/
 
-    5. Fetch all deleted forms \n
+    5. Fetch all deleted forms 
         GET request on https://sheroes-form.herokuapp.com/forms/get_all_deleted_forms/
 
         Returns all the forms which were soft deleted.By deleted it means that they are not soft deleted.
 
-    6. Accept Responses  for a form \n
+    6. Accept Responses  for a form 
         Post request on https://sheroes-form.herokuapp.com/forms/<form-id>/accept_response/
 
         To send a response for a partiular form.
         The authorization token for this will be passed as a Header if forms wants authenticated responses otherwise NUll.
         This also supports editing response as of now.        
+ 
             Data Format :
             {
             question_id: "answer",
@@ -61,19 +62,25 @@ class FormsViewSet(viewsets.ModelViewSet):
             ...
             }
 
-    7. Get Responses  for a form \n
+    7. Get Responses  for a form 
         Get request on https://sheroes-form.herokuapp.com/forms/<form-id>/get_response/
 
         To get responses for a partiular form.The authorization token for this will be passed as a Header.
         Data is returned as a list.
+
             Format :
             ["user_id","user_name","response"]
             "response" has the data format of data submitted throug accet responses functionality.
 
-    8. Get Responses in csv format which can be downloaded \n
+    8. Get Responses in csv format which can be downloaded 
         Get request on https://sheroes-form.herokuapp.com/forms/<form-id>/get_response/
 
         To get csv of the user responses.The authorization token for this will be passed as a Header. 
+
+    9. Form Creation 
+        POST request on https://sheroes-form.herokuapp.com/forms/
+
+        The above URL can be used to create a new form. Data to be sent in Json
 
     """
     # permission_classes = [
@@ -395,6 +402,34 @@ class FormsViewSet(viewsets.ModelViewSet):
 
 
 class SectionsViewSet(viewsets.ModelViewSet):
+    """
+    This viewset is used to create api's related to sections.
+
+    1. Fetch all sections 
+        GET request on https://sheroes-form.herokuapp.com/sections/
+
+        The above URL can be used to fetch all the forms from the database. 
+
+    2. Fetch a particular section 
+        GET request on https://sheroes-form.herokuapp.com/sections/<section_id>/
+
+        The above URL can be used to fetch a particular section from the database. 
+
+    3. Create a New section 
+        POST request on https://sheroes-form.herokuapp.com/sections/
+
+        The above URL can be used to create a new section. Data to be sent in Json. The Section gets automatically added to the form list.
+
+    4. Update fields of a particular section 
+        POST request on https://sheroes-form.herokuapp.com/sections/<section-id>/update_fields/
+        
+            eg: You can send this
+            {
+            "updated_by": 4,
+            "question_sequence" : [1,3,2]
+            "description" : "This is a sample description"
+            } to update the question_sequence and description of a section.
+    """
     queryset = Sections.objects.all()
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly
@@ -437,6 +472,34 @@ class SectionsViewSet(viewsets.ModelViewSet):
 
 
 class QuestionsViewSet(viewsets.ModelViewSet):
+    """
+    This viewset is used to create api's related to questions.
+
+    1. Fetch all questions 
+        GET request on https://sheroes-form.herokuapp.com/questions/
+
+        The above URL can be used to fetch all the questions from the database. 
+
+    2. Fetch a particular question 
+        GET request on https://sheroes-form.herokuapp.com/questions/<question_id>/
+
+        The above URL can be used to fetch a particular question from the database. 
+
+    3. Create a New Question 
+        POST request on https://sheroes-form.herokuapp.com/questions/
+
+        The above URL can be used to create a new question. Data to be sent in Json. The question gets automatically added to the section list.
+
+    4. Update fields of a particular question 
+        POST request on https://sheroes-form.herokuapp.com/questions/<question_id>/update_fields/
+        
+            eg: You can send this
+            {
+            "updated_by": 4,
+            "statement" : "This is a sample description"
+            } to update question statement.
+    """
+
     queryset = Questions.objects.all()
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly
@@ -502,6 +565,28 @@ class QuestionsViewSet(viewsets.ModelViewSet):
 
 
 class ShortParaViewSet(viewsets.ModelViewSet):
+    """
+    This viewset is used to create api's related to questions.
+
+    1. Fetch all short para questions 
+        GET request on https://sheroes-form.herokuapp.com/shortparas/
+
+        The above URL can be used to fetch all the  short para questions from the database. 
+
+    2. Fetch a particular short para questions 
+        GET request on https://sheroes-form.herokuapp.com/shortparas/<shortpara-id>/
+
+        The above URL can be used to fetch a particular short para question from the database. 
+
+    3. Create a New short para questions 
+        POST request on https://sheroes-form.herokuapp.com/shortparas/
+
+        The above URL can be used to create a new  short para question. Data to be sent in Json.
+
+    4. Update fields of a particular short para questions
+        POST request on https://sheroes-form.herokuapp.com/shortparas/<shortpara-id>/update_fields/
+        
+    """
     queryset = ShortPara.objects.all()
     permission_classes = [
         permissions.IsAuthenticated
@@ -540,16 +625,26 @@ class ShortParaViewSet(viewsets.ModelViewSet):
 
 class OptionsViewSet(viewsets.ModelViewSet):
     """
-    Posting a new option for a MCQ question,
-    Format:
-        heroku url: https://sheroes-form.herokuapp.com/options/
-        local url:  http://127.0.0.1:8000/options/
-        {
-            "question_id" : <question_id>,
-            "content": <content of the ption>,
-            "image_toggle" : <if option is an image>,
-            "correct_answer" : <whether it is the correct answer>   
-        }
+    This viewset is used to create api's related to MCQ options.
+
+    1. Fetch all MCQ options 
+        GET request on https://sheroes-form.herokuapp.com/options/
+
+        The above URL can be used to fetch all the MCQ options  from the database. 
+
+    2. Fetch a particular MCQ option
+        GET request on https://sheroes-form.herokuapp.com/options/<options-id>/
+
+        The above URL can be used to fetch a particular MCQ option from the database. 
+
+    3. Create a New MCQ options 
+        POST request on https://sheroes-form.herokuapp.com/options/
+
+        The above URL can be used to create a new MCQ options. Data to be sent in Json.
+
+    4. Update fields of a particular MCQ option
+        POST request on https://sheroes-form.herokuapp.com/options/<options-id>/update_fields/
+        
     """
     queryset = Options.objects.all()
     permission_classes = [
@@ -589,6 +684,29 @@ class OptionsViewSet(viewsets.ModelViewSet):
 
    
 class ResponsesViewSet(viewsets.ModelViewSet):
+    """
+    This viewset is used to create api's related to responses.
+
+    1. Fetch all Responses 
+        GET request on https://sheroes-form.herokuapp.com/responses/
+
+        The above URL can be used to fetch all the responses from the database. 
+
+    2. Fetch a particular response
+        GET request on https://sheroes-form.herokuapp.com/responses/<responses-id>/
+
+        The above URL can be used to fetch a particular responses from the database. 
+
+    3. Create a New response
+        POST request on https://sheroes-form.herokuapp.com/responses/
+
+        The above URL can be used to create a new response. Data to be sent in Json.
+
+    4. Update fields of a particular response
+        POST request on https://sheroes-form.herokuapp.com/responses/<responses-id>/update_fields/
+        
+    """
+
     queryset = Responses.objects.all()
     permission_classes = [
         permissions.IsAuthenticated
@@ -644,6 +762,28 @@ class ResponsesViewSet(viewsets.ModelViewSet):
 
 
 class FileUploadViewSet(viewsets.ModelViewSet):
+    """
+    This viewset is used to create api's related to File upload questions.
+
+    1. Fetch all File upload questions
+        GET request on https://sheroes-form.herokuapp.com/fileupload/
+
+        The above URL can be used to fetch all the File upload questions from the database. 
+
+    2. Fetch a particular File upload question
+        GET request on https://sheroes-form.herokuapp.com/fileupload/<fileupload-id>/
+
+        The above URL can be used to fetch a particular File upload question from the database. 
+
+    3. Create a New File upload question
+        POST request on https://sheroes-form.herokuapp.com/fileupload/
+
+        The above URL can be used to create a new File upload question. Data to be sent in Json.
+
+    4. Update fields of a particular File upload question
+        POST request on https://sheroes-form.herokuapp.com/fileupload/<fileupload-id>/update_fields/
+        
+    """
     queryset = FileUpload.objects.all()
     permission_classes = [
         permissions.IsAuthenticated
