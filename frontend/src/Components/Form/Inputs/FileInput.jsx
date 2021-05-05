@@ -19,8 +19,7 @@ import { showAlert } from '../../Alert';
  * @property {Function} handleChange - Modifies the response of user
  */
 function FileInput(props) {
-	const { quesId, required, limit_mb } = props;
-	const [file, setFile] = useState(null);
+	const { required, limit_mb } = props;
 	const [link, setLink] = useState(props.value);
 	const dispatch = useDispatch();
 	const handleChange = e => {
@@ -30,7 +29,6 @@ function FileInput(props) {
 				showAlert(`File Size should be Less than ${limit_mb} MB`);
 				return;
 			}
-			setFile(file);
 			const data = {
 				content: 'Files',
 				file: file,
@@ -42,7 +40,7 @@ function FileInput(props) {
 		}
 	};
 	const handleDelete = () => {
-		setFile(null);
+		setLink(null);
 	};
 	return (
 		<div className="d-flex flex-row align-items-center ">
