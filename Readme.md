@@ -14,6 +14,8 @@
 
 - Visit the website [here](https://sheroes.pages.dev).
 - Login/Register into the portal.
+- Once you register you also get a notification via email.
+- You can ask an admin to make you a form creator.
 - Now, you can view all the previous forms and have the option to create new form.
 - Clicking on any of the old forms or clicking on the option to create a new form lands the user on the form editing page.
 - On the form editing page, you have the following options:
@@ -49,11 +51,15 @@
 ```
 
 ## Backend
+Please make sure you have a Sendgrid account and have obtained SENDGRID_API_KEY from them.
+You also need to update the sender email in post function of class RegisterAPI in ./backend/accounts/views.py
 
 ```
 - cd backend/
 - pipenv shell
 - pipenv install
+- echo "export SENDGRID_API_KEY=<Your send grid key>" > sendgrid.env
+- source ./sendgrid.env
 - python manage.py makemigrations
 - python manage.py migrate
 - python manage.py runserver
@@ -62,6 +68,7 @@
 # Documentation
 
 - Frontend: <https://sheroes-docs.netlify.app/>
+- Backend: https://sheroes-form.herokuapp.com/admin/doc/
 
 # Glimpses
 ![image](https://user-images.githubusercontent.com/44255731/115881844-ca733000-a469-11eb-88c3-d0e65b41416b.png)
