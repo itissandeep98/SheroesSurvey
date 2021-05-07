@@ -89,17 +89,27 @@ WSGI_APPLICATION = 'sheroes_forms.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'sheroesform',
+#         'USER': 'sheroes_admin',
+#         'PASSWORD' : '3fyEiLlxsJa4ctOaot9I',
+#         'HOST' : 'sheroes-form.czdw77kneec2.us-east-1.rds.amazonaws.com',
+#         'PORT' : '3306',
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'sheroesform',
-        'USER': 'sheroes_admin',
-        'PASSWORD' : '3fyEiLlxsJa4ctOaot9I',
-        'HOST' : 'sheroes-form.czdw77kneec2.us-east-1.rds.amazonaws.com',
+        'NAME': 'KkYsmSx5dI',
+        'USER': 'KkYsmSx5dI',
+        'PASSWORD' : 'iBdOdfN7Cq',
+        'HOST' : 'remotemysql.com',
         'PORT' : '3306',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
