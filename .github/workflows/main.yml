@@ -21,5 +21,5 @@ jobs:
           npm install
           git config user.name "itissandeep98"
           git config user.email "itissandeep98@gmail.com"
-          git remote set-url origin https://SDOS-Winter2021:${{secrets.ACCESS_TOKEN}}@github.com/SDOS-Winter2021/Team_3_Sheroes
+          git remote set-url origin https://itissandeep98:${{secrets.ACCESS_TOKEN}}@github.com/itissandeep98/SheroesSurvey
           npm run deploy
