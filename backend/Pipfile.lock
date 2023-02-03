@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "8acb1aa754909cfa034dc2ce4a96111e6adb5f589fae1f098e42233aae089008"
+            "sha256": "c6d700d922b26bc68facd786a9c08725f527bb4cc58a27abfe88582c5adce181"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -170,11 +170,11 @@
         },
         "django": {
             "hashes": [
-                "sha256:677182ba8b5b285a4e072f3ac17ceee6aff1b5ce77fd173cc5b6a2d3dc022fcf",
-                "sha256:a8681e098fa60f7c33a4b628d6fcd3fe983a0939ff1301ecacac21d0b38bad56"
+                "sha256:59c39fc342b242fb42b6b040ad8b1b4c15df438706c1d970d416d63cdd73e7fd",
+                "sha256:644288341f06ebe4938eec6801b6bd59a6534a78e4aedde2a153075d11143894"
             ],
             "index": "pypi",
-            "version": "==3.2.14"
+            "version": "==3.2.17"
         },
         "django-cors-headers": {
             "hashes": [
@@ -481,9 +481,9 @@
         },
         "starkbank-ecdsa": {
             "hashes": [
-                "sha256:73b62b1b3de54bbaa05dedb1a2d951c033432bb074de899e19d4a96a36b21df6"
+                "sha256:9399c3371b899d4a235b68a1ed7919d202fbf024bd2c863ae8ebdad343c2a63a"
             ],
-            "version": "==2.0.3"
+            "version": "==2.2.0"
         },
         "toml": {
             "hashes": [
